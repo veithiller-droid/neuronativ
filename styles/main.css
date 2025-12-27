@@ -1,1 +1,425 @@
+/* ============================================
+   NEURONATIV - MAIN STYLES
+   Für Hauptseite und Wissen-Übersicht
+   ============================================ */
 
+/* Reset & Base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    color: #2c2c2c;
+    background: #52575a;
+    line-height: 1.6;
+    font-size: 18px;
+    margin: 0;
+    padding: 0 60px;
+}
+
+.page-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    background: white;
+    box-shadow: 0 0 40px rgba(0,0,0,0.2);
+    min-height: 100vh;
+}
+
+/* ============================================
+   HEADER
+   ============================================ */
+
+header {
+    background: white;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 20px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-text {
+    font-size: 24px;
+    font-weight: 300;
+    letter-spacing: 2px;
+    color: #2c2c2c;
+    text-decoration: none;
+}
+
+nav {
+    display: flex;
+    gap: 40px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #666;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: #2c2c2c;
+}
+
+/* ============================================
+   MAIN CONTENT
+   ============================================ */
+
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 40px;
+}
+
+/* ============================================
+   HERO SECTION (Hauptseite)
+   ============================================ */
+
+.hero {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 60px;
+    align-items: center;
+    margin-bottom: 80px;
+}
+
+.hero-text h1 {
+    font-size: 3rem;
+    font-weight: 300;
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+.hero-text .tagline {
+    font-size: 1.3rem;
+    color: #666;
+    font-weight: 300;
+    margin-bottom: 30px;
+}
+
+.hero-logo {
+    text-align: center;
+}
+
+.hero-logo img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* ============================================
+   SECTIONS
+   ============================================ */
+
+section {
+    margin-bottom: 80px;
+}
+
+section h2 {
+    font-size: 2.2rem;
+    font-weight: 300;
+    margin-bottom: 30px;
+    color: #2c2c2c;
+}
+
+section p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    margin-bottom: 20px;
+    color: #444;
+}
+
+/* ============================================
+   HIGHLIGHT BOX
+   ============================================ */
+
+.highlight {
+    background: #e6eef2;
+    padding: 30px 40px;
+    border-radius: 6px;
+    margin: 30px 0;
+    border-left: 4px solid #3f6475;
+}
+
+.highlight p {
+    margin: 0;
+    font-style: italic;
+    color: #2c2c2c;
+}
+
+/* ============================================
+   FEATURE SECTIONS (alternierend)
+   ============================================ */
+
+.features {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+}
+
+.feature-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.feature-row.reverse {
+    direction: rtl;
+}
+
+.feature-row.reverse > * {
+    direction: ltr;
+}
+
+.feature-text {
+    background: white;
+    padding: 40px;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.feature-text h3 {
+    font-size: 1.8rem;
+    font-weight: 400;
+    margin-bottom: 20px;
+    color: #2c2c2c;
+}
+
+.feature-text p {
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 20px;
+}
+
+.feature-text a {
+    display: inline-block;
+    color: #3f6475;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+.feature-text a:hover {
+    color: #2c2c2c;
+    text-decoration: underline;
+}
+
+.feature-image {
+    text-align: center;
+}
+
+.feature-image img {
+    max-width: 350px;
+    width: 100%;
+    height: auto;
+    transition: transform 0.3s;
+}
+
+.feature-image img:hover {
+    transform: translateY(-4px);
+}
+
+/* ============================================
+   CTA SECTION
+   ============================================ */
+
+.cta-section {
+    background: #f7f7f5;
+    padding: 60px;
+    border-radius: 8px;
+    text-align: center;
+    margin: 60px 0;
+}
+
+.cta-section h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.cta-section p {
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+    color: #555;
+}
+
+.cta-button {
+    display: inline-block;
+    background: #3f6475;
+    color: white;
+    padding: 16px 40px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s;
+}
+
+.cta-button:hover {
+    background: #335563;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* ============================================
+   TOPIC CARDS (Wissen-Übersicht)
+   ============================================ */
+
+.topics-section {
+    margin-bottom: 60px;
+}
+
+.topics-section h3 {
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-bottom: 25px;
+    color: #2c2c2c;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.topics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+    margin-bottom: 50px;
+}
+
+.topic-card {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 25px;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.topic-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    border-color: #3f6475;
+}
+
+.topic-card h3 {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 12px;
+    color: #2c2c2c;
+    border: none;
+    padding: 0;
+}
+
+.topic-card p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.topic-tag {
+    display: inline-block;
+    background: #e6eef2;
+    color: #3f6475;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+
+footer {
+    background: white;
+    border-top: 1px solid #e0e0e0;
+    padding: 40px;
+    text-align: center;
+}
+
+footer p {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+
+footer a {
+    color: #3f6475;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 1024px) {
+    .hero {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .feature-row,
+    .feature-row.reverse {
+        grid-template-columns: 1fr;
+        direction: ltr;
+    }
+
+    .feature-image img {
+        max-width: 250px;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 0 20px;
+        font-size: 16px;
+    }
+
+    main {
+        padding: 40px 20px;
+    }
+
+    .hero-text h1 {
+        font-size: 2rem;
+    }
+
+    .hero-text .tagline {
+        font-size: 1.1rem;
+    }
+
+    section h2 {
+        font-size: 1.8rem;
+    }
+
+    .topics-grid {
+        grid-template-columns: 1fr;
+    }
+
+    nav {
+        gap: 20px;
+    }
+
+    .cta-section {
+        padding: 40px 30px;
+    }
+}
