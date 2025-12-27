@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neurodivergenz-Profil</title>
+
+<style>
+/* =========================
+   FARBKONZEPT - UPDATE
+========================= */
+:root {
+  --bg-page: #F0F9FF;        /* Türkis */
+  --bg-box: #FFFFFF;         /* Weiß */
+  --bg-box-alt: #EEEAF3;
+  --bg-highlight: #FFFBEA;   /* Helles Senf */
+  --border-light: #D8DEE4;
+  --accent-main: #EAB308;    /* Senf */
+  --accent-soft: #FACC15;    /* Heller Senf */
+  --accent-warm: #E6B980;
+  --accent-turquoise: #06B6D4;
+  --text-main: #2F3A40;
+  --text-secondary: #5F6C73;
+  --confidence-high: #16a34a;
+  --confidence-medium: #facc15;
+  --confidence-low: #ef4444;
+}
+
+/* =========================
+   BASIS
+========================= */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: var(--bg-page);
+  color: var(--text-main);
+  line-height: 1.6;
+  padding: 40px 20px;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* =========================
+   HEADER
+========================= */
+.profile-header {
+  background: #F5F5F5;
+  border-top: 2px solid var(--accent-main);
+  border-bottom: 2px solid var(--accent-main);
+  padding: 24px 0;
+  margin-bottom: 48px;
+  text-align: center;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  width: 100vw;
+}
+
+.profile-header h1 {
+  font-size: 2.2em;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: var(--accent-main);
+}
+
+.profile-subtitle {
+  font-size: 1.15em;
+  color: var(--text-secondary);
+  font-style: italic;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* =========================
+   HAUPT-PROFIL (HERO/BANNER)
+========================= */
+.main-profile {
+  background: linear-gradient(135deg, #FFFFFF 0%, #F0F9FF 100%);
+  border: 3px solid var(--accent-main);
+  border-radius: 16px;
+  padding: 40px;
+  margin-bottom: 40px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.profile-type {
+  font-size: 2.2em;
+  font-weight: 700;
+  color: var(--accent-main);
+  margin-bottom: 12px;
+  line-height: 1.2;
+}
+
+/* NEU: Subtyp unter Hauptprofil */
+.profile-subtype {
+  font-size: 1.2em;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+  font-style: italic;
+}
+
+.profile-confidence {
+  display: inline-block;
+  padding: 10px 24px;
+  background: var(--bg-highlight);
+  border: 2px solid var(--accent-soft);
+  border-radius: 24px;
+  font-size: 1em;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 24px;
+}
+
+.profile-description {
+  max-width: 700px;
+  margin: 0 auto;
+  font-size: 1.05em;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+/* NEU: Onset-Badge */
+.onset-badge {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 8px 16px;
+  background: #E0F9F7;
+  border: 1px solid var(--accent-turquoise);
+  border-radius: 20px;
+  font-size: 0.9em;
+  color: var(--text-secondary);
+}
+
+/* =========================
+   DISKREPANZ-SECTION (NEU!)
+========================= */
+.discrepancy-section {
+  background: #FEF3C7;
+  border-left: 4px solid var(--accent-soft);
+  border-radius: 10px;
+  padding: 24px;
+  margin-bottom: 40px;
+}
+
+.discrepancy-section h2 {
+  font-size: 1.3em;
+  margin-bottom: 16px;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.discrepancy-icon {
+  font-size: 1.5em;
+}
+
+.discrepancy-list {
+  list-style: none;
+}
+
+.discrepancy-item {
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(234, 179, 8, 0.2);
+}
+
+.discrepancy-item:last-child {
+  border-bottom: none;
+}
+
+.discrepancy-flag {
+  display: inline-block;
+  padding: 4px 12px;
+  background: white;
+  border: 1px solid var(--accent-soft);
+  border-radius: 12px;
+  font-size: 0.85em;
+  font-weight: 600;
+  color: var(--accent-main);
+  margin-bottom: 8px;
+}
+
+.discrepancy-text {
+  font-size: 0.95em;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+/* =========================
+   CLUSTER-SCORES
+========================= */
+.cluster-scores {
+  margin-bottom: 40px;
+}
+
+.cluster-scores h2 {
+  font-size: 1.6em;
+  margin-bottom: 24px;
+  color: var(--text-main);
+}
+
+.cluster-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.cluster-card {
+  background: var(--bg-box);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+}
+
+.cluster-name {
+  font-size: 1em;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--text-main);
+}
+
+.cluster-bar {
+  background: #E5E7EB;
+  height: 28px;
+  border-radius: 14px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.cluster-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-soft) 0%, var(--accent-main) 100%);
+  transition: width 0.5s ease;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 10px;
+  color: white;
+  font-weight: 600;
+  font-size: 0.9em;
+}
+.cluster-explanation {
+  font-size: 0.9em;
+  color: var(--text-secondary);
+  margin-top: 12px;
+  line-height: 1.5;
+  text-align: left;
+  padding: 0 10px;
+  min-height: 60px; /* damit alle Boxen gleich hoch sind */
+}
+.cluster-info {
+  position: relative;
+  text-align: right;
+  margin-top: 8px;
+}
+
+.info-icon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background: var(--accent-soft);
+  color: white;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 20px;
+  font-weight: bold;
+  cursor: help;
+  font-size: 0.8em;
+}
+
+.info-tooltip {
+  display: none;
+  position: absolute;
+  bottom: 30px;
+  right: 0;
+  width: 280px;
+  background: var(--bg-box);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  z-index: 10;
+  font-size: 0.9em;
+  line-height: 1.5;
+  color: var(--text-main);
+  text-align: left;
+}
+
+.cluster-info:hover .info-tooltip {
+  display: block;
+}
+
+/* =========================
+   DETAIL-PROFILE
+========================= */
+.detail-profiles {
+  margin-bottom: 40px;
+}
+
+.detail-profiles h2 {
+  font-size: 1.6em;
+  margin-bottom: 24px;
+  color: var(--text-main);
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.profile-card {
+  background: var(--bg-box);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 24px;
+  transition: all 0.2s;
+}
+
+.profile-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transform: translateY(-2px);
+}
+
+.profile-card h3 {
+  font-size: 1.1em;
+  margin-bottom: 12px;
+  color: var(--text-main);
+}
+
+/* NEU: Subtyp-Badge in Karten */
+.subtype-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  background: #E0F9F7;
+  border: 1px solid var(--accent-turquoise);
+  border-radius: 12px;
+  font-size: 0.8em;
+  font-weight: 600;
+  color: var(--accent-turquoise);
+  margin-bottom: 12px;
+}
+
+.profile-card-score {
+  font-size: 2em;
+  font-weight: 700;
+  color: var(--accent-main);
+  margin-bottom: 8px;
+}
+
+.profile-card-confidence {
+  font-size: 0.9em;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+}
+
+.profile-card-status {
+  padding: 6px 14px;
+  border-radius: 16px;
+  font-size: 0.85em;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.status-primary {
+  background: #D1FAE5;
+  color: #065F46;
+  border: 1px solid #34D399;
+}
+
+.status-secondary {
+  background: #FEF3C7;
+  color: #92400E;
+  border: 1px solid #FCD34D;
+}
+
+.status-low {
+  background: #FEE2E2;
+  color: #991B1B;
+  border: 1px solid #FCA5A5;
+}
+
+/* =========================
+   REASONING
+========================= */
+.reasoning-section {
+  background: var(--bg-box-alt);
+  border: 1px solid var(--border-light);
+  border-radius: 14px;
+  padding: 30px;
+  margin-bottom: 40px;
+}
+
+.reasoning-section h2 {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+  color: var(--text-main);
+}
+
+.reasoning-list {
+  list-style: none;
+}
+
+.reasoning-list li {
+  padding: 14px 0;
+  padding-left: 30px;
+  position: relative;
+  border-bottom: 1px solid rgba(216, 222, 228, 0.5);
+  line-height: 1.7;
+}
+
+.reasoning-list li:last-child {
+  border-bottom: none;
+}
+
+.reasoning-list li:before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: var(--accent-main);
+  font-weight: 700;
+  font-size: 1.2em;
+}
+
+/* =========================
+   PATTERNS (erweitert mit Subtypen)
+========================= */
+.patterns-section {
+  background: var(--bg-box);
+  border: 1px solid var(--border-light);
+  border-radius: 14px;
+  padding: 30px;
+  margin-bottom: 40px;
+}
+
+.patterns-section h2 {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+  color: var(--text-main);
+}
+
+.patterns-list {
+  list-style: none;
+}
+
+.pattern-item {
+  display: flex;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(216, 222, 228, 0.3);
+}
+
+.pattern-item:last-child {
+  border-bottom: none;
+}
+
+.pattern-confidence {
+  flex-shrink: 0;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, var(--accent-soft) 0%, var(--accent-main) 100%);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.1em;
+  color: white;
+}
+
+.pattern-text {
+  flex: 1;
+  padding-top: 8px;
+}
+
+/* =========================
+   NÄCHSTE SCHRITTE
+========================= */
+.next-steps {
+  background: var(--bg-highlight);
+  border: 2px solid var(--accent-warm);
+  border-radius: 14px;
+  padding: 30px;
+  margin-bottom: 40px;
+}
+
+.next-steps h2 {
+  font-size: 1.4em;
+  margin-bottom: 20px;
+  color: var(--text-main);
+}
+
+.steps-list {
+  list-style: none;
+  counter-reset: step-counter;
+}
+
+.steps-list li {
+  counter-increment: step-counter;
+  padding: 16px 0 16px 50px;
+  position: relative;
+  border-bottom: 1px solid rgba(230, 185, 128, 0.3);
+  line-height: 1.6;
+}
+
+.steps-list li:last-child {
+  border-bottom: none;
+}
+
+.steps-list li:before {
+  content: counter(step-counter);
+  position: absolute;
+  left: 0;
+  top: 12px;
+  width: 32px;
+  height: 32px;
+  background: var(--accent-warm);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.9em;
+}
+
+/* =========================
+   DISCLAIMER
+========================= */
+.disclaimer {
+  background: #fef2f2;
+  border: 2px solid #fca5a5;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 40px;
+  font-size: 0.95em;
+  line-height: 1.7;
+}
+
+.disclaimer strong {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 1.05em;
+  color: #991b1b;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+.action-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-top: 40px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 14px 28px;
+  border-radius: 10px;
+  border: none;
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-primary {
+  background: var(--accent-main);
+  color: white;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: transparent;
+  border: 2px solid var(--border-light);
+  color: var(--text-main);
+}
+
+.btn-secondary:hover {
+  background: var(--bg-box);
+}
+
+/* =========================
+   PRINT / PDF
+========================= */
+@media print {
+  body {
+    background: white;
+    padding: 0;
+  }
+  
+  .action-buttons {
+    display: none !important;
+  }
+  
+  .profile-header {
+    position: static;
+    width: auto;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  
+  .main-profile,
+  .cluster-scores,
+  .detail-profiles,
+  .reasoning-section,
+  .patterns-section,
+  .discrepancy-section,
+  .next-steps {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+  <!-- HEADER -->
+  <header class="profile-header">
+    <h1>Ihr Neurodivergenz-Profil</h1>
+    <p class="profile-subtitle">
+      Wissenschaftlich fundierte Auswertung Ihrer Testergebnisse
+    </p>
+  </header>
+
+ <section class="main-profile" id="main-profile">
+  <!-- Großer Titel -->
+  <h2 class="profile-type" id="profile-type">—</h2>
+
+  <!-- Sub-Line 1: Subtyp -->
+  <div class="profile-subline profile-subline-main" id="profile-subtype-1" style="display:none;">—</div>
+
+  <!-- Sub-Line 2: Dominierendes Merkmal -->
+  <div class="profile-subline profile-subline-detail" id="profile-subtype-2" style="display:none;">—</div>
+
+  <div class="profile-confidence" id="profile-confidence">—</div>
+  <p class="profile-description" id="profile-description">—</p>
+  <div class="onset-badge" id="onset-badge" style="display:none;">—</div>
+</section>
+
+  <!-- DISKREPANZEN (NEU!) -->
+  <section class="discrepancy-section" id="discrepancy-section" style="display:none;">
+    <h2><span class="discrepancy-icon">⚠️</span> Besondere Muster</h2>
+    <ul class="discrepancy-list" id="discrepancy-list">
+      <!-- Dynamisch -->
+    </ul>
+  </section>
+
+<!-- CLUSTER-AUSWERTUNG -->
+<section class="cluster-scores">
+  <h2>Cluster-Auswertung</h2>
+  <div class="cluster-grid">
+
+    <!-- ADHS-Cluster -->
+    <div class="cluster-card">
+      <div class="cluster-name">ADHS-<br>Cluster</div>
+      <div class="cluster-bar">
+        <div class="cluster-bar-fill" id="adhd-fill" style="width:0%">
+          <span id="adhd-score">—</span>
+        </div>
+      </div>
+      <!-- Tooltip mit Fragezeichen -->
+      <div class="cluster-info">
+        <span class="info-icon">?</span>
+        <div class="info-tooltip" id="adhd-tooltip">—</div>
+      </div>
+    </div>
+
+    <!-- Autismus-Cluster -->
+    <div class="cluster-card">
+      <div class="cluster-name">Autismus-<br>Cluster</div>
+      <div class="cluster-bar">
+        <div class="cluster-bar-fill" id="autism-fill" style="width:0%">
+          <span id="autism-score">—</span>
+        </div>
+      </div>
+      <div class="cluster-info">
+        <span class="info-icon">?</span>
+        <div class="info-tooltip" id="autism-tooltip">—</div>
+      </div>
+    </div>
+
+    <!-- Emotionale Verarbeitung -->
+    <div class="cluster-card">
+      <div class="cluster-name">Emotionale Verarbeitung</div>
+      <div class="cluster-bar">
+        <div class="cluster-bar-fill" id="emotional-fill" style="width:0%">
+          <span id="emotional-score">—</span>
+        </div>
+      </div>
+      <div class="cluster-info">
+        <span class="info-icon">?</span>
+        <div class="info-tooltip" id="emotional-tooltip">—</div>
+      </div>
+    </div>
+
+    <!-- Kompensation & Belastung -->
+    <div class="cluster-card">
+      <div class="cluster-name">Kompensation & Belastung</div>
+      <div class="cluster-bar">
+        <div class="cluster-bar-fill" id="compensation-fill" style="width:0%">
+          <span id="compensation-score">—</span>
+        </div>
+      </div>
+      <div class="cluster-info">
+        <span class="info-icon">?</span>
+        <div class="info-tooltip" id="compensation-tooltip">—</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+  <!-- DETAIL-PROFILE -->
+  <section class="detail-profiles">
+    <h2>Detail-Profile</h2>
+    <div class="profile-grid" id="profile-grid">
+      <!-- Dynamisch generiert -->
+    </div>
+  </section>
+
+  <!-- BEGRÜNDUNG -->
+  <section class="reasoning-section">
+    <h2>Grundlage der Einordnung</h2>
+    <ul class="reasoning-list" id="reasoning-list">
+      <!-- Dynamisch -->
+    </ul>
+  </section>
+
+  <!-- ERKANNTE MUSTER -->
+  <section class="patterns-section" id="patterns-section" style="display:none;">
+    <h2>Erkannte Muster</h2>
+    <ul class="patterns-list" id="patterns-list">
+      <!-- Dynamisch -->
+    </ul>
+  </section>
+
+  <!-- NÄCHSTE SCHRITTE -->
+  <section class="next-steps">
+    <h2>Empfohlene nächste Schritte</h2>
+    <ul class="steps-list" id="steps-list">
+      <!-- Dynamisch -->
+    </ul>
+  </section>
+
+  <!-- DISCLAIMER -->
+  <section class="disclaimer">
+    <strong>Wichtiger Hinweis:</strong>
+    Dieses Profil basiert auf einem Selbsteinschätzungs-Screening und ersetzt keine professionelle Diagnostik. Die Ergebnisse dienen der Orientierung und können als Gesprächsgrundlage für fachärztliche Abklärung genutzt werden. Eine formale Diagnose kann nur durch qualifizierte Fachpersonen (Psychiatrie, Neurologie, spezialisierte Psychologie) gestellt werden.
+  </section>
+
+  <!-- ACTIONS -->
+  <div class="action-buttons">
+    <button class="btn btn-primary" onclick="window.print()">Als PDF speichern</button>
+    <button class="btn btn-secondary" onclick="window.close()">Fenster schließen</button>
+    <button class="btn btn-secondary" onclick="window.open('methodology.html', '_blank')">Zur Methodik</button>
+  </div>
+
+</div>
+
+<script type="module">
+  // =========================
+  // MODULE IMPORTS
+  // =========================
+  import { calculateProfile } from './profile_scoring.js';
+  import { PROFILE_TEXTS } from './profile_texts.js';
+  import { PROFILE_DESCRIPTIONS } from './profile_descriptions.js';
+
+  let profileResult = null;
+
+  // =========================
+  // DATEN LADEN & PROFIL BERECHNEN
+  // =========================
+  const storedData = localStorage.getItem('neurodivergenz_profile_data');
+  if (storedData) {
+    try {
+      const rawData = JSON.parse(storedData);
+      console.log('Rohdaten geladen:', rawData);
+
+      profileResult = calculateProfile(rawData.scores, rawData.meta, rawData.answers);
+
+      console.log('Profil berechnet:', profileResult);
+    } catch (e) {
+      console.error('Fehler beim Berechnen:', e);
+    }
+  } else {
+    console.warn('Keine Daten im localStorage gefunden.');
+  }
+
+  // =========================
+  // RENDER-FUNKTIONEN
+  // =========================
+
+  function renderMainProfile() {
+    if (!profileResult?.mainProfile) return;
+
+    const main = profileResult.mainProfile;
+
+    // 1. Haupt-Titel
+    let mainTitle = 'Individuelles Profil';
+    const clusters = profileResult.clusterScores || {};
+
+    if (clusters.autism >= 75 && clusters.adhd >= 75) {
+      mainTitle = 'AuDHD-Profil';
+    } else if (clusters.autism >= clusters.adhd && clusters.autism >= 70) {
+      mainTitle = 'Autismus-Profil';
+    } else if (clusters.adhd >= 70) {
+      mainTitle = 'ADHS-Profil';
+    }
+
+    document.getElementById('profile-type').textContent = mainTitle;
+
+    // 2. Sub-Line 1: Subtyp
+    const subtype1 = document.getElementById('profile-subtype-1');
+    if (main.subtype?.user_description) {
+      subtype1.textContent = main.subtype.user_description;
+      subtype1.style.display = 'block';
+    } else {
+      subtype1.style.display = 'none';
+    }
+
+    // 3. Sub-Line 2: Dominierendes Merkmal
+    const subtype2 = document.getElementById('profile-subtype-2');
+    let detailText = '';
+    if (main.dominant_label && main.dominant_score) {
+      detailText = `mit starker ${main.dominant_label.toLowerCase()} (${main.dominant_score}%)`;
+    }
+    if (detailText) {
+      subtype2.textContent = detailText;
+      subtype2.style.display = 'block';
+    } else {
+      subtype2.style.display = 'none';
+    }
+
+    // 4. Konfidenz
+    const confidence = Math.round((main.confidence || 0) * 100);
+    document.getElementById('profile-confidence').textContent = `Konfidenz: ${confidence}%`;
+
+    // 5. Beschreibung – personalisiert aus PROFILE_TEXTS
+  const ui = PROFILE_TEXTS.ui.hero;
+
+// Durchschnittsscore berechnen
+const avgScore = (
+  main.adhd_cluster + 
+  main.autism_cluster + 
+  main.emotional_processing + 
+  main.compensation_burden
+) / 4;
+
+// Beschreibungstext-Schlüssel bestimmen
+let descKey = main.type;
+
+// Wenn kein spezifisches Profil erkannt, nach Score entscheiden
+if (!descKey) {
+  if (avgScore < 25) {
+    descKey = 'very_low';
+  } else if (avgScore < 45) {
+    descKey = 'low';
+  } else if (avgScore < 65) {
+    descKey = 'moderate';
+  } else if (avgScore >= 65) {
+    descKey = 'high';
+  } else {
+    descKey = 'default';
+  }
+}
+
+// Text setzen
+const descriptionText = ui.description[descKey] || ui.description.default;
+document.getElementById('profile-description').textContent = descriptionText;
+}
+
+  function renderOnsetBadge() {
+    if (!profileResult?.onsetAnalysis) return;
+
+    const onset = profileResult.onsetAnalysis;
+    const badge = document.getElementById('onset-badge');
+
+    if (onset.timing) {
+      const labels = {
+        childhood: 'Seit Kindheit',
+        youth: 'Seit Jugend',
+        adult: 'Seit Erwachsenenalter',
+        recent: 'Kürzlich aufgetreten',
+        unsure: 'Zeitpunkt unklar'
+      };
+      badge.textContent = labels[onset.timing] || onset.timing;
+      badge.style.display = 'inline-block';
+    } else {
+      badge.style.display = 'none';
+    }
+  }
+
+  function renderDiscrepancies() {
+    if (!profileResult?.discrepancies || profileResult.discrepancies.length === 0) {
+      document.getElementById('discrepancy-section').style.display = 'none';
+      return;
+    }
+
+    const section = document.getElementById('discrepancy-section');
+    const list = document.getElementById('discrepancy-list');
+    list.innerHTML = '';
+
+    const relevant = profileResult.discrepancies
+      .filter(d => d.severity === 'high' || d.severity === 'moderate')
+      .sort((a, b) => {
+        const order = { high: 3, moderate: 2, low: 1 };
+        return order[b.severity] - order[a.severity];
+      });
+
+    section.style.display = 'block';
+
+    for (const d of relevant) {
+      const li = document.createElement('li');
+      li.className = 'discrepancy-item';
+
+      const flagLabels = PROFILE_TEXTS?.ui?.discrepancy?.flag_labels || {};
+
+      li.innerHTML = `
+        <div class="discrepancy-flag">${flagLabels[d.flag] || d.flag}</div>
+        <div class="discrepancy-text">${d.user_description}</div>
+      `;
+
+      list.appendChild(li);
+    }
+  }
+
+  function renderClusterScores() {
+    if (!profileResult?.clusterScores) return;
+
+    const c = profileResult.clusterScores;
+
+    // Balken und Prozente
+    document.getElementById('adhd-score').textContent = `${c.adhd}%`;
+    document.getElementById('adhd-fill').style.width = `${c.adhd}%`;
+
+    document.getElementById('autism-score').textContent = `${c.autism}%`;
+    document.getElementById('autism-fill').style.width = `${c.autism}%`;
+
+    const emotionalScore = c.emotional || 50;
+    document.getElementById('emotional-score').textContent = `${emotionalScore}%`;
+    document.getElementById('emotional-fill').style.width = `${emotionalScore}%`;
+
+    document.getElementById('compensation-score').textContent = `${c.compensation}%`;
+    document.getElementById('compensation-fill').style.width = `${c.compensation}%`;
+
+    // Tooltip-Erklärungen
+    const clusters = PROFILE_TEXTS.clusters;
+
+    function setTooltip(id, key, score) {
+      const tooltip = document.getElementById(`${id}-tooltip`);
+      if (!tooltip || !clusters[key]) {
+        if (tooltip) tooltip.textContent = '—';
+        return;
+      }
+
+      if (score >= 70) {
+        tooltip.textContent = clusters[key].what_high_means;
+      } else if (score <= 40) {
+        tooltip.textContent = clusters[key].what_low_means;
+      } else {
+        tooltip.textContent = 'Mittlere Ausprägung – die Merkmale sind spürbar, aber nicht dominant.';
+      }
+    }
+
+    setTooltip('adhd', 'adhd', c.adhd);
+    setTooltip('autism', 'autism', c.autism);
+    setTooltip('emotional', 'emotional', emotionalScore);
+    setTooltip('compensation', 'compensation', c.compensation);
+  }
+
+  function renderDetailProfiles() {
+    if (!profileResult) return;
+
+    const grid = document.getElementById('profile-grid');
+    grid.innerHTML = '';
+
+    const profiles = profileResult.profiles;
+    const displayProfiles = ['adhd', 'autism', 'audhd', 'high_masking', 'stress', 'traits'];
+
+    for (const key of displayProfiles) {
+      const profile = profiles[key];
+      if (!profile) continue;
+
+      const confidence = Math.round((profile.confidence || 0) * 100);
+      let status = 'status-low';
+      let statusText = 'Nicht ausgeprägt';
+
+      if (profile.primary || profile.dominant) {
+        status = 'status-primary';
+        statusText = 'Primär';
+      } else if (confidence >= 50) {
+        status = 'status-secondary';
+        statusText = 'Sekundär';
+      }
+
+      const card = document.createElement('div');
+      card.className = 'profile-card';
+
+      const relatedSubtype = profileResult.subtypes?.find(s => {
+        if (key === 'adhd' && s.type.startsWith('adhd_')) return true;
+        if (key === 'autism' && s.type.startsWith('autism_')) return true;
+        if (key === 'audhd' && s.type.startsWith('audhd_')) return true;
+        return false;
+      });
+
+      const subtypeBadge = relatedSubtype 
+        ? `<div class="subtype-badge">${getSubtypeLabel(relatedSubtype.type)}</div>`
+        : '';
+
+      card.innerHTML = `
+        <h3>${PROFILE_TEXTS?.profile_types?.[key]?.name || key}</h3>
+        ${subtypeBadge}
+        <div class="profile-card-score">${profile.score || 0}%</div>
+        <div class="profile-card-confidence">Konfidenz: ${confidence}%</div>
+        <div class="profile-card-status ${status}">${statusText}</div>
+      `;
+
+      grid.appendChild(card);
+    }
+  }
+
+  function getSubtypeLabel(type) {
+    const labels = {
+      'adhd_inattentive': 'Vorwiegend Unaufmerksamkeit',
+      'adhd_hyperactive': 'Vorwiegend Hyperaktiv-Impulsiv',
+      'adhd_combined': 'Kombinierter Typ',
+      'adhd_emotional': 'Mit emotionaler Dysregulation',
+      'autism_classic': 'Klassisches Profil',
+      'autism_masked': 'Hochmaskiert',
+      'autism_female': 'Weibliche Präsentation',
+      'autism_hyperfocus': 'Mit intensivem Spezialinteresse',
+      'audhd_specific': 'Eigenständiges AuDHD-Profil',
+      'audhd_conflict': 'Mit inneren Widersprüchen'
+    };
+    return labels[type] || type;
+  }
+
+  function renderReasoning() {
+    if (!profileResult) return;
+
+    const list = document.getElementById('reasoning-list');
+    list.innerHTML = '';
+
+    for (const reason of profileResult.reasoning || []) {
+      const li = document.createElement('li');
+      li.textContent = reason;
+      list.appendChild(li);
+    }
+  }
+
+  function renderPatterns() {
+    if (!profileResult || !profileResult.patterns?.length) {
+      document.getElementById('patterns-section').style.display = 'none';
+      return;
+    }
+
+    document.getElementById('patterns-section').style.display = 'block';
+    const list = document.getElementById('patterns-list');
+    list.innerHTML = '';
+
+    for (const pattern of profileResult.patterns) {
+      const li = document.createElement('li');
+      const conf = Math.round((pattern.confidence || 0) * 100);
+      li.innerHTML = `
+        <div class="pattern-item">
+          <div class="pattern-confidence">${conf}%</div>
+          <div class="pattern-text">${pattern.note}</div>
+        </div>
+      `;
+      list.appendChild(li);
+    }
+  }
+
+  function renderNextSteps() {
+    if (!profileResult) return;
+
+    const list = document.getElementById('steps-list');
+    list.innerHTML = '';
+
+    for (const step of profileResult.nextSteps || []) {
+      const li = document.createElement('li');
+      li.textContent = step;
+      list.appendChild(li);
+    }
+  }
+
+  // =========================
+  // HAUPT-RENDER-FUNKTION
+  // =========================
+  function renderProfile() {
+    if (!profileResult) {
+      console.error('Keine Profildaten verfügbar');
+      return;
+    }
+
+    renderMainProfile();
+    renderOnsetBadge();
+    renderDiscrepancies();
+    renderClusterScores();
+    renderDetailProfiles();
+    renderReasoning();
+    renderPatterns();
+    renderNextSteps();
+  }
+
+  document.addEventListener('DOMContentLoaded', renderProfile);
+</script>

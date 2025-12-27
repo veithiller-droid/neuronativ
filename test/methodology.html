@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Berechnungsmethodik - Neurodivergenz-Test</title>
+
+<style>
+:root {
+  --bg-page: #F3EFE8;
+  --bg-box: #EEF2F4;
+  --bg-box-alt: #EEEAF3;
+  --bg-code: #F8F9FA;
+  --border-light: #D8DEE4;
+  --accent-main: #8FAFC4;
+  --accent-soft: #A7C4BC;
+  --text-main: #2F3A40;
+  --text-secondary: #5F6C73;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: var(--bg-page);
+  color: var(--text-main);
+  line-height: 1.7;
+  padding: 40px 20px;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Header */
+.method-header {
+  text-align: center;
+  margin-bottom: 50px;
+  padding-bottom: 30px;
+  border-bottom: 2px solid var(--border-light);
+}
+
+.method-header h1 {
+  font-size: 2.2em;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: var(--text-main);
+}
+
+.method-subtitle {
+  font-size: 1.1em;
+  color: var(--text-secondary);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Sections */
+.method-section {
+  background: var(--bg-box);
+  border-radius: 14px;
+  padding: 35px;
+  margin-bottom: 35px;
+}
+
+.method-section h2 {
+  font-size: 1.6em;
+  margin-bottom: 20px;
+  color: var(--text-main);
+  border-bottom: 2px solid var(--accent-main);
+  padding-bottom: 10px;
+}
+
+.method-section h3 {
+  font-size: 1.3em;
+  margin-top: 30px;
+  margin-bottom: 15px;
+  color: var(--accent-main);
+}
+
+.method-section p {
+  margin-bottom: 16px;
+}
+
+/* Scale list */
+.scale-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.scale-item {
+  background: var(--bg-page);
+  padding: 15px;
+  border-radius: 8px;
+  border-left: 4px solid var(--accent-main);
+}
+
+.scale-item strong {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--accent-main);
+}
+
+/* Formula box */
+.formula-box {
+  background: var(--bg-code);
+  border: 2px solid var(--border-light);
+  border-radius: 10px;
+  padding: 20px;
+  margin: 20px 0;
+  font-family: 'Courier New', monospace;
+  font-size: 0.95em;
+  overflow-x: auto;
+}
+
+.formula-box strong {
+  display: block;
+  margin-bottom: 10px;
+  font-family: system-ui;
+  color: var(--accent-main);
+}
+
+/* Calculation steps */
+.calc-steps {
+  background: var(--bg-box-alt);
+  border-radius: 10px;
+  padding: 25px;
+  margin: 20px 0;
+}
+
+.calc-step {
+  margin-bottom: 25px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.calc-step:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.step-title {
+  font-weight: 700;
+  color: var(--accent-main);
+  margin-bottom: 10px;
+  font-size: 1.1em;
+}
+
+.step-content {
+  margin-left: 20px;
+}
+
+.value-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+  margin: 15px 0;
+}
+
+.value-item {
+  background: var(--bg-page);
+  padding: 10px 15px;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.value-name {
+  color: var(--text-secondary);
+}
+
+.value-score {
+  font-weight: 700;
+  color: var(--accent-main);
+  font-size: 1.1em;
+}
+
+/* Pattern box */
+.pattern-box {
+  background: #E8F4F8;
+  border-left: 4px solid var(--accent-soft);
+  padding: 20px;
+  border-radius: 8px;
+  margin: 15px 0;
+}
+
+.pattern-box .pattern-name {
+  font-weight: 700;
+  color: var(--accent-soft);
+  margin-bottom: 8px;
+}
+
+/* Warning box */
+.limitation-box {
+  background: #FFF9E6;
+  border: 2px solid #E6B980;
+  border-radius: 12px;
+  padding: 25px;
+  margin: 20px 0;
+}
+
+.limitation-box h3 {
+  color: #8B6914;
+  margin-top: 0;
+}
+
+.limitation-box ul {
+  margin-left: 25px;
+  margin-top: 15px;
+}
+
+.limitation-box li {
+  margin-bottom: 10px;
+}
+
+/* Buttons */
+.action-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-top: 40px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 14px 28px;
+  border-radius: 10px;
+  border: none;
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-primary {
+  background: var(--accent-main);
+  color: white;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+}
+
+.btn-secondary {
+  background: transparent;
+  border: 2px solid var(--border-light);
+  color: var(--text-main);
+}
+
+.btn-secondary:hover {
+  background: var(--bg-box);
+}
+
+/* Info box */
+.info-box {
+  background: #E8F4F8;
+  border-left: 4px solid var(--accent-main);
+  padding: 20px;
+  border-radius: 8px;
+  margin: 20px 0;
+}
+
+.info-box strong {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--accent-main);
+}
+
+@media print {
+  body {
+    background: white;
+    padding: 20px;
+  }
+  
+  .action-buttons {
+    display: none !important;
+  }
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+  <!-- HEADER -->
+  <header class="method-header">
+    <h1>Wie wird Ihr Profil berechnet?</h1>
+    <p class="method-subtitle">
+      Transparente Erklärung unserer Methodik und Ihrer individuellen Auswertung
+    </p>
+  </header>
+
+  <!-- TEIL 1: ALLGEMEINE METHODIK -->
+  <section class="method-section">
+    <h2>1. Allgemeine Methodik</h2>
+    
+    <h3>Die 10 Skalen</h3>
+    <p>
+      Der Test erfasst 10 verschiedene Bereiche neurodivergenter Kognition. Jede Skala besteht aus 9-10 Fragen, 
+      die auf einer 5-Punkte-Skala beantwortet werden (1 = trifft nicht zu, 5 = trifft völlig zu). 
+      Ihre Antworten werden pro Skala zu einem Prozentwert umgerechnet (50% = Bevölkerungsdurchschnitt).
+    </p>
+    
+    <div class="scale-grid">
+      <div class="scale-item">
+        <strong>Aufmerksamkeit</strong>
+        Interessenbasierte vs. anforderungsbasierte Fokussteuerung
+      </div>
+      <div class="scale-item">
+        <strong>Sensorische Empfindlichkeit</strong>
+        Intensität der Wahrnehmung von Sinnesreizen
+      </div>
+      <div class="scale-item">
+        <strong>Soziale Wahrnehmung</strong>
+        Analytische vs. intuitive Verarbeitung sozialer Signale
+      </div>
+      <div class="scale-item">
+        <strong>Maskierung</strong>
+        Bewusste/unbewusste Anpassung an neurotypische Erwartungen
+      </div>
+      <div class="scale-item">
+        <strong>Struktur & Sicherheit</strong>
+        Bedürfnis nach Vorhersehbarkeit und Routinen
+      </div>
+      <div class="scale-item">
+        <strong>Überlastung</strong>
+        Sensorische und emotionale Belastungsgrenzen
+      </div>
+      <div class="scale-item">
+        <strong>Emotionswahrnehmung</strong>
+        Fähigkeit eigene Gefühle zu erkennen und zu benennen
+      </div>
+      <div class="scale-item">
+        <strong>Exekutivfunktionen</strong>
+        Arbeitsgedächtnis, Handlungsplanung, Impulskontrolle
+      </div>
+      <div class="scale-item">
+        <strong>Emotionale Regulation</strong>
+        Steuerung von Intensität und Dauer von Gefühlen
+      </div>
+      <div class="scale-item">
+        <strong>Hyperfokus</strong>
+        Vertiefungsfähigkeit bei intrinsischem Interesse
+      </div>
+    </div>
+
+    <h3>Cluster-Bildung</h3>
+    <p>
+      Die 10 Skalen werden zu 4 übergeordneten Clustern zusammengefasst, die verschiedene neurodivergente 
+      Profile abbilden. Die Berechnung erfolgt als <strong>gewichteter Durchschnitt</strong>, da nicht alle 
+      Skalen gleich wichtig für ein Cluster sind.
+    </p>
+
+    <div class="formula-box">
+      <strong>ADHS-Cluster:</strong>
+      = (Aufmerksamkeit × 1.2 + Exekutivfunktionen × 1.2 + Hyperfokus × 0.6) / 3
+      <br><br>
+      <em>Aufmerksamkeit und Exekutive höher gewichtet (Kernsymptome nach DSM-5)</em>
+    </div>
+
+    <div class="formula-box">
+      <strong>Autismus-Cluster:</strong>
+      = (Sensorik × 1.2 + Soziales × 1.2 + Struktur × 0.8) / 3
+      <br><br>
+      <em>Sensorik und Soziales höher gewichtet (Kernsymptome nach DSM-5)</em>
+    </div>
+
+    <div class="formula-box">
+      <strong>Emotionale Verarbeitung:</strong>
+      = (Alexithymie × 1.0 + Emotionsregulation × 1.0) / 2
+      <br><br>
+      <em>Beide gleich gewichtet (tritt bei ADHS und Autismus auf)</em>
+    </div>
+
+    <div class="formula-box">
+      <strong>Kompensation & Belastung:</strong>
+      = (Maskierung × 1.0 + Überlastung × 1.0) / 2
+      <br><br>
+      <em>Beide gleich gewichtet (Sekundärphänomene)</em>
+    </div>
+
+    <h3>Konfidenz - Was bedeutet das?</h3>
+    <p>
+      <strong>Konfidenz beschreibt, wie sicher die Einordnung ist.</strong> Sie wird nicht einfach aus der 
+      Höhe der Werte berechnet, sondern berücksichtigt mehrere Faktoren:
+    </p>
+    
+    <ul style="margin-left: 25px; margin-top: 15px;">
+      <li><strong>Stärke der Ausprägung:</strong> Je höher die Cluster-Scores, desto höher die Basis-Konfidenz</li>
+      <li><strong>Eindeutigkeit:</strong> Ist ein Profil dominant oder gibt es Überlappungen?</li>
+      <li><strong>Muster-Erkennung:</strong> Werden spezifische Kombinationen erkannt?</li>
+      <li><strong>Meta-Daten:</strong> Geschlecht, Symptombeginn, Stress, Diagnosen</li>
+      <li><strong>Kompensation:</strong> Hohe Maskierung kann Werte verschleiern</li>
+    </ul>
+
+    <div class="info-box">
+      <strong>Konfidenz-Stufen:</strong>
+      <ul style="margin-left: 20px; margin-top: 10px;">
+        <li><strong>85-100%:</strong> Sehr hohe Konfidenz - klares, eindeutiges Profil</li>
+        <li><strong>75-84%:</strong> Hohe Konfidenz - deutliche Hinweise</li>
+        <li><strong>60-74%:</strong> Mittlere Konfidenz - wahrscheinliches Profil</li>
+        <li><strong>45-59%:</strong> Niedrige Konfidenz - Tendenzen erkennbar</li>
+        <li><strong><45%:</strong> Sehr niedrig - unklares oder gemischtes Bild</li>
+      </ul>
+    </div>
+
+    <h3>Pattern-Erkennung</h3>
+    <p>
+      Neben den Cluster-Scores analysiert das System spezifische <strong>Muster</strong>, die auf bestimmte 
+      Konstellationen hinweisen:
+    </p>
+
+    <ul style="margin-left: 25px; margin-top: 15px;">
+      <li><strong>High Masking:</strong> Maskierung ≥65% + erhöhte soziale/sensorische Werte + Meta-Daten (Geschlecht, Onset)</li>
+      <li><strong>Late Recognition:</strong> Maskierung ≥65% + weiblich/divers + Symptombeginn nicht in Kindheit erkannt</li>
+      <li><strong>Stress Overlay:</strong> Überlastung ≥80% + hoher aktueller Stress</li>
+      <li><strong>AuDHD-spezifisch:</strong> Beide Cluster ≥65% + Hyperfokus ≥65% + Struktur ≥65% + Überlastung ≥65%</li>
+      <li><strong>Traits only:</strong> Durchschnitt 55-65%, kein Einzelwert >78%</li>
+    </ul>
+
+    <h3>Profil-Bestimmung</h3>
+    <p>
+      Das System prüft in dieser Reihenfolge, welches Profil am besten passt:
+    </p>
+
+    <ol style="margin-left: 25px; margin-top: 15px;">
+      <li><strong>Spezial-Checks:</strong> Alle Werte <35% (Unterdurchschnittlich) oder <55% (Unauffällig)?</li>
+      <li><strong>Hauptprofile:</strong> ADHS, Autismus oder AuDHD mit Konfidenz ≥60%?</li>
+      <li><strong>Overlay-Profile:</strong> Hochmaskierung oder Überlastung dominant?</li>
+      <li><strong>Traits:</strong> Moderate Werte ohne klare Richtung?</li>
+      <li><strong>Gemischt:</strong> Wenn kein Profil die Schwellen erreicht</li>
+    </ol>
+
+    <p style="margin-top: 20px;">
+      Das Profil mit der <strong>höchsten Konfidenz</strong> wird als Hauptprofil gewählt. Bei gleicher Konfidenz 
+      entscheiden spezifische Regeln (z.B. AuDHD bei beiden Clustern erhöht).
+    </p>
+  </section>
+
+  <!-- TEIL 2: INDIVIDUELLE BERECHNUNG -->
+  <section class="method-section">
+    <h2>2. Ihre individuelle Berechnung</h2>
+    
+    <div id="personal-calculation">
+      <p style="text-align: center; padding: 40px; color: var(--text-secondary);">
+        Ihre persönlichen Berechnungsdetails werden hier angezeigt, sobald die Daten geladen sind...
+      </p>
+    </div>
+  </section>
+
+  <!-- TEIL 3: LIMITATIONEN -->
+  <section class="method-section">
+    <h2>3. Limitationen & Grenzen</h2>
+    
+    <div class="limitation-box">
+      <h3>Was dieser Test NICHT kann:</h3>
+      <ul>
+        <li><strong>Keine formale Diagnose:</strong> Diagnosen nach ICD-11 oder DSM-5 können nur durch qualifizierte 
+        Fachpersonen (Psychiatrie, Neurologie, spezialisierte Psychologie) nach umfassender Untersuchung gestellt werden.</li>
+        
+        <li><strong>Keine 100% Sicherheit:</strong> Selbsteinschätzung unterliegt vielen Einflüssen: Tagesform, 
+        Vergleichsmaßstäbe, Selbstwahrnehmung, aktuelle Belastung. Konfidenzwerte spiegeln diese Unsicherheit wider.</li>
+        
+        <li><strong>Keine Differentialdiagnostik:</strong> Viele Symptome überlappen mit anderen Zuständen (Depression, 
+        Angst, Trauma, Burnout, chronische Erkrankungen). Der Test kann diese nicht sicher unterscheiden.</li>
+        
+        <li><strong>Keine Verlaufsbeobachtung:</strong> Der Test erfasst einen Zeitpunkt. Neurodivergenz ist aber stabil 
+        über die Lebensspanne, während Belastung schwankt. Bei unklaren Ergebnissen kann Re-Evaluation nach Entlastung 
+        sinnvoll sein.</li>
+        
+        <li><strong>Kulturelle Einflüsse:</strong> Der Test ist auf westeuropäische Normen kalibriert. Kulturelle 
+        Unterschiede in Sozialverhalten, Emotionsausdruck oder Selbstwahrnehmung werden nicht vollständig abgebildet.</li>
+      </ul>
+    </div>
+
+    <h3>Warum keine 100% Konfidenz möglich ist:</h3>
+    <p>
+      Selbst bei sehr klaren Profilen liegt die maximale Konfidenz bei ~95%. Dies ist bewusst so gewählt, 
+      weil Selbsteinschätzungs-Tests prinzipielle Grenzen haben:
+    </p>
+
+    <ul style="margin-left: 25px; margin-top: 15px;">
+      <li>Menschen vergleichen sich mit ihrem Umfeld (unterschiedliche Bezugsrahmen)</li>
+      <li>Maskierung kann Selbstwahrnehmung verzerren</li>
+      <li>Aktuelle Belastung beeinflusst Antworten</li>
+      <li>Manche Merkmale sind nicht direkt erfragbar (z.B. motorische Koordination)</li>
+      <li>Komorbide Zustände können Bild überlagern</li>
+    </ul>
+
+    <h3>Wie Sie die Ergebnisse nutzen können:</h3>
+    <ul style="margin-left: 25px; margin-top: 15px;">
+      <li><strong>Selbstreflexion:</strong> Erkennen von Mustern und Zusammenhängen im eigenen Erleben</li>
+      <li><strong>Gesprächsgrundlage:</strong> Konkrete Anhaltspunkte für Gespräche mit Fachpersonen</li>
+      <li><strong>Alltagsanpassungen:</strong> Auch ohne Diagnose können passende Strategien hilfreich sein</li>
+      <li><strong>Validierung:</strong> Bestätigung, dass Ihre Erfahrungen real und nachvollziehbar sind</li>
+      <li><strong>Community:</strong> Orientierung, ob Austausch mit neurodivergenten Menschen relevant sein könnte</li>
+    </ul>
+  </section>
+
+  <!-- BUTTONS -->
+  <div class="action-buttons">
+    <button class="btn btn-primary" onclick="window.print()">Diese Seite als PDF speichern</button>
+    <button class="btn btn-secondary" onclick="window.close()">Zurück zum Profil</button>
+  </div>
+
+</div>
+
+<script type="module">
+// Daten aus localStorage laden
+let profileData = null;
+
+try {
+  const dataString = localStorage.getItem('neurodivergenz_profile_data');
+  if (!dataString) {
+    document.getElementById('personal-calculation').innerHTML = 
+      '<p style="color: #ef4444; text-align: center;">Keine Testdaten gefunden. Bitte führen Sie zuerst den Test durch.</p>';
+  } else {
+    const data = JSON.parse(dataString);
+    profileData = data;
+    renderPersonalCalculation(data);
+  }
+} catch (error) {
+  console.error('Fehler beim Laden:', error);
+}
+
+function renderPersonalCalculation(data) {
+  const container = document.getElementById('personal-calculation');
+  
+  // Scores und Meta holen
+  const scores = data.scores;
+  const meta = data.meta;
+  const answers = data.answers || {};
+  
+  // Profil-Result neu berechnen (import später, erstmal hardcoded)
+  const profileResult = data.profileResult || {};
+  
+  let html = '';
+  
+  // SCHRITT 1: Rohwerte
+  html += `
+    <div class="calc-step">
+      <div class="step-title">Schritt 1: Ihre Rohwerte (Skalen-Scores)</div>
+      <div class="step-content">
+        <p>Jede Skala wurde aus Ihren Antworten berechnet und auf einen Prozentwert normiert (50% = Durchschnitt):</p>
+        <div class="value-list">
+          <div class="value-item"><span class="value-name">Aufmerksamkeit</span><span class="value-score">${scores.attention}%</span></div>
+          <div class="value-item"><span class="value-name">Sensorik</span><span class="value-score">${scores.sensory}%</span></div>
+          <div class="value-item"><span class="value-name">Soziales</span><span class="value-score">${scores.social}%</span></div>
+          <div class="value-item"><span class="value-name">Maskierung</span><span class="value-score">${scores.masking}%</span></div>
+          <div class="value-item"><span class="value-name">Struktur</span><span class="value-score">${scores.structure}%</span></div>
+          <div class="value-item"><span class="value-name">Überlastung</span><span class="value-score">${scores.overload}%</span></div>
+          <div class="value-item"><span class="value-name">Alexithymie</span><span class="value-score">${scores.alexithymia}%</span></div>
+          <div class="value-item"><span class="value-name">Executive</span><span class="value-score">${scores.executive}%</span></div>
+          <div class="value-item"><span class="value-name">Emotreg</span><span class="value-score">${scores.emotreg}%</span></div>
+          <div class="value-item"><span class="value-name">Hyperfokus</span><span class="value-score">${scores.hyperfocus}%</span></div>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  // SCHRITT 2: Meta-Daten
+  const genderMap = {male: 'Männlich', female: 'Weiblich', diverse: 'Divers', 'prefer-not': 'Keine Angabe'};
+  const onsetMap = {childhood: 'Kindheit', adolescence: 'Jugend', adult: 'Erwachsenenalter', unknown: 'Unbekannt'};
+  const stressMap = {low: 'Niedrig', moderate: 'Moderat', high: 'Hoch', 'very-high': 'Sehr hoch'};
+  
+  html += `
+    <div class="calc-step">
+      <div class="step-title">Schritt 2: Ihre Angaben (Meta-Daten)</div>
+      <div class="step-content">
+        <p>Diese Informationen beeinflussen die Pattern-Erkennung und Konfidenz-Berechnung:</p>
+        <ul style="margin-left: 20px; margin-top: 10px;">
+          <li><strong>Geschlecht:</strong> ${genderMap[meta.gender] || meta.gender}</li>
+          <li><strong>Symptombeginn:</strong> ${onsetMap[meta.onset] || meta.onset}</li>
+          <li><strong>Aktueller Stress:</strong> ${stressMap[meta.stress] || meta.stress}</li>
+          ${meta.diagnosis && meta.diagnosis.length > 0 ? `<li><strong>Bestehende Diagnosen:</strong> ${meta.diagnosis.join(', ')}</li>` : ''}
+        </ul>
+      </div>
+    </div>
+  `;
+  
+  // SCHRITT 3: Cluster-Berechnung
+  const adhdCalc = Math.round((scores.attention * 1.2 + scores.executive * 1.2 + scores.hyperfocus * 0.6) / 3);
+  const autismCalc = Math.round((scores.sensory * 1.2 + scores.social * 1.2 + scores.structure * 0.8) / 3);
+  const emotionalCalc = Math.round((scores.alexithymia + scores.emotreg) / 2);
+  const compensationCalc = Math.round((scores.masking + scores.overload) / 2);
+  
+  html += `
+    <div class="calc-step">
+      <div class="step-title">Schritt 3: Cluster-Berechnung (gewichtete Durchschnitte)</div>
+      <div class="step-content">
+        <div class="formula-box">
+          <strong>ADHS-Cluster:</strong><br>
+          = (${scores.attention} × 1.2 + ${scores.executive} × 1.2 + ${scores.hyperfocus} × 0.6) / 3<br>
+          = (${Math.round(scores.attention * 1.2)} + ${Math.round(scores.executive * 1.2)} + ${Math.round(scores.hyperfocus * 0.6)}) / 3<br>
+          = <strong>${adhdCalc}%</strong>
+        </div>
+        <div class="formula-box">
+          <strong>Autismus-Cluster:</strong><br>
+          = (${scores.sensory} × 1.2 + ${scores.social} × 1.2 + ${scores.structure} × 0.8) / 3<br>
+          = (${Math.round(scores.sensory * 1.2)} + ${Math.round(scores.social * 1.2)} + ${Math.round(scores.structure * 0.8)}) / 3<br>
+          = <strong>${autismCalc}%</strong>
+        </div>
+        <div class="formula-box">
+          <strong>Emotionale Verarbeitung:</strong><br>
+          = (${scores.alexithymia} + ${scores.emotreg}) / 2<br>
+          = <strong>${emotionalCalc}%</strong>
+        </div>
+        <div class="formula-box">
+          <strong>Kompensation & Belastung:</strong><br>
+          = (${scores.masking} + ${scores.overload}) / 2<br>
+          = <strong>${compensationCalc}%</strong>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  // SCHRITT 4: Pattern-Erkennung (vereinfacht, echte Patterns würden von profileResult kommen)
+  html += `
+    <div class="calc-step">
+      <div class="step-title">Schritt 4: Pattern-Erkennung</div>
+      <div class="step-content">
+        <p>Das System prüft spezifische Muster basierend auf Ihren Werten und Meta-Daten:</p>
+  `;
+  
+  // High Masking Check
+  if (scores.masking >= 65 && (scores.social >= 65 || scores.sensory >= 65)) {
+    html += `
+      <div class="pattern-box">
+        <div class="pattern-name">✓ High Masking Pattern erkannt</div>
+        <ul style="margin-left: 20px; margin-top: 8px;">
+          <li>Maskierung ${scores.masking}% ≥ 65% ✓</li>
+          <li>Sozial/Sensorisch erhöht ✓</li>
+          ${meta.gender === 'female' || meta.gender === 'diverse' ? '<li>Weiblich/Divers: +15% Konfidenz</li>' : ''}
+          ${meta.onset === 'childhood' ? '<li>Symptombeginn Kindheit: +15% Konfidenz</li>' : ''}
+        </ul>
+      </div>
+    `;
+  } else {
+    html += `<p style="margin-left: 20px;">• High Masking: Nicht erkannt (Maskierung ${scores.masking}% < 65% oder Sozial/Sensorisch nicht erhöht)</p>`;
+  }
+  
+  // Stress Overlay Check
+  if (scores.overload >= 80 && meta.stress !== 'low') {
+    html += `
+      <div class="pattern-box">
+        <div class="pattern-name">✓ Stress Overlay Pattern erkannt</div>
+        <ul style="margin-left: 20px; margin-top: 8px;">
+          <li>Überlastung ${scores.overload}% ≥ 80% ✓</li>
+          <li>Aktueller Stress: ${stressMap[meta.stress]}</li>
+        </ul>
+      </div>
+    `;
+  } else {
+    html += `<p style="margin-left: 20px;">• Stress Overlay: Nicht erkannt (Überlastung ${scores.overload}% < 80%)</p>`;
+  }
+  
+  // AuDHD Check
+  if (adhdCalc >= 65 && autismCalc >= 65 && scores.hyperfocus >= 65 && scores.structure >= 65 && scores.overload >= 65) {
+    html += `
+      <div class="pattern-box">
+        <div class="pattern-name">✓ AuDHD-spezifisches Pattern erkannt</div>
+        <ul style="margin-left: 20px; margin-top: 8px;">
+          <li>ADHS-Cluster ${adhdCalc}% ≥ 65% ✓</li>
+          <li>Autismus-Cluster ${autismCalc}% ≥ 65% ✓</li>
+          <li>Hyperfokus ${scores.hyperfocus}% ≥ 65% ✓</li>
+          <li>Struktur ${scores.structure}% ≥ 65% ✓</li>
+          <li>Überlastung ${scores.overload}% ≥ 65% ✓</li>
+        </ul>
+      </div>
+    `;
+  }
+  
+  html += `
+      </div>
+    </div>
+  `;
+  
+  // SCHRITT 5: Profil-Bestimmung
+  html += `
+    <div class="calc-step">
+      <div class="step-title">Schritt 5: Profil-Bestimmung & Konfidenz</div>
+      <div class="step-content">
+        <p>Basierend auf Cluster-Scores, Patterns und Meta-Daten wird das wahrscheinlichste Profil bestimmt:</p>
+        
+        <div style="margin-top: 20px;">
+          <strong>Geprüfte Profile (in Reihenfolge):</strong>
+          <ul style="margin-left: 20px; margin-top: 10px;">
+            <li>ADHS-Profil: Cluster ${adhdCalc}%, Konfidenz-Check...</li>
+            <li>Autismus-Profil: Cluster ${autismCalc}%, Konfidenz-Check...</li>
+            <li>AuDHD-Profil: Beide Cluster erhöht? ${adhdCalc >= 65 && autismCalc >= 65 ? 'Ja' : 'Nein'}</li>
+            <li>Hochmaskierung: Pattern erkannt? ${scores.masking >= 65 && (scores.social >= 65 || scores.sensory >= 65) ? 'Ja' : 'Nein'}</li>
+            <li>Überlastung: ${scores.overload >= 80 ? 'Ja' : 'Nein'}</li>
+            <li>Traits: Moderate Werte ohne Dominanz? Check...</li>
+            <li>Gemischt: Wenn kein Profil Schwelle erreicht</li>
+          </ul>
+        </div>
+        
+        <div class="info-box" style="margin-top: 20px;">
+          <strong>Ihr Ergebnis:</strong>
+          <p style="margin-top: 10px;">
+            Das System hat basierend auf allen Faktoren Ihr Profil bestimmt. 
+            Die genauen Werte sehen Sie in Ihrer Profil-Übersicht.
+          </p>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  container.innerHTML = html;
+}
+</script>
+
+</body>
+</html>
