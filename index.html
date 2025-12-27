@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neuronativ – Forum und Selbsttest für Neurodivergenz</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+<style>
+/* =========================
+   MODERN NEUTRAL DESIGN
+========================= */
+:root {
+  --bg-outer: #3a3f42;
+  --bg-inner: #f7f7f5;
+  --bg-soft: #ffffff;
+
+  --text-main: #1f2933;
+  --text-secondary: #4b5563;
+  --text-muted: #6b7280;
+
+  --accent-primary: #3f6475;
+  --accent-soft: #e6eef2;
+
+  --border-light: #e5e7eb;
+  --shadow: rgba(0, 0, 0, 0.06);
+}
+
+/* =========================
+   BASIS
+========================= */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg-outer);
+  font-family: 'Crimson Text', Georgia, serif;
+  color: var(--text-main);
+  line-height: 1.8;
+  font-size: 18px;
+}
+
+/* =========================
+   LAYOUT
+========================= */
+.page-frame {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 4vh 2rem;
+}
+
+.container {
+  background: var(--bg-inner);
+  max-width: 900px;
+  width: 100%;
+  padding: 4rem 3.5rem;
+  border-radius: 6px;
+}
+
+/* =========================
+   TYPO
+========================= */
+h1, h2, h3 {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont,
+               "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  letter-spacing: 0.01em;
+}
+
+/* =========================
+   HEADER
+========================= */
+.header {
+  text-align: center;
+  margin-bottom: 5rem;
+}
+
+.logo {
+  max-width: 220px;
+  margin-bottom: 1.5rem;
+}
+
+.header h1 {
+  font-size: 3.2rem;
+  margin-bottom: 0.8rem;
+}
+
+.header-tagline {
+  font-size: 1.15rem;
+  color: var(--text-secondary);
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+/* =========================
+   SECTIONS
+========================= */
+.section {
+  background: var(--bg-soft);
+  border: 1px solid var(--border-light);
+  border-radius: 6px;
+  padding: 3rem 3rem;
+  margin-bottom: 4rem;
+  box-shadow: 0 4px 12px var(--shadow);
+}
+
+.section h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.section p {
+  margin-bottom: 1.3rem;
+  color: var(--text-secondary);
+  text-align: justify;
+}
+
+.section p:last-child {
+  margin-bottom: 0;
+}
+
+/* =========================
+   HIGHLIGHT
+========================= */
+.highlight-box {
+  background: var(--accent-soft);
+  border-left: 4px solid var(--accent-primary);
+  padding: 1.8rem 2.2rem;
+  margin: 2.5rem 0;
+  font-style: italic;
+}
+
+.highlight-box p {
+  margin: 0;
+  font-size: 1.2rem;
+  color: var(--text-main);
+  text-align: center;
+  font-weight: 600;
+}
+
+/* =========================
+   ILLUSTRATIONS
+========================= */
+.inline-illustration {
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.inline-illustration img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  box-shadow: 0 4px 12px var(--shadow);
+}
+
+/* =========================
+   FEATURE GRID
+========================= */
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2rem;
+  margin-top: 2.5rem;
+}
+
+.feature-card {
+  background: var(--bg-soft);
+  border: 1px solid var(--border-light);
+  padding: 2rem 1.8rem;
+  text-align: center;
+  border-radius: 6px;
+}
+
+.feature-icon {
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+}
+
+.feature-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.6rem;
+}
+
+.feature-card p {
+  font-size: 1rem;
+  color: var(--text-secondary);
+}
+
+/* =========================
+   TEST SECTION
+========================= */
+.test-section {
+  background: var(--bg-soft);
+  border: 1px solid var(--border-light);
+  border-radius: 6px;
+  padding: 3.5rem 3rem;
+  box-shadow: 0 6px 20px var(--shadow);
+}
+
+.test-section h2 {
+  font-size: 2.2rem;
+  margin-bottom: 1.2rem;
+}
+
+.test-description {
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+  text-align: justify;
+}
+
+.test-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem 2.5rem;
+  justify-content: center;
+  margin-bottom: 2.5rem;
+}
+
+.test-feature-item {
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+/* =========================
+   CTA
+========================= */
+.cta-button {
+  display: inline-block;
+  background: var(--accent-primary);
+  color: #fff;
+  font-family: system-ui, sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 0.9rem 2.2rem;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.cta-button:hover {
+  background: #335563;
+  transform: translateY(-1px);
+}
+
+/* =========================
+   FOOTER
+========================= */
+.footer {
+  text-align: center;
+  margin-top: 4rem;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.footer a {
+  color: var(--accent-primary);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 768px) {
+  body {
+    font-size: 16px;
+  }
+
+  .container {
+    padding: 3rem 2rem;
+  }
+
+  .header h1 {
+    font-size: 2.4rem;
+  }
+}
+</style>
+</head>
+
+<body>
+<div class="page-frame">
+<main class="container">
+
+<header class="header">
+  <img src="images/neuronativ.jpg" alt="Neuronativ Logo" class="logo">
+  <h1>Neuronativ</h1>
+  <p class="header-tagline">
+    Community, Wissen und Selbsteinschätzung für neurodivergente Menschen
+  </p>
+</header>
+
+<section class="section">
+  <h2>Was ist Neuronativ?</h2>
+  <p>
+    Neuronativ ist eine Plattform für Menschen, die sich mit Neurodivergenz beschäftigen – sei es aus persönlicher
+    Betroffenheit, wissenschaftlichem Interesse oder beruflichem Kontext.
+  </p>
+  <p>
+    Neurodivergenz umfasst neurologische Besonderheiten wie ADHS, Autismus-Spektrum-Störungen, Hochsensibilität
+    und weitere Formen der neurokognitiven Vielfalt.
+  </p>
+
+  <div class="inline-illustration">
+    <img src="images/braindiversity.jpg" alt="">
+  </div>
+
+  <div class="highlight-box">
+    <p>Nicht falsch verdrahtet – nur anders verdrahtet.</p>
+  </div>
+
+  <p>
+    Der Schlüssel liegt im Verständnis – nicht in der Pathologisierung.
+  </p>
+</section>
+
+<section class="section">
+  <h2>Was wir machen</h2>
+
+  <div class="feature-grid">
+    <div class="feature-card">
+      <div class="feature-icon">📚</div>
+      <h3>Wissen & Aufklärung</h3>
+      <p>Fundierte Informationen zu Neurodivergenz</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">💬</div>
+      <h3>Community & Austausch</h3>
+      <p>Respektvoller Austausch auf Augenhöhe</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">🔬</div>
+      <h3>Selbsteinschätzung</h3>
+      <p>Differenzierter Selbsttest – keine Diagnose</p>
+    </div>
+  </div>
+</section>
+
+<section class="test-section">
+  <h2>Neurodiversitäts-Selbsttest</h2>
+  <p class="test-description">
+    Der Test dient der Selbstreflexion und kann Hinweise geben,
+    ob eine fachliche Abklärung sinnvoll ist.
+  </p>
+
+  <div class="test-features">
+    <div class="test-feature-item">✓ ca. 15 Minuten</div>
+    <div class="test-feature-item">✓ wissenschaftlich fundiert</div>
+    <div class="test-feature-item">✓ anonym</div>
+  </div>
+
+  <a href="test/index.html" class="cta-button">Zum Test</a>
+</section>
+
+<footer class="footer">
+  <p>&copy; 2024 Neuronativ</p>
+  <p>
+    <a href="impressum.html">Impressum</a> ·
+    <a href="datenschutz.html">Datenschutz</a> ·
+    <a href="kontakt.html">Kontakt</a>
+  </p>
+</footer>
+
+</main>
+</div>
+</body>
+</html>
