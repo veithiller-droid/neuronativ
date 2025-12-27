@@ -1,379 +1,459 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Neuronativ – Forum und Selbsttest für Neurodivergenz</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neuronativ – Forum und Selbsttest für Neurodivergenz</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<!-- Google Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            color: #2c2c2c;
+            background: #52575a;
+            line-height: 1.8;
+            font-size: 18px;
+            margin: 0;
+            padding: 0 60px;
+        }
 
-<style>
-/* =========================
-   MODERN NEUTRAL DESIGN
-========================= */
-:root {
-  --bg-outer: #3a3f42;
-  --bg-inner: #f7f7f5;
-  --bg-soft: #ffffff;
+        .page-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: #fafafa;
+            box-shadow: 0 0 40px rgba(0,0,0,0.2);
+        }
 
-  --text-main: #1f2933;
-  --text-secondary: #4b5563;
-  --text-muted: #6b7280;
+        /* Header */
+        header {
+            background: white;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 20px 0;
+        }
 
-  --accent-primary: #3f6475;
-  --accent-soft: #e6eef2;
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-  --border-light: #e5e7eb;
-  --shadow: rgba(0, 0, 0, 0.06);
-}
+        .logo-text {
+            font-size: 24px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: #2c2c2c;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
 
-/* =========================
-   BASIS
-========================= */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+        nav {
+            display: flex;
+            gap: 40px;
+        }
 
-body {
-  background: var(--bg-outer);
-  font-family: 'Crimson Text', Georgia, serif;
-  color: var(--text-main);
-  line-height: 1.8;
-  font-size: 18px;
-}
+        nav a {
+            text-decoration: none;
+            color: #666;
+            font-size: 13px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
 
-/* =========================
-   LAYOUT
-========================= */
-.page-frame {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  padding: 4vh 2rem;
-}
+        nav a:hover {
+            color: #2c2c2c;
+        }
 
-.container {
-  background: var(--bg-inner);
-  max-width: 900px;
-  width: 100%;
-  padding: 4rem 3.5rem;
-  border-radius: 6px;
-}
+        /* Hero Section */
+        .hero {
+            background: white;
+            padding: 80px 40px;
+        }
 
-/* =========================
-   TYPO
-========================= */
-h1, h2, h3 {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont,
-               "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  letter-spacing: 0.01em;
-}
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
 
-/* =========================
-   HEADER
-========================= */
-.header {
-  text-align: center;
-  margin-bottom: 5rem;
-}
+        .hero-text h1 {
+            font-size: 3rem;
+            font-weight: 300;
+            margin-bottom: 20px;
+            color: #2c2c2c;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
 
-.logo {
-  max-width: 220px;
-  margin-bottom: 1.5rem;
-}
+        .hero-text .tagline {
+            color: #666;
+            font-size: 1.15rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
 
-.header h1 {
-  font-size: 3.2rem;
-  margin-bottom: 0.8rem;
-}
+        .hero-image {
+            text-align: center;
+        }
 
-.header-tagline {
-  font-size: 1.15rem;
-  color: var(--text-secondary);
-  max-width: 680px;
-  margin: 0 auto;
-}
+        .hero-image img {
+            max-width: 100%;
+            width: 400px;
+            height: auto;
+            border-radius: 8px;
+        }
 
-/* =========================
-   SECTIONS
-========================= */
-.section {
-  background: var(--bg-soft);
-  border: 1px solid var(--border-light);
-  border-radius: 6px;
-  padding: 3rem 3rem;
-  margin-bottom: 4rem;
-  box-shadow: 0 4px 12px var(--shadow);
-}
+        /* Main Content Section */
+        .content-section {
+            background: white;
+            padding: 80px 40px;
+        }
 
-.section h2 {
-  font-size: 2rem;
-  margin-bottom: 1.5rem;
-}
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
 
-.section p {
-  margin-bottom: 1.3rem;
-  color: var(--text-secondary);
-  text-align: justify;
-}
+        .content-section h2 {
+            font-size: 2rem;
+            font-weight: 300;
+            margin-bottom: 30px;
+            color: #2c2c2c;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
 
-.section p:last-child {
-  margin-bottom: 0;
-}
+        .content-section p {
+            color: #666;
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
 
-/* =========================
-   HIGHLIGHT
-========================= */
-.highlight-box {
-  background: var(--accent-soft);
-  border-left: 4px solid var(--accent-primary);
-  padding: 1.8rem 2.2rem;
-  margin: 2.5rem 0;
-  font-style: italic;
-}
+        /* Highlight Box */
+        .highlight-box {
+            background: #e6eef2;
+            border-left: 4px solid #3f6475;
+            padding: 30px 35px;
+            margin: 40px 0;
+            font-style: italic;
+        }
 
-.highlight-box p {
-  margin: 0;
-  font-size: 1.2rem;
-  color: var(--text-main);
-  text-align: center;
-  font-weight: 600;
-}
+        .highlight-box p {
+            margin: 0;
+            font-size: 1.2rem;
+            color: #2c2c2c;
+            text-align: center;
+            font-weight: 600;
+        }
 
-/* =========================
-   ILLUSTRATIONS
-========================= */
-.inline-illustration {
-  margin: 2rem 0;
-  text-align: center;
-}
+        /* Feature Alternating Layout */
+        .feature-alternating {
+            margin-top: 50px;
+        }
 
-.inline-illustration img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 4px;
-  box-shadow: 0 4px 12px var(--shadow);
-}
+        .feature-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: stretch;
+            margin-bottom: 80px;
+        }
 
-/* =========================
-   FEATURE GRID
-========================= */
-.feature-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 2rem;
-  margin-top: 2.5rem;
-}
+        .feature-row:last-child {
+            margin-bottom: 0;
+        }
 
-.feature-card {
-  background: var(--bg-soft);
-  border: 1px solid var(--border-light);
-  padding: 2rem 1.8rem;
-  text-align: center;
-  border-radius: 6px;
-}
+        .feature-text {
+            padding: 40px;
+            background: white;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
 
-.feature-icon {
-  font-size: 2.2rem;
-  margin-bottom: 1rem;
-}
+        .feature-text h3 {
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-bottom: 20px;
+            color: #2c2c2c;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
 
-.feature-card h3 {
-  font-size: 1.2rem;
-  margin-bottom: 0.6rem;
-}
+        .feature-text p {
+            font-size: 1rem;
+            color: #666;
+            line-height: 1.8;
+            margin: 0;
+        }
 
-.feature-card p {
-  font-size: 1rem;
-  color: var(--text-secondary);
-}
+        .feature-image {
+            text-align: center;
+        }
 
-/* =========================
-   TEST SECTION
-========================= */
-.test-section {
-  background: var(--bg-soft);
-  border: 1px solid var(--border-light);
-  border-radius: 6px;
-  padding: 3.5rem 3rem;
-  box-shadow: 0 6px 20px var(--shadow);
-}
+        .feature-image img {
+            max-width: 350px;
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
 
-.test-section h2 {
-  font-size: 2.2rem;
-  margin-bottom: 1.2rem;
-}
+        .feature-image a:hover img {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+        }
 
-.test-description {
-  color: var(--text-secondary);
-  margin-bottom: 2rem;
-  text-align: justify;
-}
+        /* Test Section */
+        .test-section {
+            background: white;
+            padding: 80px 40px;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
 
-.test-features {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.2rem 2.5rem;
-  justify-content: center;
-  margin-bottom: 2.5rem;
-}
+        .test-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
 
-.test-feature-item {
-  font-weight: 600;
-  color: var(--text-main);
-}
+        .test-section h2 {
+            font-size: 2.2rem;
+            font-weight: 300;
+            margin-bottom: 20px;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
 
-/* =========================
-   CTA
-========================= */
-.cta-button {
-  display: inline-block;
-  background: var(--accent-primary);
-  color: #fff;
-  font-family: system-ui, sans-serif;
-  font-size: 1.1rem;
-  font-weight: 600;
-  padding: 0.9rem 2.2rem;
-  border-radius: 4px;
-  text-decoration: none;
-  transition: background 0.2s ease, transform 0.1s ease;
-}
+        .test-description {
+            color: #666;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
 
-.cta-button:hover {
-  background: #335563;
-  transform: translateY(-1px);
-}
+        .test-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px 40px;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
 
-/* =========================
-   FOOTER
-========================= */
-.footer {
-  text-align: center;
-  margin-top: 4rem;
-  font-size: 0.9rem;
-  color: var(--text-muted);
-}
+        .test-feature-item {
+            font-weight: 600;
+            color: #2c2c2c;
+            font-size: 1rem;
+        }
 
-.footer a {
-  color: var(--accent-primary);
-  text-decoration: none;
-  font-weight: 600;
-}
+        .cta-button {
+            display: inline-block;
+            background: #3f6475;
+            color: white;
+            font-family: system-ui, -apple-system, sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            padding: 15px 40px;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
 
-.footer a:hover {
-  text-decoration: underline;
-}
+        .cta-button:hover {
+            background: #335563;
+            transform: translateY(-2px);
+        }
 
-/* =========================
-   RESPONSIVE
-========================= */
-@media (max-width: 768px) {
-  body {
-    font-size: 16px;
-  }
+        /* Footer */
+        .footer {
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            padding: 40px;
+            text-align: center;
+        }
 
-  .container {
-    padding: 3rem 2rem;
-  }
+        .footer p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
 
-  .header h1 {
-    font-size: 2.4rem;
-  }
-}
-</style>
+        .footer a {
+            color: #3f6475;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                font-size: 16px;
+            }
+
+            .hero-content {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-text h1 {
+                font-size: 2.2rem;
+            }
+
+            nav {
+                gap: 20px;
+            }
+
+            .feature-row {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+    </style>
 </head>
-
 <body>
-<div class="page-frame">
-<main class="container">
+    <div class="page-wrapper">
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo-text">neuronativ</div>
+            <nav>
+                <a href="wissen.html">Wissen</a>
+                <a href="test/index.html">Selbsttest</a>
+                <a href="#kontakt">Kontakt</a>
+            </nav>
+        </div>
+    </header>
 
-<header class="header">
-  <img src="images/neuronativ.jpg" alt="Neuronativ Logo" class="logo">
-  <h1>Neuronativ</h1>
-  <p class="header-tagline">
-    Community, Wissen und Selbsteinschätzung für neurodivergente Menschen
-  </p>
-</header>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Neuronativ</h1>
+                <p class="tagline">
+                    Community, Wissen und Selbsteinschätzung für neurodivergente Menschen
+                </p>
+            </div>
+            <div class="hero-image">
+                <img src="images/neuronativlogo.png" alt="Neuronativ Logo">
+            </div>
+        </div>
+    </section>
 
-<section class="section">
-  <h2>Was ist Neuronativ?</h2>
-  <p>
-    Neuronativ ist eine Plattform für Menschen, die sich mit Neurodivergenz beschäftigen – sei es aus persönlicher
-    Betroffenheit, wissenschaftlichem Interesse oder beruflichem Kontext.
-  </p>
-  <p>
-    Neurodivergenz umfasst neurologische Besonderheiten wie ADHS, Autismus-Spektrum-Störungen, Hochsensibilität
-    und weitere Formen der neurokognitiven Vielfalt.
-  </p>
+    <!-- Was ist Neuronativ -->
+    <section class="content-section">
+        <div class="content-wrapper">
+            <h2>Was ist Neuronativ?</h2>
+            <p>
+                Neuronativ ist eine Plattform für Menschen, die sich mit Neurodivergenz beschäftigen – sei es aus persönlicher
+                Betroffenheit, wissenschaftlichem Interesse oder beruflichem Kontext.
+            </p>
+            <p>
+                Neurodivergenz umfasst neurologische Besonderheiten wie ADHS, Autismus-Spektrum-Störungen, Hochsensibilität
+                und weitere Formen der neurokognitiven Vielfalt.
+            </p>
 
-  <div class="inline-illustration">
-    <img src="images/braindiversity.jpg" alt="">
-  </div>
+            <div class="highlight-box">
+                <p>Nicht falsch verdrahtet – nur anders verdrahtet.</p>
+            </div>
 
-  <div class="highlight-box">
-    <p>Nicht falsch verdrahtet – nur anders verdrahtet.</p>
-  </div>
+            <p>
+                Der Schlüssel liegt im Verständnis – nicht in der Pathologisierung.
+            </p>
+        </div>
+    </section>
 
-  <p>
-    Der Schlüssel liegt im Verständnis – nicht in der Pathologisierung.
-  </p>
-</section>
+    <!-- Was wir machen -->
+    <section class="content-section" style="background: #f7f7f5;">
+        <div class="content-wrapper">
+            <h2>Was wir machen</h2>
 
-<section class="section">
-  <h2>Was wir machen</h2>
+            <div class="feature-alternating">
+                <!-- Row 1: stairs.png links, Text rechts -->
+                <div class="feature-row">
+                    <div class="feature-image">
+                        <a href="test/index.html">
+                            <img src="images/stairs.png" alt="Art Deco Illustration">
+                        </a>
+                    </div>
+                    <div class="feature-text">
+                        <h3><a href="test/index.html" style="color: #2c2c2c; text-decoration: none;">Selbsteinschätzung</a></h3>
+                        <p>Differenzierter Selbsttest – keine Diagnose</p>
+                    </div>
+                </div>
 
-  <div class="feature-grid">
-    <div class="feature-card">
-      <div class="feature-icon">📚</div>
-      <h3>Wissen & Aufklärung</h3>
-      <p>Fundierte Informationen zu Neurodivergenz</p>
+                <!-- Row 2: Text links, night.png rechts -->
+                <div class="feature-row">
+                    <div class="feature-text">
+                        <h3>Community & Austausch</h3>
+                        <p>Respektvoller Austausch auf Augenhöhe</p>
+                    </div>
+                    <div class="feature-image">
+                        <img src="images/night.png" alt="Art Deco Illustration">
+                    </div>
+                </div>
+
+                <!-- Row 3: reader.png links, Text rechts -->
+                <div class="feature-row">
+                    <div class="feature-image">
+                        <a href="wissen.html">
+                            <img src="images/reader.png" alt="Art Deco Illustration">
+                        </a>
+                    </div>
+                    <div class="feature-text">
+                        <h3><a href="wissen.html" style="color: #2c2c2c; text-decoration: none;">Wissen & Aufklärung</a></h3>
+                        <p>Fundierte Informationen zu Neurodivergenz</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Selbsttest Section -->
+    <section style="background: #f7f7f5; padding: 80px 40px;" id="test">
+        <div class="test-section">
+            <div class="test-content">
+                <h2>Neurodiversitäts-Selbsttest</h2>
+                <p class="test-description">
+                    Der Test dient der Selbstreflexion und kann Hinweise geben,
+                    ob eine fachliche Abklärung sinnvoll ist.
+                </p>
+
+                <div class="test-features">
+                    <div class="test-feature-item">✓ ca. 15 Minuten</div>
+                    <div class="test-feature-item">✓ wissenschaftlich fundiert</div>
+                    <div class="test-feature-item">✓ anonym</div>
+                </div>
+
+                <a href="test/index.html" class="cta-button">Zum Test</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 Neuronativ</p>
+        <p>
+            <a href="impressum.html">Impressum</a> ·
+            <a href="datenschutz.html">Datenschutz</a> ·
+            <a href="kontakt.html">Kontakt</a>
+        </p>
+    </footer>
     </div>
-
-    <div class="feature-card">
-      <div class="feature-icon">💬</div>
-      <h3>Community & Austausch</h3>
-      <p>Respektvoller Austausch auf Augenhöhe</p>
-    </div>
-
-    <div class="feature-card">
-      <div class="feature-icon">🔬</div>
-      <h3>Selbsteinschätzung</h3>
-      <p>Differenzierter Selbsttest – keine Diagnose</p>
-    </div>
-  </div>
-</section>
-
-<section class="test-section">
-  <h2>Neurodiversitäts-Selbsttest</h2>
-  <p class="test-description">
-    Der Test dient der Selbstreflexion und kann Hinweise geben,
-    ob eine fachliche Abklärung sinnvoll ist.
-  </p>
-
-  <div class="test-features">
-    <div class="test-feature-item">✓ ca. 15 Minuten</div>
-    <div class="test-feature-item">✓ wissenschaftlich fundiert</div>
-    <div class="test-feature-item">✓ anonym</div>
-  </div>
-
-  <a href="test/index.html" class="cta-button">Zum Test</a>
-</section>
-
-<footer class="footer">
-  <p>&copy; 2024 Neuronativ</p>
-  <p>
-    <a href="impressum.html">Impressum</a> ·
-    <a href="datenschutz.html">Datenschutz</a> ·
-    <a href="kontakt.html">Kontakt</a>
-  </p>
-</footer>
-
-</main>
-</div>
 </body>
 </html>
