@@ -300,17 +300,24 @@
   }
 
   .scale button {
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    border: 2px solid transparent;
-    font-size: 18px;
-    font-weight: 600;
-    color: #6B7280;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  }
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-main);  /* <-- Ändere hier: Theme-Farbe statt fest #6B7280 */
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+/* Ziffern bei Auswahl/Hover immer gut sichtbar */
+.scale button:hover,
+.scale button.selected,
+.scale button:active,
+.scale button:focus {
+  color: #000000 !important;  /* Schwarz – super Kontrast auf deinen Akzentfarben */
+}
 
   .scale button:nth-child(1) { background: var(--senf-0); border-color: #E5E7EB; }
   .scale button:nth-child(2) { background: var(--senf-1); }
