@@ -857,16 +857,27 @@ body {
     Dieses Profil basiert auf einem Selbsteinschätzungs-Screening und ersetzt keine professionelle Diagnostik. Die Ergebnisse dienen der Orientierung und können als Gesprächsgrundlage für fachärztliche Abklärung genutzt werden. Eine formale Diagnose kann nur durch qualifizierte Fachpersonen (Psychiatrie, Neurologie, spezialisierte Psychologie) gestellt werden.
   </section>
 
-  <!-- ACTIONS -->
-  <div class="action-buttons">
-    <button class="btn btn-primary" onclick="window.print()">Als PDF speichern</button>
-    <button class="btn btn-primary" onclick="window.open('druckbericht.html', '_blank')">
-  Bericht
-</button>
-    <button class="btn btn-secondary" onclick="window.close()">Fenster schließen</button>
-    <button class="btn btn-secondary" onclick="window.open('methodology.html', '_blank')">Zur Methodik</button>
-  </div>
+<!-- ACTIONS -->
+<div class="action-buttons">
+  <button class="btn btn-primary" onclick="window.print()">
+    Als PDF speichern
+  </button>
 
+  <!-- Bericht in neuem Tab öffnen (zuverlässiger als window.open) -->
+  <a href="druckbericht.html" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+    Bericht
+  </a>
+
+  <!-- Sicher zurück statt Fenster schließen -->
+  <button class="btn btn-secondary" onclick="history.back()">
+    Zurück
+  </button>
+
+  <!-- Methodik in neuem Tab öffnen (zuverlässiger) -->
+  <a href="methodology.html" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+    Zur Methodik
+  </a>
+</div>
 </div>
 
 <script type="module">
