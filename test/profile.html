@@ -858,27 +858,32 @@ body {
   </section>
 
 <!-- ACTIONS -->
+<!-- ACTIONS -->
 <div class="action-buttons">
   <button class="btn btn-primary" onclick="window.print()">
     Als PDF speichern
   </button>
 
-  <!-- Bericht in neuem Tab öffnen (zuverlässiger als window.open) -->
-  <a href="druckbericht.html" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+  <!-- Bericht im gleichen Tab öffnen (sicherer Zurück möglich) -->
+  <a href="druckbericht.html" class="btn btn-primary">
     Bericht
   </a>
 
-  <!-- Sicher zurück statt Fenster schließen -->
-  <button class="btn btn-secondary" onclick="history.back()">
-    Zurück
-  </button>
+  <!-- Zurück zum Test -->
+  <a href="../test/index.html" class="btn btn-secondary">
+    Zurück zum Test
+  </a>
 
-  <!-- Methodik in neuem Tab öffnen (zuverlässiger) -->
-  <a href="methodology.html" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+  <!-- Methodik im gleichen Tab öffnen -->
+  <a href="methodology.html" class="btn btn-secondary">
     Zur Methodik
   </a>
 </div>
-</div>
+
+<!-- Kleiner Hinweis für Power-User -->
+<p style="text-align: center; margin-top: 20px; font-size: 0.9em; color: var(--text-secondary);">
+  Tipp: Rechtsklick auf „Bericht“ oder „Zur Methodik“ → „In neuem Tab öffnen“ (oder Strg/Cmd + Klick)
+</p>
 
 <script type="module">
   // =========================
