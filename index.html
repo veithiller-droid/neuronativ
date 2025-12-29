@@ -1,459 +1,658 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neuronativ – Forum und Selbsttest für Neurodivergenz</title>
-    
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neuronativ – Forum und Selbsttest für Neurodivergenz</title>
 
-        body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-            color: #2c2c2c;
-            background: #52575a;
-            line-height: 1.8;
-            font-size: 18px;
-            margin: 0;
-            padding: 0 60px;
-        }
+  <style>
+    /* =========================
+       FARBKONZEPT - THEMES
+    ========================= */
 
-        .page-wrapper {
-            max-width: 1400px;
-            margin: 0 auto;
-            background: #fafafa;
-            box-shadow: 0 0 40px rgba(0,0,0,0.2);
-        }
+    /* Default Theme: SANFT */
+    :root {
+      --bg-page: #D4F5F3;
+      --bg-box: #FFFFFF;
+      --bg-box-alt: #EEEAF3;
+      --bg-box-soft: #F2F5F7;
+      --bg-highlight: #FFFBEA;
+      --border-light: #D8DEE4;
+      --accent-main: #EAB308;
+      --accent-soft: #FACC15;
+      --accent-warm: #E6B980;
+      --accent-turquoise: #06B6D4;
+      --text-main: #2F3A40;
+      --text-secondary: #5F6C73;
+    }
 
-        /* Header */
-        header {
-            background: white;
-            border-bottom: 1px solid #e0e0e0;
-            padding: 20px 0;
-        }
+    /* Theme: KONTRAST */
+    [data-theme="contrast"] {
+      --bg-page: #FFFFFF;
+      --bg-box: #F9FAFB;
+      --bg-box-alt: #F3F4F6;
+      --bg-box-soft: #F3F4F6;
+      --bg-highlight: #FEF3C7;
+      --border-light: #000000;
+      --accent-main: #1E3A8A;
+      --accent-soft: #3B82F6;
+      --text-main: #000000;
+      --text-secondary: #374151;
+    }
 
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    /* Theme: DUNKEL */
+    [data-theme="dark"] {
+      --bg-page: #111827;
+      --bg-box: #1F2937;
+      --bg-box-alt: #374151;
+      --bg-box-soft: #374151;
+      --bg-highlight: #374151;
+      --border-light: #4B5563;
+      --accent-main: #22D3EE;
+      --accent-soft: #06B6D4;
+      --text-main: #F9FAFB;
+      --text-secondary: #D1D5DB;
+    }
 
-        .logo-text {
-            font-size: 24px;
-            font-weight: 300;
-            letter-spacing: 2px;
-            color: #2c2c2c;
-            font-family: system-ui, -apple-system, sans-serif;
-        }
+    /* Theme: WARM */
+    [data-theme="warm"] {
+      --bg-page: #FAF8F3;
+      --bg-box: #FFFFFF;
+      --bg-box-alt: #FEF3E2;
+      --bg-box-soft: #FEF3E2;
+      --bg-highlight: #FED7AA;
+      --border-light: #E7E5E4;
+      --accent-main: #C2410C;
+      --accent-soft: #EA580C;
+      --text-main: #292524;
+      --text-secondary: #57534E;
+    }
 
-        nav {
-            display: flex;
-            gap: 40px;
-        }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        nav a {
-            text-decoration: none;
-            color: #666;
-            font-size: 13px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            transition: color 0.3s;
-            font-family: system-ui, -apple-system, sans-serif;
-        }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+      color: var(--text-main);
+      background: var(--bg-page);
+      line-height: 1.8;
+      font-size: 18px;
+      margin: 0;
+      padding: 0 60px;
+    }
 
-        nav a:hover {
-            color: #2c2c2c;
-        }
+    .page-wrapper {
+      max-width: 1400px;
+      margin: 0 auto;
+      background: var(--bg-box);
+      box-shadow: 0 0 40px rgba(0,0,0,0.2);
+    }
 
-        /* Hero Section */
-        .hero {
-            background: white;
-            padding: 80px 40px;
-        }
+    /* Header */
+    header {
+      background: var(--bg-box);
+      border-bottom: 1px solid var(--border-light);
+      padding: 20px 0;
+    }
 
-        .hero-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-        }
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-        .hero-text h1 {
-            font-size: 3rem;
-            font-weight: 300;
-            margin-bottom: 20px;
-            color: #2c2c2c;
-            font-family: system-ui, -apple-system, sans-serif;
-        }
+    .logo-text {
+      font-size: 24px;
+      font-weight: 300;
+      letter-spacing: 2px;
+      color: var(--text-main);
+    }
 
-        .hero-text .tagline {
-            color: #666;
-            font-size: 1.15rem;
-            line-height: 1.8;
-            margin-bottom: 30px;
-        }
+    nav {
+      display: flex;
+      gap: 40px;
+    }
 
-        .hero-image {
-            text-align: center;
-        }
+    nav a {
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-size: 13px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
 
-        .hero-image img {
-            max-width: 100%;
-            width: 400px;
-            height: auto;
-            border-radius: 8px;
-        }
+    nav a:hover {
+      color: var(--accent-main);
+    }
 
-        /* Main Content Section */
-        .content-section {
-            background: white;
-            padding: 80px 40px;
-        }
+    /* Hero Section */
+    .hero {
+      background: var(--bg-box);
+      padding: 80px 40px;
+    }
 
-        .content-wrapper {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+    .hero-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
 
-        .content-section h2 {
-            font-size: 2rem;
-            font-weight: 300;
-            margin-bottom: 30px;
-            color: #2c2c2c;
-            font-family: system-ui, -apple-system, sans-serif;
-        }
+    .hero-text h1 {
+      font-size: 3rem;
+      font-weight: 300;
+      margin-bottom: 20px;
+      color: var(--text-main);
+    }
 
-        .content-section p {
-            color: #666;
-            font-size: 1rem;
-            line-height: 1.8;
-            margin-bottom: 20px;
-            text-align: justify;
-        }
+    .hero-text .tagline {
+      color: var(--text-secondary);
+      font-size: 1.15rem;
+      line-height: 1.8;
+      margin-bottom: 30px;
+    }
 
-        /* Highlight Box */
-        .highlight-box {
-            background: #e6eef2;
-            border-left: 4px solid #3f6475;
-            padding: 30px 35px;
-            margin: 40px 0;
-            font-style: italic;
-        }
+    .hero-image {
+      text-align: center;
+    }
 
-        .highlight-box p {
-            margin: 0;
-            font-size: 1.2rem;
-            color: #2c2c2c;
-            text-align: center;
-            font-weight: 600;
-        }
+    .hero-image img {
+      max-width: 100%;
+      width: 400px;
+      height: auto;
+      border-radius: 8px;
+    }
 
-        /* Feature Alternating Layout */
-        .feature-alternating {
-            margin-top: 50px;
-        }
+    /* Main Content Section */
+    .content-section {
+      background: var(--bg-box);
+      padding: 80px 40px;
+    }
 
-        .feature-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: stretch;
-            margin-bottom: 80px;
-        }
+    .content-wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
 
-        .feature-row:last-child {
-            margin-bottom: 0;
-        }
+    .content-section h2 {
+      font-size: 2rem;
+      font-weight: 300;
+      margin-bottom: 30px;
+      color: var(--text-main);
+    }
 
-        .feature-text {
-            padding: 40px;
-            background: white;
-            border-radius: 6px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
+    .content-section p {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      line-height: 1.8;
+      margin-bottom: 20px;
+      text-align: justify;
+    }
 
-        .feature-text h3 {
-            font-size: 1.5rem;
-            font-weight: 400;
-            margin-bottom: 20px;
-            color: #2c2c2c;
-            font-family: system-ui, -apple-system, sans-serif;
-        }
+    /* Highlight Box */
+    .highlight-box {
+      background: var(--bg-box-alt);
+      border-left: 4px solid var(--accent-main);
+      padding: 30px 35px;
+      margin: 40px 0;
+      font-style: italic;
+    }
 
-        .feature-text p {
-            font-size: 1rem;
-            color: #666;
-            line-height: 1.8;
-            margin: 0;
-        }
+    .highlight-box p {
+      margin: 0;
+      font-size: 1.2rem;
+      color: var(--text-main);
+      text-align: center;
+      font-weight: 600;
+    }
 
-        .feature-image {
-            text-align: center;
-        }
+    /* Feature Alternating Layout */
+    .feature-alternating {
+      margin-top: 50px;
+    }
 
-        .feature-image img {
-            max-width: 350px;
-            width: 100%;
-            height: auto;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
+    .feature-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: stretch;
+      margin-bottom: 80px;
+    }
 
-        .feature-image a:hover img {
-            transform: translateY(-4px);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.15);
-        }
+    .feature-row:last-child {
+      margin-bottom: 0;
+    }
 
-        /* Test Section */
-        .test-section {
-            background: white;
-            padding: 80px 40px;
-            text-align: center;
-            border: 1px solid #e0e0e0;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-        }
+    .feature-text {
+      padding: 40px;
+      background: var(--bg-box);
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
 
-        .test-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
+    .feature-text h3 {
+      font-size: 1.5rem;
+      font-weight: 400;
+      margin-bottom: 20px;
+      color: var(--text-main);
+    }
 
-        .test-section h2 {
-            font-size: 2.2rem;
-            font-weight: 300;
-            margin-bottom: 20px;
-            font-family: system-ui, -apple-system, sans-serif;
-        }
+    .feature-text p {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin: 0;
+    }
 
-        .test-description {
-            color: #666;
-            font-size: 1.1rem;
-            line-height: 1.8;
-            margin-bottom: 30px;
-        }
+    .feature-image {
+      text-align: center;
+    }
 
-        .test-features {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px 40px;
-            justify-content: center;
-            margin-bottom: 40px;
-        }
+    .feature-image img {
+      max-width: 350px;
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
 
-        .test-feature-item {
-            font-weight: 600;
-            color: #2c2c2c;
-            font-size: 1rem;
-        }
+    .feature-image a:hover img {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    }
 
-        .cta-button {
-            display: inline-block;
-            background: #3f6475;
-            color: white;
-            font-family: system-ui, -apple-system, sans-serif;
-            font-size: 1.1rem;
-            font-weight: 600;
-            padding: 15px 40px;
-            border-radius: 4px;
-            text-decoration: none;
-            transition: all 0.2s ease;
-        }
+    /* Test Section */
+    .test-section {
+      background: var(--bg-box-soft);
+      padding: 80px 40px;
+      text-align: center;
+      border: 1px solid var(--border-light);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    }
 
-        .cta-button:hover {
-            background: #335563;
-            transform: translateY(-2px);
-        }
+    .test-content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
 
-        /* Footer */
-        .footer {
-            background: white;
-            border-top: 1px solid #e0e0e0;
-            padding: 40px;
-            text-align: center;
-        }
+    .test-section h2 {
+      font-size: 2.2rem;
+      font-weight: 300;
+      margin-bottom: 20px;
+      color: var(--text-main);
+    }
 
-        .footer p {
-            color: #666;
-            font-size: 0.9rem;
-            margin-bottom: 10px;
-        }
+    .test-description {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      line-height: 1.8;
+      margin-bottom: 30px;
+    }
 
-        .footer a {
-            color: #3f6475;
-            text-decoration: none;
-            font-weight: 600;
-        }
+    .test-features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px 40px;
+      justify-content: center;
+      margin-bottom: 40px;
+    }
 
-        .footer a:hover {
-            text-decoration: underline;
-        }
+    .test-feature-item {
+      font-weight: 600;
+      color: var(--text-main);
+      font-size: 1rem;
+    }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            body {
-                font-size: 16px;
-            }
+    .cta-button {
+      display: inline-block;
+      background: var(--accent-main);
+      color: white;
+      font-size: 1.1rem;
+      font-weight: 600;
+      padding: 15px 40px;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
 
-            .hero-content {
-                grid-template-columns: 1fr;
-            }
+    .cta-button:hover {
+      background: var(--accent-soft);
+      transform: translateY(-2px);
+    }
 
-            .hero-text h1 {
-                font-size: 2.2rem;
-            }
+    /* Footer */
+    .footer {
+      background: var(--bg-box);
+      border-top: 1px solid var(--border-light);
+      padding: 40px;
+      text-align: center;
+    }
 
-            nav {
-                gap: 20px;
-            }
+    .footer p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+    }
 
-            .feature-row {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-        }
-    </style>
+    .footer a {
+      color: var(--accent-main);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      body {
+        font-size: 16px;
+        padding: 0 20px;
+      }
+
+      .hero-content {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-text h1 {
+        font-size: 2.2rem;
+      }
+
+      nav {
+        gap: 20px;
+      }
+
+      .feature-row {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+    }
+
+    /* =========================
+       THEME-POPUP
+    ========================= */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    .modal {
+      background: var(--bg-box);
+      padding: 28px 30px 30px;
+      max-width: 460px;
+      width: 90%;
+      border-radius: 18px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+      text-align: center;
+    }
+
+    .modal h2 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 1.3em;
+      color: var(--text-main);
+    }
+
+    .theme-buttons {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin: 20px 0;
+    }
+
+    .theme-btn {
+      padding: 16px;
+      border-radius: 12px;
+      border: 2px solid var(--border-light);
+      background: var(--bg-box);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .theme-btn:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    .theme-icon {
+      font-size: 2.5em;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .theme-name {
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .modal-actions {
+      margin-top: 20px;
+    }
+
+    .btn-primary {
+      padding: 12px 30px;
+      background: var(--accent-main);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-    <div class="page-wrapper">
+  <div class="page-wrapper">
+
+    <!-- THEME-POPUP (wie im Test) -->
+    <div id="theme-modal" class="modal-backdrop" style="display: none;">
+      <div class="modal">
+        <h2>Willkommen! 👋</h2>
+        <p class="topic-intro">
+          Wählen Sie ein Farbschema, das für Sie angenehm ist. 
+          Die Einstellung wird gespeichert und gilt für die gesamte Webseite.
+        </p>
+
+        <div class="theme-buttons">
+          <button onclick="setTheme('soft')" class="theme-btn theme-soft">
+            <span class="theme-icon">🌊</span>
+            <span class="theme-name">Sanft</span>
+          </button>
+          <button onclick="setTheme('contrast')" class="theme-btn theme-contrast">
+            <span class="theme-icon">⚫</span>
+            <span class="theme-name">Kontrast</span>
+          </button>
+          <button onclick="setTheme('dark')" class="theme-btn theme-dark">
+            <span class="theme-icon">🌙</span>
+            <span class="theme-name">Dunkel</span>
+          </button>
+          <button onclick="setTheme('warm')" class="theme-btn theme-warm">
+            <span class="theme-icon">🍂</span>
+            <span class="theme-name">Warm</span>
+          </button>
+        </div>
+
+        <div class="modal-actions">
+          <button id="continue-theme" class="btn-primary">Weiter zur Webseite</button>
+        </div>
+      </div>
+    </div>
+
     <!-- Header -->
     <header>
-        <div class="header-content">
-            <div class="logo-text">neuronativ</div>
-            <nav>
-                <a href="wissen.html">Wissen</a>
-                <a href="test/index.html">Selbsttest</a>
-                <a href="#kontakt">Kontakt</a>
-            </nav>
-        </div>
+      <div class="header-content">
+        <div class="logo-text">neuronativ</div>
+        <nav>
+  <a href="wissen.html">Wissen</a>
+  <a href="test/index.html">Selbsttest</a>
+  <a href="#kontakt">Kontakt</a>
+  <a href="#" id="change-theme-link">Farbschema ändern</a>
+</nav>
+      </div>
     </header>
 
     <!-- Hero Section -->
     <section class="hero">
-        <div class="hero-content">
-            <div class="hero-text">
-                <h1>Neuronativ</h1>
-                <p class="tagline">
-                    Community, Wissen und Selbsteinschätzung für neurodivergente Menschen
-                </p>
-            </div>
-            <div class="hero-image">
-                <img src="images/neuronativlogo.png" alt="Neuronativ Logo">
-            </div>
+      <div class="hero-content">
+        <div class="hero-text">
+          <h1>Neuronativ</h1>
+          <p class="tagline">
+            Community, Wissen und Selbsteinschätzung für neurodivergente Menschen
+          </p>
         </div>
+        <div class="hero-image">
+          <img src="images/neuronativlogo.png" alt="Neuronativ Logo">
+        </div>
+      </div>
     </section>
 
     <!-- Was ist Neuronativ -->
     <section class="content-section">
-        <div class="content-wrapper">
-            <h2>Was ist Neuronativ?</h2>
-            <p>
-                Neuronativ ist eine Plattform für Menschen, die sich mit Neurodivergenz beschäftigen – sei es aus persönlicher
-                Betroffenheit, wissenschaftlichem Interesse oder beruflichem Kontext.
-            </p>
-            <p>
-                Neurodivergenz umfasst neurologische Besonderheiten wie ADHS, Autismus-Spektrum-Störungen, Hochsensibilität
-                und weitere Formen der neurokognitiven Vielfalt.
-            </p>
+      <div class="content-wrapper">
+        <h2>Was ist Neuronativ?</h2>
+        <p>
+          Neuronativ ist eine Plattform für Menschen, die sich mit Neurodivergenz beschäftigen – sei es aus persönlicher
+          Betroffenheit, wissenschaftlichem Interesse oder beruflichem Kontext.
+        </p>
+        <p>
+          Neurodivergenz umfasst neurologische Besonderheiten wie ADHS, Autismus-Spektrum-Störungen, Hochsensibilität
+          und weitere Formen der neurokognitiven Vielfalt.
+        </p>
 
-            <div class="highlight-box">
-                <p>Nicht falsch verdrahtet – nur anders verdrahtet.</p>
-            </div>
-
-            <p>
-                Der Schlüssel liegt im Verständnis – nicht in der Pathologisierung.
-            </p>
+        <div class="highlight-box">
+          <p>Nicht falsch verdrahtet – nur anders verdrahtet.</p>
         </div>
+
+        <p>
+          Der Schlüssel liegt im Verständnis – nicht in der Pathologisierung.
+        </p>
+      </div>
     </section>
 
     <!-- Was wir machen -->
-    <section class="content-section" style="background: #f7f7f5;">
-        <div class="content-wrapper">
-            <h2>Was wir machen</h2>
+    <section class="content-section" style="background: var(--bg-box-soft);">
+      <div class="content-wrapper">
+        <h2>Was wir machen</h2>
 
-            <div class="feature-alternating">
-                <!-- Row 1: stairs.png links, Text rechts -->
-                <div class="feature-row">
-                    <div class="feature-image">
-                        <a href="test/index.html">
-                            <img src="images/stairs.png" alt="Art Deco Illustration">
-                        </a>
-                    </div>
-                    <div class="feature-text">
-                        <h3><a href="test/index.html" style="color: #2c2c2c; text-decoration: none;">Selbsteinschätzung</a></h3>
-                        <p>Differenzierter Selbsttest – keine Diagnose</p>
-                    </div>
-                </div>
-
-                <!-- Row 2: Text links, night.png rechts -->
-                <div class="feature-row">
-                    <div class="feature-text">
-                        <h3>Community & Austausch</h3>
-                        <p>Respektvoller Austausch auf Augenhöhe</p>
-                    </div>
-                    <div class="feature-image">
-                        <img src="images/night.png" alt="Art Deco Illustration">
-                    </div>
-                </div>
-
-                <!-- Row 3: reader.png links, Text rechts -->
-                <div class="feature-row">
-                    <div class="feature-image">
-                        <a href="wissen.html">
-                            <img src="images/reader.png" alt="Art Deco Illustration">
-                        </a>
-                    </div>
-                    <div class="feature-text">
-                        <h3><a href="wissen.html" style="color: #2c2c2c; text-decoration: none;">Wissen & Aufklärung</a></h3>
-                        <p>Fundierte Informationen zu Neurodivergenz</p>
-                    </div>
-                </div>
+        <div class="feature-alternating">
+          <!-- Row 1 -->
+          <div class="feature-row">
+            <div class="feature-image">
+              <a href="test/index.html">
+                <img src="images/stairs.png" alt="Art Deco Illustration">
+              </a>
             </div>
+            <div class="feature-text">
+              <h3><a href="test/index.html" style="color: var(--text-main); text-decoration: none;">Selbsteinschätzung</a></h3>
+              <p>Differenzierter Selbsttest – keine Diagnose</p>
+            </div>
+          </div>
+
+          <!-- Row 2 -->
+          <div class="feature-row">
+            <div class="feature-text">
+              <h3>Community & Austausch</h3>
+              <p>Respektvoller Austausch auf Augenhöhe</p>
+            </div>
+            <div class="feature-image">
+              <img src="images/night.png" alt="Art Deco Illustration">
+            </div>
+          </div>
+
+          <!-- Row 3 -->
+          <div class="feature-row">
+            <div class="feature-image">
+              <a href="wissen.html">
+                <img src="images/reader.png" alt="Art Deco Illustration">
+              </a>
+            </div>
+            <div class="feature-text">
+              <h3><a href="wissen.html" style="color: var(--text-main); text-decoration: none;">Wissen & Aufklärung</a></h3>
+              <p>Fundierte Informationen zu Neurodivergenz</p>
+            </div>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- Selbsttest Section -->
-    <section style="background: #f7f7f5; padding: 80px 40px;" id="test">
-        <div class="test-section">
-            <div class="test-content">
-                <h2>Neurodiversitäts-Selbsttest</h2>
-                <p class="test-description">
-                    Der Test dient der Selbstreflexion und kann Hinweise geben,
-                    ob eine fachliche Abklärung sinnvoll ist.
-                </p>
+    <section class="test-section">
+      <div class="test-content">
+        <h2>Neurodiversitäts-Selbsttest</h2>
+        <p class="test-description">
+          Der Test dient der Selbstreflexion und kann Hinweise geben,
+          ob eine fachliche Abklärung sinnvoll ist.
+        </p>
 
-                <div class="test-features">
-                    <div class="test-feature-item">✓ ca. 15 Minuten</div>
-                    <div class="test-feature-item">✓ wissenschaftlich fundiert</div>
-                    <div class="test-feature-item">✓ anonym</div>
-                </div>
-
-                <a href="test/index.html" class="cta-button">Zum Test</a>
-            </div>
+        <div class="test-features">
+          <div class="test-feature-item">✓ ca. 15 Minuten</div>
+          <div class="test-feature-item">✓ wissenschaftlich fundiert</div>
+          <div class="test-feature-item">✓ anonym</div>
         </div>
+
+        <a href="test/index.html" class="cta-button">Zum Test</a>
+      </div>
     </section>
 
     <!-- Footer -->
     <footer class="footer">
-        <p>&copy; 2024 Neuronativ</p>
-        <p>
-            <a href="impressum.html">Impressum</a> ·
-            <a href="datenschutz.html">Datenschutz</a> ·
-            <a href="kontakt.html">Kontakt</a>
-        </p>
+      <p>&copy; 2024 Neuronativ</p>
+      <p>
+        <a href="impressum.html">Impressum</a> ·
+        <a href="datenschutz.html">Datenschutz</a> ·
+        <a href="kontakt.html">Kontakt</a>
+      </p>
     </footer>
-    </div>
+  </div>
+
+  <!-- Theme-Script -->
+ <script>
+  function setTheme(theme) {
+    localStorage.setItem('preferred-theme', theme);
+    document.documentElement.setAttribute('data-theme', theme);
+  }
+
+  (function() {
+    const saved = localStorage.getItem('preferred-theme') || 'soft';
+    document.documentElement.setAttribute('data-theme', saved);
+
+    // Popup nur beim ersten Besuch zeigen
+    if (!localStorage.getItem('theme-seen')) {
+      document.getElementById('theme-modal').style.display = 'flex';
+    }
+
+    // Button: Popup schließen und merken
+    document.getElementById('continue-theme').addEventListener('click', () => {
+      document.getElementById('theme-modal').style.display = 'none';
+      localStorage.setItem('theme-seen', 'true');
+    });
+
+    // Link: Theme-Popup nachträglich öffnen
+    document.getElementById('change-theme-link')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      document.getElementById('theme-modal').style.display = 'flex';
+    });
+  })();
+</script>
+
 </body>
+
 </html>
