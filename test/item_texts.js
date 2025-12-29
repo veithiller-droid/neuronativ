@@ -229,6 +229,66 @@ export const ITEM_TEXTS = {
     6: "Intensive Regulation ist nach Reizen praktisch immer zwingend erforderlich. Selbst nach kurzer Belastung wird lange Erholung benötigt."
   }
 },
+
+"sen_10": {
+  scale: "sensory",
+  texts: {
+    1: "Druck, Bewegung oder Berührung gezielt zu suchen ist unnötig. Die Selbstregulation funktioniert ohne solche Stimulation.",
+    2: "Sich absichtlich festen Umarmungen oder Schaukeln auszusetzen kommt weitgehend nicht vor. Nur selten wird Stimulation zur Regulation genutzt.",
+    3: "Gelegentlich werden Druck oder Bewegung bewusst gesucht. Sich enge Kleidung anzuziehen oder zu wippen geschieht manchmal zur Beruhigung.",
+    4: "Sich gezielt starker Stimulation auszusetzen ist vielfach erforderlich. Fester Druck oder rhythmische Bewegung werden oft zur Regulation gebraucht.",
+    5: "Bestimmte Reize aktiv aufzusuchen geschieht durchgängig. Schwere Decken, feste Umarmungen oder Schaukeln sind regelmäßig zur Stabilisierung nötig.",
+    6: "Ohne intensive sensorische Stimulation ist Regulation praktisch unmöglich. Sich Druck oder Bewegung auszusetzen ist fast ausnahmslos zwingend erforderlich."
+  }
+},
+
+"sen_11": {
+  scale: "sensory",
+  texts: {
+    1: "Gerüche werden neutral oder angenehm wahrgenommen. Olfaktorische Überforderung tritt nicht auf.",
+    2: "Die meisten Gerüche sind gut tolerierbar. Nur extrem intensive oder unangenehme Düfte können kurz stören.",
+    3: "Bestimmte Gerüche wirken zuweilen deutlich belastend. Die olfaktorische Empfindlichkeit zeigt sich manchmal erhöht.",
+    4: "Viele Gerüche lösen häufig starkes Unbehagen aus. Alltägliche Düfte werden oft als überwältigend erlebt.",
+    5: "Die meisten Gerüche sind normalerweise unerträglich. Olfaktorische Reize überfordern regelmäßig massiv.",
+    6: "Praktisch jeder Geruch wird als extrem belastend empfunden. Selbst schwache Düfte sind fast ausnahmslos nicht aushaltbar."
+  }
+},
+
+"sen_12": {
+  scale: "sensory",
+  texts: {
+    1: "Lebensmittel werden in großer Vielfalt gegessen. Konsistenz oder Geschmack führen nicht zu Ablehnung.",
+    2: "Das Essensrepertoire bleibt weitgehend vielfältig. Nur vereinzelt werden bestimmte Texturen oder Geschmäcker gemieden.",
+    3: "Manche Lebensmittel werden wegen ihrer Konsistenz abgelehnt. Die gustatorische Empfindlichkeit ist gelegentlich spürbar.",
+    4: "Zahlreiche Nahrungsmittel werden aufgrund von Textur oder Geschmack gemieden. Die Ablehnung erfolgt vielfach stark ausgeprägt.",
+    5: "Die meisten Lebensmittel sind wegen Konsistenz nicht essbar. Das Essensrepertoire ist durchgängig stark eingeschränkt.",
+    6: "Nahezu alle Lebensmittel werden aufgrund von Textur oder Geschmack abgelehnt. Essen ist fast ausnahmslos extrem eingeschränkt."
+  }
+},
+
+"sen_13": {
+  scale: "sensory",
+  texts: {
+    1: "Körpersignale wie Hunger oder Durst werden rechtzeitig bemerkt. Die interozeptive Wahrnehmung funktioniert zuverlässig.",
+    2: "Innere Bedürfnisse werden weitgehend zeitnah registriert. Nur bei starker Ablenkung kann die Wahrnehmung kurz verzögert sein.",
+    3: "Hunger oder Harndrang werden manchmal erst spät bewusst. Die interozeptive Sensibilität ist gelegentlich reduziert.",
+    4: "Körpersignale bleiben oft lange unbemerkt. Durst oder Hunger werden häufig erst bei starker Intensität wahrgenommen.",
+    5: "Innere Bedürfnisse werden normalerweise sehr spät registriert. Die interozeptive Wahrnehmung ist regelmäßig stark eingeschränkt.",
+    6: "Hunger oder Harndrang werden praktisch nie rechtzeitig bemerkt. Körpersignale erreichen das Bewusstsein fast ausnahmslos erst in Extremsituationen."
+  }
+},
+
+"sen_14": {
+  scale: "sensory",
+  texts: {
+    1: "Die Körperposition im Raum ist jederzeit klar. Koordination und räumliches Bewusstsein funktionieren präzise.",
+    2: "Die räumliche Orientierung gelingt weitgehend mühelos. Nur in ungewohnten Situationen kann kurz Unsicherheit auftreten.",
+    3: "Wo sich der Körper im Raum befindet ist gelegentlich unklar. Stolpern oder Anstoßen geschieht manchmal.",
+    4: "Die propriozeptive Wahrnehmung ist vielfach eingeschränkt. Koordinationsschwierigkeiten oder häufiges Stolpern treten oft auf.",
+    5: "Den eigenen Körper im Raum wahrzunehmen fällt durchgängig schwer. Anstoßen oder Stolpern passiert regelmäßig.",
+    6: "Die Körperposition bleibt praktisch immer unklar. Räumliche Orientierung und Koordination sind fast ausnahmslos massiv beeinträchtigt."
+  }
+},
 // === SOCIAL ===
 
 "soc_01": {
@@ -255,17 +315,6 @@ export const ITEM_TEXTS = {
   }
 },
 
-"soc_03": {
-  scale: "social",
-  texts: {
-    1: "Nach sozialen Kontakten ist keine besondere Erholung nötig. Die Energie bleibt stabil.",
-    2: "Nach sozialen Kontakten wird meist nur kurze Erholung benötigt. Die Regeneration erfolgt weitgehend schnell.",
-    3: "Nach sozialen Kontakten wird gelegentlich Erholungszeit benötigt. Die Energie muss manchmal bewusst aufgeladen werden.",
-    4: "Nach sozialen Kontakten ist oft deutliche Erholung erforderlich. Die Regeneration dauert häufig länger.",
-    5: "Nach sozialen Kontakten wird normalerweise lange Erholungszeit benötigt. Die Erschöpfung ist regelmäßig erheblich.",
-    6: "Nach sozialen Kontakten ist praktisch immer intensive Erholung zwingend. Selbst kurze Kontakte erfordern lange Regeneration."
-  }
-},
 
 "soc_04": {
   scale: "social",
@@ -348,6 +397,29 @@ export const ITEM_TEXTS = {
     4: "Nach sozialen Kontakten sind die Energiereserven oft deutlich erschöpft. Die innere Müdigkeit ist häufig spürbar.",
     5: "Nach sozialen Kontakten ist die Erschöpfung normalerweise erheblich. Die Energie ist regelmäßig stark reduziert.",
     6: "Nach sozialen Kontakten ist die Erschöpfung praktisch immer massiv. Selbst kurze Kontakte zehren extrem an der Energie."
+  }
+},
+"soc_11": {
+  scale: "social",
+  texts: {
+    1: "Mimik, Tonfall und Körpersprache werden mühelos erfasst. Non-verbale Signale sind klar verständlich.",
+    2: "Die meisten non-verbalen Hinweise werden weitgehend verstanden. Nur sehr subtile Signale können gelegentlich unklar bleiben.",
+    3: "Mimik oder Tonfall zu deuten fällt manchmal etwas schwer. Non-verbale Signale bleiben gelegentlich mehrdeutig.",
+    4: "Gesichtsausdrücke oder Stimmlagen richtig einzuordnen gelingt vielfach kaum. Die Bedeutung non-verbaler Hinweise bleibt oft rätselhaft.",
+    5: "Mimik und Tonfall zu verstehen ist normalerweise sehr schwierig. Non-verbale Kommunikation bleibt regelmäßig unzugänglich.",
+    6: "Praktisch keine non-verbalen Signale werden erfasst. Mimik und Tonfall bleiben fast ausnahmslos völlig unklar."
+  }
+},
+
+"soc_12": {
+  scale: "social",
+  texts: {
+    1: "Emotionale Erwartungen in engen Beziehungen sind gut handhabbar. Überforderung entsteht nicht.",
+    2: "Beziehungen bleiben weitgehend im handhabbaren Rahmen. Nur bei sehr hohen Erwartungen kann kurz Anstrengung auftreten.",
+    3: "In nahen Beziehungen überfordern emotionale Erwartungen manchmal. Die Anforderungen können gelegentlich zu viel werden.",
+    4: "Enge Beziehungen bringen oft überwältigende emotionale Erwartungen mit sich. Die Anforderungen sind häufig kaum zu erfüllen.",
+    5: "Emotionale Erwartungen in nahen Beziehungen überfordern durchgängig massiv. Die Anforderungen sind regelmäßig nicht zu bewältigen.",
+    6: "Praktisch jede enge Beziehung überfordert durch emotionale Erwartungen vollständig. Die Anforderungen sind fast ausnahmslos unerträglich."
   }
 },
 
@@ -460,17 +532,64 @@ export const ITEM_TEXTS = {
     6: "Die Anpassung kostet praktisch immer extrem viel Kraft. Der innere Aufwand ist fast durchgehend enorm."
   }
 },
-// === STRUCTURE ===
+"mas_09": {
+  scale: "masking",
+  texts: {
+    1: "Soziale Gespräche entstehen spontan. Einstudierte Phrasen oder Skripte werden nicht benötigt.",
+    2: "Die Konversation läuft weitgehend natürlich. Nur in seltenen Situationen können vorbereitete Formulierungen helfen.",
+    3: "Manchmal werden bewusst Gesprächsskripte genutzt. Einstudierte Phrasen erleichtern gelegentlich soziale Situationen.",
+    4: "Vorgefertigte Formulierungen sind vielfach erforderlich. Ohne Skripte oder einstudierte Sätze wird die Konversation oft schwierig.",
+    5: "Gesprächsskripte werden durchgängig benötigt. Spontane Konversation gelingt regelmäßig nicht ohne vorbereitete Phrasen.",
+    6: "Praktisch jedes Gespräch basiert auf eingeübten Skripten. Ohne einstudierte Formulierungen ist Kommunikation fast ausnahmslos unmöglich."
+  }
+},
+
+"mas_10": {
+  scale: "masking",
+  texts: {
+    1: "Mimik und Körpersprache entwickeln sich natürlich. Bewusstes Imitieren anderer findet nicht statt.",
+    2: "Der nonverbale Ausdruck erfolgt weitgehend intuitiv. Nur gelegentlich wird kurz auf andere geachtet um sich zu orientieren.",
+    3: "Gelegentlich werden Gesichtsausdrücke oder Gesten anderer bewusst nachgeahmt. Die Imitation geschieht manchmal um normal zu wirken.",
+    4: "Die Mimik oder Körpersprache anderer wird oft gezielt imitiert. Normal zu erscheinen erfordert häufig bewusstes Nachahmen.",
+    5: "Gesichtsausdrücke und Gesten werden normalerweise bewusst kopiert. Ohne Imitation wirkt das eigene Verhalten regelmäßig unpassend.",
+    6: "Praktisch jede Mimik wird von anderen abgeschaut. Ohne ständiges Imitieren ist normales Auftreten fast ausnahmslos unmöglich."
+  }
+},
+
+"mas_11": {
+  scale: "masking",
+  texts: {
+    1: "Blickkontakt entsteht natürlich und fühlt sich angenehm an. Erzwingen ist nicht nötig.",
+    2: "Augenkontakt gelingt weitgehend mühelos. Nur bei sehr intensiven Gesprächen kann er kurz unangenehm werden.",
+    3: "Manchmal muss Blickkontakt bewusst aufrechterhalten werden obwohl es sich unangenehm anfühlt. Das Erzwingen kostet gelegentlich Energie.",
+    4: "Augenkontakt zu halten erfordert vielfach bewusste Anstrengung. Obwohl es sich unangenehm anfühlt wird er oft erzwungen.",
+    5: "Blickkontakt fühlt sich durchgängig sehr unangenehm an. Er wird regelmäßig nur unter großer Anstrengung erzwungen.",
+    6: "Augenkontakt ist praktisch immer extrem unangenehm. Ihn zu halten erfordert fast ausnahmslos maximale Selbstüberwindung."
+  }
+},
+
+"mas_12": {
+  scale: "masking",
+  texts: {
+    1: "Anpassungsbemühungen kosten keine besondere Energie. Erschöpfung oder Identitätsverlust entstehen nicht.",
+    2: "Die soziale Anpassung bleibt weitgehend im Rahmen. Nur nach sehr intensiven Phasen kann kurze Müdigkeit auftreten.",
+    3: "Die Anpassungsbemühungen führen manchmal zu spürbarer Erschöpfung. Gelegentlich entsteht das Gefühl sich selbst zu verlieren.",
+    4: "Das ständige Anpassen erschöpft oft erheblich. Nicht mehr zu wissen wer man wirklich ist kommt häufig vor.",
+    5: "Die Anpassung führt normalerweise zu massiver Erschöpfung. Das eigene Selbst geht regelmäßig im Anpassen verloren.",
+    6: "Praktisch jede Anpassung zehrt extrem an der Substanz. Wer man ohne Maske ist bleibt fast ausnahmslos völlig unklar."
+  }
+},
+
 // === STRUCTURE ===
 "str_01": {
   scale: "structure",
   texts: {
-    1: "Klare Abläufe sind angenehm aber nicht notwendig. Innere Sicherheit entsteht auch ohne Struktur.",
-    2: "Klare Abläufe wirken weitgehend unterstützend. Die innere Sicherheit ist meist auch ohne sie stabil.",
-    3: "Klare Abläufe geben manchmal spürbar Sicherheit. Die Stabilität profitiert gelegentlich von Struktur.",
-    4: "Klare Abläufe geben oft deutlich innere Sicherheit. Struktur wird häufig zur Stabilisierung benötigt.",
-    5: "Klare Abläufe geben normalerweise starke innere Sicherheit. Ohne Struktur leidet die Stabilität regelmäßig.",
-    6: "Klare Abläufe sind praktisch zwingend für innere Sicherheit. Ohne Struktur entsteht fast immer Destabilisierung."
+    1: "Klare Abläufe sind angenehm aber nicht notwendig. Innere Sicherheit und Ruhe entstehen auch ohne feste Strukturen oder Planung.",
+    2: "Struktur und Vorausschau wirken weitgehend unterstützend. Die innere Stabilität bleibt meist auch ohne sie erhalten.",
+    3: "Feste Abläufe und Planung geben manchmal spürbar Halt. Innere Sicherheit profitiert gelegentlich von Struktur und Vorausschau.",
+    4: "Klare Strukturen und Planung geben oft deutlich innere Ruhe. Ohne sie leidet die Sicherheit häufig merklich.",
+    5: "Feste Abläufe und Vorausschau sind normalerweise sehr wichtig für innere Stabilität. Ohne Struktur und Planung leiden Sicherheit und Ruhe regelmäßig.",
+    6: "Klare Strukturen und Planung sind praktisch zwingend für innere Ruhe. Ohne feste Abläufe und Vorausschau entsteht fast ausnahmslos Destabilisierung."
   }
 },
 
@@ -483,18 +602,6 @@ export const ITEM_TEXTS = {
     4: "Viele Optionen überfordern oft deutlich. Die Anzahl der Möglichkeiten belastet häufig.",
     5: "Viele Optionen überfordern normalerweise stark. Wenige klare Alternativen werden regelmäßig bevorzugt.",
     6: "Viele Optionen überfordern praktisch immer massiv. Bereits wenige Wahlmöglichkeiten sind belastend."
-  }
-},
-
-"str_03": {
-  scale: "structure",
-  texts: {
-    1: "Planung ist hilfreich aber optional. Innere Ruhe entsteht auch spontan.",
-    2: "Planung wirkt meist unterstützend. Die innere Ruhe bleibt weitgehend auch ohne Planung erhalten.",
-    3: "Planung hilft gelegentlich spürbar. Die innere Ruhe profitiert manchmal von Vorausschau.",
-    4: "Planung hilft oft deutlich. Innere Ruhe entsteht häufig leichter mit Vorausschau.",
-    5: "Planung hilft normalerweise stark. Ohne Vorausschau leidet die innere Ruhe regelmäßig.",
-    6: "Planung ist praktisch zwingend erforderlich. Ohne Vorausschau entsteht fast immer innere Unruhe."
   }
 },
 
@@ -569,6 +676,40 @@ export const ITEM_TEXTS = {
     6: "Vorhersehbarkeit ist praktisch zwingend für Wohlbefinden. Ohne sie entsteht fast immer starkes Unbehagen."
   }
 },
+"str_10": {
+  scale: "structure",
+  texts: {
+    1: "Routinen geben Struktur ohne Starrheit. Veränderungen kosten keine besondere Energie.",
+    2: "Bewährte Abläufe wirken weitgehend unterstützend. Veränderungen werden meist gut toleriert.",
+    3: "Vertraute Routinen geben manchmal spürbaren Halt. Veränderungen können gelegentlich Energie kosten.",
+    4: "Bewährte Abläufe bieten oft deutlichen Halt. Veränderungen erfordern häufig erhebliche Anpassungsenergie.",
+    5: "Feste Routinen sind normalerweise sehr wichtig für Stabilität. Veränderungen kosten regelmäßig massive Energie.",
+    6: "Bewährte Abläufe sind praktisch zwingend für inneren Halt. Jede Veränderung kostet fast ausnahmslos enorme Energie."
+  }
+},
+
+"str_11": {
+  scale: "structure",
+  texts: {
+    1: "Eigene Rituale oder feste Abläufe sind unnötig. Der Alltag wird ohne besondere Routinen bewältigt.",
+    2: "Spezielle Abläufe werden weitgehend nicht benötigt. Nur gelegentlich können kleine Gewohnheiten unterstützend wirken.",
+    3: "Manchmal werden eigene Rituale entwickelt um den Alltag zu strukturieren. Persönliche Routinen helfen gelegentlich bei der Bewältigung.",
+    4: "Eigene Abläufe oder Rituale sind vielfach erforderlich. Ohne persönliche Routinen wird die Alltagsbewältigung oft schwierig.",
+    5: "Der Alltag lässt sich normalerweise nur mit eigenen Ritualen bewältigen. Persönliche Abläufe sind regelmäßig zwingend notwendig.",
+    6: "Ohne selbst entwickelte Rituale ist der Alltag praktisch nicht zu bewältigen. Eigene feste Abläufe sind fast ausnahmslos absolut erforderlich."
+  }
+},
+"str_12": {
+  scale: "structure",
+  texts: {
+    1: "Interessen werden in normaler Tiefe verfolgt. Intensive Detailbeschäftigung findet nicht statt.",
+    2: "Die meisten Themen werden weitgehend oberflächlich behandelt. Nur vereinzelt wird etwas tiefer eingestiegen.",
+    3: "Manche Themen werden gelegentlich sehr detailliert erforscht. Die intensive Beschäftigung zeigt sich manchmal ausgeprägt.",
+    4: "Bei bestimmten Interessen erfolgt oft extrem detaillierte Auseinandersetzung. Die Tiefe der Beschäftigung ist häufig außergewöhnlich.",
+    5: "Themen die interessieren werden normalerweise bis ins kleinste Detail erkundet. Die intensive Beschäftigung ist regelmäßig total.",
+    6: "Praktisch jedes Interesse wird bis zur absoluten Perfektion durchdrungen. Die Detailtiefe ist fast ausnahmslos maximal."
+  }
+},
 // === OVERLOAD ===
 // === OVERLOAD ===
 "ovl_01": {
@@ -586,12 +727,12 @@ export const ITEM_TEXTS = {
 "ovl_02": {
   scale: "overload",
   texts: {
-    1: "Rückzug ist angenehm aber optional. Stabilisierung gelingt auch ohne ihn.",
-    2: "Rückzug wirkt meist unterstützend. Die Stabilisierung gelingt weitgehend auch ohne ihn.",
-    3: "Rückzug wird manchmal zur Stabilisierung benötigt. Die Notwendigkeit zeigt sich situativ.",
-    4: "Rückzug ist oft deutlich zur Stabilisierung erforderlich. Ohne ihn fällt die Regulation häufig schwer.",
-    5: "Rückzug ist normalerweise zwingend zur Stabilisierung. Ohne ihn gelingt die Regulation regelmäßig nicht.",
-    6: "Rückzug ist praktisch immer absolut erforderlich. Ohne ihn ist Stabilisierung fast unmöglich."
+    1: "Regulation erfolgt automatisch. Bewusste Strategien wie Rückzug oder Stille sind nicht erforderlich.",
+    2: "Stabilisierung gelingt weitgehend spontan. Nur selten werden Rückzug oder ähnliche Maßnahmen benötigt.",
+    3: "Manchmal werden bewusste Strategien zur Regulation genutzt. Rückzug oder Wiederholung helfen gelegentlich bei der Stabilisierung.",
+    4: "Regulation erfordert oft gezielte Strategien. Rückzug, Stille oder Wiederholung sind häufig notwendig um wieder ins Gleichgewicht zu kommen.",
+    5: "Stabilisierung gelingt normalerweise nur über bewusste Maßnahmen. Rückzug oder ähnliche Strategien sind regelmäßig zwingend erforderlich.",
+    6: "Ohne intensive Strategien ist Regulation praktisch unmöglich. Rückzug, Stille oder Wiederholung sind fast ausnahmslos absolut notwendig."
   }
 },
 
@@ -616,18 +757,6 @@ export const ITEM_TEXTS = {
     4: "In vollen Umgebungen fühlt sich die Energie oft schnell leer an. Die Erschöpfung tritt häufig rasch ein.",
     5: "Volle Umgebungen entleeren die Energie normalerweise sehr schnell. Die Erschöpfung ist regelmäßig massiv.",
     6: "In vollen Umgebungen wird die Energie praktisch sofort entleert. Selbst kurze Aufenthalte erschöpfen extrem."
-  }
-},
-
-"ovl_05": {
-  scale: "overload",
-  texts: {
-    1: "Regulation erfolgt automatisch. Bewusste Strategien sind nicht erforderlich.",
-    2: "Regulation gelingt weitgehend spontan. Nur selten werden bewusste Strategien benötigt.",
-    3: "Regulation erfordert manchmal bewusste Strategien. Rückzug oder Stille werden gelegentlich genutzt.",
-    4: "Bewusste Regulation ist oft erforderlich. Rückzug oder Wiederholung werden häufig benötigt.",
-    5: "Regulation erfolgt normalerweise nur über bewusste Strategien. Rückzug oder Stille sind regelmäßig zwingend.",
-    6: "Regulation ist praktisch nur über intensive Strategien möglich. Selbst mit ihnen gelingt Stabilisierung schwer."
   }
 },
 
@@ -787,6 +916,29 @@ export const ITEM_TEXTS = {
     6: "Praktisch immer ist etwas los aber völlig unbenennbar. Die Einordnung ist fast ausnahmslos unmöglich."
   }
 },
+"alx_10": {
+  scale: "alexithymia",
+  texts: {
+    1: "Die Gefühle anderer Menschen werden mühelos erkannt. Emotionale Zustände bei anderen sind klar erfassbar.",
+    2: "Wie sich andere fühlen wird weitgehend gut eingeschätzt. Nur bei sehr subtilen Emotionen kann kurz Unsicherheit auftreten.",
+    3: "Manchmal fällt es schwer die Gefühle anderer einzuschätzen. Was in anderen vorgeht bleibt gelegentlich unklar.",
+    4: "Die emotionalen Zustände anderer zu erkennen gelingt vielfach kaum. Wie sich jemand fühlt bleibt oft rätselhaft.",
+    5: "Gefühle bei anderen einzuschätzen ist normalerweise sehr schwierig. Was andere emotional erleben bleibt regelmäßig unzugänglich.",
+    6: "Praktisch nie gelingt es die Emotionen anderer zu erfassen. Was in Menschen vorgeht bleibt fast ausnahmslos völlig unklar."
+  }
+},
+
+"alx_11": {
+  scale: "alexithymia",
+  texts: {
+    1: "Die Gefühle anderer werden wahrgenommen ohne zu überwältigen. Emotionale Ansteckung tritt nicht auf.",
+    2: "Emotionen bei anderen bleiben weitgehend im handhabbaren Bereich. Nur sehr intensive Gefühlslagen können kurz mitreißen.",
+    3: "Gelegentlich überwältigen die Emotionen anderer Menschen. Der Rückzug wird manchmal notwendig um sich zu schützen.",
+    4: "Fremde Gefühle wirken oft so stark dass Rückzug nötig wird. Die emotionale Überforderung durch andere ist häufig massiv.",
+    5: "Die Gefühle anderer überwältigen normalerweise so sehr dass Abstand zwingend wird. Die affektive Überlastung ist regelmäßig extrem.",
+    6: "Praktisch jede fremde Emotion reißt völlig mit. Rückzug ist fast ausnahmslos die einzige Möglichkeit mit der Überwältigung umzugehen."
+  }
+},
 
   // === EXECUTIVE (EXEKUTIVFUNKTIONEN) ===
 
@@ -907,6 +1059,90 @@ export const ITEM_TEXTS = {
     4: "Die Zeiteinschätzung fällt oft deutlich schwer. Die Abweichung ist häufig erheblich.",
     5: "Zeitabschätzung fällt normalerweise sehr schwer. Die Einschätzung weicht regelmäßig stark ab.",
     6: "Die Zeiteinschätzung gelingt praktisch nie. Fast jede Abschätzung ist massiv falsch."
+  }
+},
+
+"exe_11": {
+  scale: "executive",
+  texts: {
+    1: "Zwischen verschiedenen Aufgaben oder Denkweisen hin- und herzuwechseln gelingt mühelos. Die mentale Umstellung erfolgt flüssig.",
+    2: "Der Übergang zwischen Tätigkeiten klappt weitgehend leicht. Nur bei sehr häufigen Wechseln kann sich leichte Anstrengung zeigen.",
+    3: "Aufgaben oder Denkweisen zu wechseln fällt gelegentlich etwas schwer. Die Umstellung erfordert manchmal bewusste Energie.",
+    4: "Das Hin- und Herwechseln zwischen verschiedenen Tätigkeiten kostet oft viel Kraft. Die mentale Flexibilität ist häufig eingeschränkt.",
+    5: "Zwischen Aufgaben zu wechseln fällt normalerweise sehr schwer. Jede Umstellung erfordert regelmäßig massive innere Anstrengung.",
+    6: "Der Wechsel zwischen verschiedenen Tätigkeiten oder Denkweisen ist praktisch unmöglich. Die mentale Starrheit dominiert fast ausnahmslos."
+  }
+},
+
+"exe_12": {
+  scale: "executive",
+  texts: {
+    1: "Planänderungen werden gelassen aufgenommen. Die Anpassung geschieht spontan ohne innere Belastung.",
+    2: "Wenn sich Pläne ändern bleibt die innere Ruhe weitgehend erhalten. Nur sehr plötzliche Wechsel können kurz irritieren.",
+    3: "Sich an veränderte Pläne anzupassen kostet zuweilen spürbare Energie. Die Flexibilität ist manchmal eingeschränkt.",
+    4: "Planänderungen erfordern häufig erhebliche Anpassungsenergie. Die innere Umstellung gelingt vielfach nur mit Mühe.",
+    5: "Wenn Pläne sich ändern ist die Anpassung durchgängig sehr schwierig. Die Umstellung kostet regelmäßig enorme Kraft.",
+    6: "Jede Planänderung überfordert nahezu ausnahmslos völlig. Anpassung an Veränderungen gelingt fast nie."
+  }
+},
+
+"exe_13": {
+  scale: "executive",
+  texts: {
+    1: "Handlungen erfolgen nach reiflicher Überlegung. Impulsivität tritt nicht auf.",
+    2: "Reaktionen sind weitgehend überlegt. Nur in Ausnahmesituationen kann mal etwas spontan geschehen.",
+    3: "Gelegentlich werden Dinge getan ohne vorher nachzudenken. Impulsive Momente kommen manchmal vor.",
+    4: "Impulsive Handlungen ohne Bedacht der Folgen passieren vielfach. Die Kontrolle über spontane Reaktionen ist oft begrenzt.",
+    5: "Ohne die Konsequenzen zu bedenken wird normalerweise gehandelt. Impulsivität bestimmt regelmäßig das Verhalten.",
+    6: "Praktisch jede Handlung erfolgt impulsiv. Über Folgen nachzudenken gelingt fast ausnahmslos nicht."
+  }
+},
+
+"exe_14": {
+  scale: "executive",
+  texts: {
+    1: "Mit einer Reaktion zu warten gelingt auch unter Druck problemlos. Die Impulskontrolle funktioniert zuverlässig.",
+    2: "Das Zurückhalten einer Reaktion klappt weitgehend gut. Nur bei sehr starkem innerem Drang kann es kurz schwieriger werden.",
+    3: "Zu warten obwohl der Impuls da ist fällt zuweilen etwas schwer. Die Selbstkontrolle erfordert gelegentlich bewusste Anstrengung.",
+    4: "Eine Reaktion zurückzuhalten gelingt oft kaum. Selbst wenn klar ist dass Warten besser wäre wird häufig sofort reagiert.",
+    5: "Mit einer Reaktion zu warten ist durchgängig extrem schwierig. Die Impulskontrolle versagt regelmäßig auch bei klarem Wissen um die Notwendigkeit.",
+    6: "Jede Reaktion erfolgt nahezu ausnahmslos sofort. Zurückhalten ist praktisch unmöglich selbst wenn es dringend geboten wäre."
+  }
+},
+
+"exe_15": {
+  scale: "executive",
+  texts: {
+    1: "Aufgaben anzufangen geschieht spontan. Keine innere Barriere steht dem Beginn entgegen.",
+    2: "Der Start in eine Tätigkeit gelingt weitgehend mühelos. Nur bei sehr unangenehmen Aufgaben kann kurz Zögern auftreten.",
+    3: "Mit etwas anzufangen erfordert manchmal spürbare Überwindung. Eine leichte innere Blockade muss gelegentlich durchbrochen werden.",
+    4: "Der Beginn einer Aufgabe kostet häufig massive Überwindung. Wie gegen eine unsichtbare Wand anzulaufen ist vielfach das Gefühl.",
+    5: "Etwas zu starten fällt durchgängig extrem schwer. Die innere Barriere beim Anfangen ist regelmäßig enorm.",
+    6: "Mit irgendetwas anzufangen ist praktisch immer unmöglich. Die Blockade beim ersten Schritt lähmt fast ausnahmslos völlig."
+  }
+},
+
+"exe_16": {
+  scale: "executive",
+  texts: {
+    1: "Wichtige Dinge werden direkt erledigt. Aufschieben kommt nicht vor.",
+    2: "Aufgaben werden weitgehend zeitnah angegangen. Nur sehr unangenehme Tätigkeiten können mal kurz warten.",
+    3: "Dinge aufzuschieben passiert gelegentlich auch bei wichtigen Aufgaben. Die Prokrastination ist manchmal spürbar.",
+    4: "Selbst bei Wichtigkeit werden Aufgaben vielfach verschoben. Das Aufschieben geschieht oft trotz besseren Wissens.",
+    5: "Wichtige Dinge aufzuschieben ist durchgängig die Regel. Prokrastination bestimmt regelmäßig das Handeln.",
+    6: "Praktisch alles wird aufgeschoben unabhängig von der Dringlichkeit. Sofortiges Handeln gelingt fast nie."
+  }
+},
+
+"exe_17": {
+  scale: "executive",
+  texts: {
+    1: "Jeder Schritt einer Aufgabe gelingt gleich leicht. Der Anfang unterscheidet sich nicht vom Rest.",
+    2: "Der Einstieg verläuft weitgehend wie die Fortsetzung. Nur bei sehr komplexen Aufgaben kann der Start etwas mehr Energie kosten.",
+    3: "Der erste Schritt erfordert zuweilen deutlich mehr Energie als die Fortsetzung. Die Anfangshürde ist manchmal erhöht.",
+    4: "Los zu legen ist vielfach der schwerste Teil. Sobald begonnen wurde läuft es oft deutlich leichter.",
+    5: "Der Anfang ist durchgängig massiv schwieriger als alles Weitere. Die initiale Hürde kostet regelmäßig enorme Überwindung.",
+    6: "Der erste Schritt ist praktisch immer unüberwindbar. Ist er geschafft läuft der Rest fast mühelos."
   }
 },
 // === EMOTREG (EMOTIONALE REGULATION) ===
@@ -1128,17 +1364,6 @@ export const ITEM_TEXTS = {
   }
 },
 
-"hyp_09": {
-  scale: "hyperfocus",
-  texts: {
-    1: "Routinen geben Struktur ohne Starrheit. Veränderungen kosten keine besondere Energie.",
-    2: "Abläufe geben weitgehend Halt. Veränderungen werden meist gut toleriert.",
-    3: "Bewährte Abläufe geben manchmal spürbar Halt. Veränderungen können gelegentlich Energie kosten.",
-    4: "Routinen geben oft deutlich Halt. Veränderungen kosten häufig viel Energie.",
-    5: "Bewährte Abläufe sind normalerweise sehr wichtig für Halt. Veränderungen kosten regelmäßig massive Energie.",
-    6: "Routinen sind praktisch zwingend erforderlich. Jede Veränderung kostet fast ausnahmslos extreme Energie."
-  }
-},
 
 "hyp_10": {
   scale: "hyperfocus",
@@ -1149,6 +1374,29 @@ export const ITEM_TEXTS = {
     4: "Zeit und Bedürfnisse werden bei Vertiefung oft vergessen. Das Bewusstsein geht häufig verloren.",
     5: "Bei Konzentration werden Zeit und Bedürfnisse normalerweise völlig vergessen. Das Bewusstsein ist regelmäßig komplett weg.",
     6: "Zeit und Bedürfnisse werden praktisch immer sofort vergessen. Jegliches Bewusstsein dafür fehlt fast ausnahmslos."
+  }
+},
+"hyp_11": {
+  scale: "hyperfocus",
+  texts: {
+    1: "Interessen bleiben langfristig stabil. Abrupte Wechsel kommen nicht vor.",
+    2: "Die meisten Interessen bleiben weitgehend erhalten. Nur selten verliert eines plötzlich an Reiz.",
+    3: "Manchmal wechseln Interessen abrupt wenn die Faszination nachlässt. Der Übergang kann gelegentlich sehr schnell erfolgen.",
+    4: "Sobald ein Interesse weniger intensiv wird erfolgt oft ein abrupter Wechsel. Die Aufmerksamkeit springt häufig plötzlich zum nächsten Thema.",
+    5: "Interessen wechseln normalerweise sehr abrupt sobald die Intensität abnimmt. Der Übergang geschieht regelmäßig ohne Übergang.",
+    6: "Praktisch jedes Interesse endet abrupt wenn die Faszination nachlässt. Ein fließender Übergang findet fast nie statt."
+  }
+},
+
+"hyp_12": {
+  scale: "hyperfocus",
+  texts: {
+    1: "Hyperfokus tritt nicht auf. Leistung entsteht durch gleichmäßige Konzentration.",
+    2: "Intensive Konzentration kann gelegentlich zu guten Ergebnissen führen. Hyperfokus ist weitgehend nicht nötig.",
+    3: "In manchen Bereichen ermöglicht intensive Fokussierung überdurchschnittliche Leistungen. Hyperfokus zeigt sich gelegentlich als Stärke.",
+    4: "Phasen extremer Konzentration führen oft zu herausragenden Ergebnissen. Hyperfokus ist häufig der Schlüssel zu besonderen Fähigkeiten.",
+    5: "Überdurchschnittliche Leistungen entstehen normalerweise nur durch Hyperfokus. Intensive Konzentrationsphasen sind regelmäßig die Grundlage für Exzellenz.",
+    6: "Praktisch jede besondere Fähigkeit basiert auf Hyperfokus. Ohne extreme Konzentrationsphasen wären außergewöhnliche Leistungen fast unmöglich."
   }
 },
   };

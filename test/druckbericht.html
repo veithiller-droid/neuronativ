@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neurodivergenz-Screening – Bericht zum Ausdrucken</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      line-height: 1.6;
+      color: #000;
+      background: white;
+      max-width: 210mm;
+      margin: 0 auto;
+      padding: 20mm 15mm;
+    }
+    h1 {
+      font-size: 24pt;
+      text-align: center;
+      margin-bottom: 10pt;
+      color: #EAB308;
+    }
+    h2 {
+      font-size: 18pt;
+      margin: 30pt 0 15pt 0;
+      border-bottom: 2px solid #EAB308;
+      padding-bottom: 8pt;
+    }
+    h3 {
+      font-size: 14pt;
+      margin: 20pt 0 10pt 0;
+    }
+    p, li {
+      font-size: 11pt;
+    }
+    ul {
+      padding-left: 20pt;
+      margin: 10pt 0;
+    }
+    .header-info {
+      text-align: center;
+      margin-bottom: 40pt;
+      font-size: 12pt;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20pt 0;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8pt;
+      text-align: left;
+    }
+    th {
+      background: #f5f5f5;
+      font-weight: 600;
+    }
+    .disclaimer {
+      margin-top: 50pt;
+      padding: 20pt;
+      border: 3pt solid #991b1b;
+      background: #fef2f2;
+      font-size: 11pt;
+    }
+    .footer {
+      margin-top: 60pt;
+      text-align: center;
+      font-size: 9pt;
+      color: #666;
+    }
+    @media print {
+      body { padding: 15mm; }
+      .no-print { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Ihr Neurodivergenz-Screening</h1>
+  <div class="header-info">
+    <strong>Bericht zum Ausdrucken / Vorlage für ärztliche Abklärung</strong><br>
+    Datum: <span id="date"></span>
+  </div>
+
+  <div id="bericht-content">
+    <!-- Wird per JavaScript gefüllt -->
+  </div>
+
+  <div class="disclaimer">
+    <strong>Wichtiger Hinweis:</strong><br>
+    Dieses Dokument basiert auf einem Selbsteinschätzungs-Screening und ersetzt keine professionelle Diagnostik. 
+    Die Ergebnisse dienen ausschließlich der Orientierung und können als Gesprächsgrundlage für eine fachärztliche 
+    oder psychologische Abklärung genutzt werden. Eine formale Diagnose kann nur durch qualifizierte Fachpersonen 
+    (Psychiatrie, Neurologie, spezialisierte Psychologie/Psychotherapie) gestellt werden.
+  </div>
+
+  <div class="footer">
+    Erstellt mit dem Neurodivergenz-Screening-Tool • Version 2.1 • 2025
+  </div>
+
+  <script type="module">
+    import { calculateProfile } from './profile_scoring.js';
+    import { PROFILE_TEXTS } from './profile_texts.js';
+    import { PROFILE_DESCRIPTIONS } from './profile_descriptions.js';
+
+    const stored = localStorage.getItem('neurodivergenz_profile_data');
+    if (!stored) {
+      document.getElementById('bericht-content').innerHTML = 
+        '<p><strong>Keine Daten gefunden.</strong> Bitte zuerst den Test durchführen und zur Profilseite gehen.</p>';
+    } else {
+      const data = JSON.parse(stored);
+      const result = calculateProfile(data.scores, data.meta, data.answers);
+
+      // Datum
+      document.getElementById('date').textContent = new Date().toLocaleDateString('de-DE', {
+        year: 'numeric', month: 'long', day: 'numeric'
+      });
+
+      let html = '';
+
+      // ===== METADATEN =====
+      html += `<h2>Persönliche Angaben (Metadaten)</h2>`;
+      html += `<table>`;
+      html += `<tr><th>Frage</th><th>Ihre Antwort</th></tr>`;
+      if (data.meta.age) html += `<tr><td>Alter</td><td>${data.meta.age}</td></tr>`;
+      if (data.meta.gender) html += `<tr><td>Geschlecht</td><td>${data.meta.gender}</td></tr>`;
+      if (data.meta.diagnoses && data.meta.diagnoses.length > 0) {
+        html += `<tr><td>Bisherige Diagnosen</td><td>${data.meta.diagnoses.join(', ')}</td></tr>`;
+      } else {
+        html += `<tr><td>Bisherige Diagnosen</td><td>Keine</td></tr>`;
+      }
+      if (data.meta.onset) html += `<tr><td>Beginn der Merkmale</td><td>${data.meta.onset}</td></tr>`;
+      if (data.meta.stress) html += `<tr><td>Aktuelles Stresslevel</td><td>${data.meta.stress}</td></tr>`;
+      if (data.meta.context) html += `<tr><td>Kontext (z. B. Lebenssituation)</td><td>${data.meta.context}</td></tr>`;
+      if (data.meta.medication) html += `<tr><td>Medikation</td><td>${data.meta.medication}</td></tr>`;
+      if (data.meta.selfview) html += `<tr><td>Selbstwahrnehmung</td><td>${data.meta.selfview}</td></tr>`;
+      html += `</table>`;
+
+      // ===== HAUPTPROFIL =====
+      const main = result.mainProfile;
+      const type = main.type;
+      const level = main.level || 'high';
+
+      let mainTitle = PROFILE_TEXTS.ui.hero.main_title_fallback;
+
+      if (PROFILE_DESCRIPTIONS[type] && PROFILE_DESCRIPTIONS[type][level]) {
+        const entry = PROFILE_DESCRIPTIONS[type][level];
+
+        if (typeof entry.title === 'function') {
+          mainTitle = entry.title(main.dominant_scale || '');
+        } else if (entry.title) {
+          mainTitle = entry.title;
+        }
+      }
+
+      html += `<h2>${mainTitle}</h2>`;
+      html += `<p><strong>Konfidenz der Einordnung:</strong> ${Math.round(main.confidence * 100)}%</p>`;
+
+      if (main.subtype?.user_description) {
+        html += `<p><strong>Subtyp:</strong> ${main.subtype.user_description}</p>`;
+      }
+
+      if (main.dominant_label && main.dominant_score) {
+        html += `<p><strong>Dominierendes Merkmal:</strong> ${main.dominant_label} (${main.dominant_score}%)</p>`;
+      }
+
+
+            // ===== CLUSTER =====
+      html += `<h2>Cluster-Auswertung</h2><ul>`;
+      const clusterMap = {
+        adhd: 'ADHS-Cluster',
+        autism: 'Autismus-Cluster',
+        emotional: 'Emotionale Verarbeitung',
+        compensation: 'Kompensation & Belastung'
+      };
+      for (const [key, name] of Object.entries(clusterMap)) {
+        const score = result.clusterScores[key] || 0;
+        html += `<li><strong>${name}:</strong> ${score}%</li>`;
+      }
+      html += `</ul>`;
+            // Subfunktions-Analyse
+      html += `<h2>Subfunktions-Analyse</h2>`;
+      html += `<p>Detaillierte Ausprägung ausgewählter Unterbereiche (nur bei relevanter Ausprägung ≥60%):</p><ul>`;
+
+      if (result.subScores.executive_initiation >= 60) html += `<li><strong>Task Initiation (Einstieg in Aufgaben):</strong> ${result.subScores.executive_initiation}%</li>`;
+      if (result.subScores.executive_impulse >= 60) html += `<li><strong>Impulskontrolle:</strong> ${result.subScores.executive_impulse}%</li>`;
+      if (result.subScores.executive_workingmemory >= 60) html += `<li><strong>Arbeitsgedächtnis:</strong> ${result.subScores.executive_workingmemory}%</li>`;
+      if (result.subScores.executive_priority >= 60) html += `<li><strong>Priorisierung:</strong> ${result.subScores.executive_priority}%</li>`;
+
+      if (result.subScores.sensory_hyper >= 60) html += `<li><strong>Überempfindlichkeit (Hyper-Sensitivität):</strong> ${result.subScores.sensory_hyper}%</li>`;
+      if (result.subScores.sensory_hypo >= 60) html += `<li><strong>Unterempfindlichkeit (Reize suchen):</strong> ${result.subScores.sensory_hypo}%</li>`;
+      if (result.subScores.sensory_intero >= 60) html += `<li><strong>Interozeption:</strong> ${result.subScores.sensory_intero}%</li>`;
+
+      if (result.subScores.masking_eyecontact >= 60) html += `<li><strong>Augenkontakt (Maskierung):</strong> ${result.subScores.masking_eyecontact}%</li>`;
+      if (result.subScores.masking_scripts >= 60) html += `<li><strong>Gesprächsskripte (Maskierung):</strong> ${result.subScores.masking_scripts}%</li>`;
+      if (result.subScores.masking_burnout >= 60) html += `<li><strong>Burnout-Folgen (Maskierung):</strong> ${result.subScores.masking_burnout}%</li>`;
+
+      if (result.subScores.alexithymia_self >= 60) html += `<li><strong>Eigene Gefühle benennen:</strong> ${result.subScores.alexithymia_self}%</li>`;
+      if (result.subScores.alexithymia_other >= 60) html += `<li><strong>Gefühle anderer einschätzen:</strong> ${result.subScores.alexithymia_other}%</li>`;
+      if (result.subScores.alexithymia_affective >= 60) html += `<li><strong>Affektive Empathie:</strong> ${result.subScores.alexithymia_affective}%</li>`;
+
+      html += `</ul>`;
+
+      // ===== SUBFUNKTIONS-ANALYSE (neu) =====
+      html += `<h2>Subfunktions-Analyse</h2>`;
+      html += `<p>Detaillierte Ausprägung ausgewählter Unterbereiche (nur bei relevanter Ausprägung ≥60%):</p>`;
+      html += `<ul>`;
+
+      if (result.subScores.executive_initiation >= 60) {
+        html += `<li><strong>Task Initiation (Einstieg in Aufgaben):</strong> ${result.subScores.executive_initiation}% – Schwierigkeiten, Aufgaben zu beginnen</li>`;
+      }
+      if (result.subScores.executive_impulse >= 60) {
+        html += `<li><strong>Impulskontrolle:</strong> ${result.subScores.executive_impulse}% – Schnelle Reaktionen oder Unterbrechungen</li>`;
+      }
+      if (result.subScores.executive_workingmemory >= 60) {
+        html += `<li><strong>Arbeitsgedächtnis:</strong> ${result.subScores.executive_workingmemory}% – Informationen kurz halten</li>`;
+      }
+      if (result.subScores.executive_priority >= 60) {
+        html += `<li><strong>Priorisierung:</strong> ${result.subScores.executive_priority}% – Reihenfolge von Aufgaben festlegen</li>`;
+      }
+
+      if (result.subScores.sensory_hyper >= 60) {
+        html += `<li><strong>Überempfindlichkeit (Hyper-Sensitivität):</strong> ${result.subScores.sensory_hyper}% – Reize kommen intensiver an</li>`;
+      }
+      if (result.subScores.sensory_hypo >= 60) {
+        html += `<li><strong>Unterempfindlichkeit (Reize suchen):</strong> ${result.subScores.sensory_hypo}% – Aktives Suchen nach sensorischen Reizen</li>`;
+      }
+      if (result.subScores.sensory_intero >= 60) {
+        html += `<li><strong>Interozeption:</strong> ${result.subScores.sensory_intero}% – Wahrnehmung von Körpersignalen (z. B. Hunger, Müdigkeit)</li>`;
+      }
+
+      if (result.subScores.masking_eyecontact >= 60) {
+        html += `<li><strong>Augenkontakt (Maskierung):</strong> ${result.subScores.masking_eyecontact}% – Blickkontakt forcieren kostet Energie</li>`;
+      }
+      if (result.subScores.masking_scripts >= 60) {
+        html += `<li><strong>Gesprächsskripte (Maskierung):</strong> ${result.subScores.masking_scripts}% – Vorbereitung von Antworten</li>`;
+      }
+      if (result.subScores.masking_burnout >= 60) {
+        html += `<li><strong>Burnout-Folgen (Maskierung):</strong> ${result.subScores.masking_burnout}% – Langzeitfolgen der Anpassung</li>`;
+      }
+
+      if (result.subScores.alexithymia_self >= 60) {
+        html += `<li><strong>Eigene Gefühle benennen:</strong> ${result.subScores.alexithymia_self}% – Schwierigkeiten, Emotionen zu erkennen und zu beschreiben</li>`;
+      }
+      if (result.subScores.alexithymia_other >= 60) {
+        html += `<li><strong>Gefühle anderer einschätzen:</strong> ${result.subScores.alexithymia_other}% – Theory of Mind</li>`;
+      }
+      if (result.subScores.alexithymia_affective >= 60) {
+        html += `<li><strong>Affektive Empathie:</strong> ${result.subScores.alexithymia_affective}% – Mitfühlen mit anderen</li>`;
+      }
+
+      html += `</ul>`;
+
+      // ===== DETAIL-PROFILE =====
+      html += `<h2>Detail-Profile</h2><ul>`;
+      const displayOrder = ['adhd', 'autism', 'audhd', 'high_masking', 'stress', 'traits'];
+      for (const key of displayOrder) {
+        const p = result.profiles[key];
+        if (p && p.score > 0) {
+          const conf = Math.round((p.confidence || 0) * 100);
+          const name = PROFILE_TEXTS?.profile_types?.[key]?.name || key;
+          html += `<li><strong>${name}:</strong> ${p.score}% (Konfidenz: ${conf}%)</li>`;
+        }
+      }
+      html += `</ul>`;
+
+      // ===== BEGRÜNDUNG =====
+      html += `<h2>Grundlage der Einordnung</h2><ul>`;
+      result.reasoning.forEach(r => html += `<li>${r}</li>`);
+      html += `</ul>`;
+
+      // ===== NEXT STEPS =====
+      html += `<h2>Empfohlene nächste Schritte</h2><ul>`;
+      result.nextSteps.forEach(s => html += `<li>${s}</li>`);
+      html += `</ul>`;
+
+      document.getElementById('bericht-content').innerHTML = html;
+    }
+  </script>
+
+</body>
+</html>

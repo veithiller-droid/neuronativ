@@ -82,11 +82,29 @@ body {
   color: var(--accent-main);
 }
 
+.method-section h4 {
+  font-size: 1.1em;
+  margin-top: 25px;
+  margin-bottom: 12px;
+  color: var(--text-main);
+  font-weight: 600;
+}
+
 .method-section p {
   margin-bottom: 16px;
 }
 
-/* Scale list */
+.method-section ul {
+  margin-left: 25px;
+  margin-top: 10px;
+  margin-bottom: 16px;
+}
+
+.method-section li {
+  margin-bottom: 8px;
+}
+
+/* Scale grid */
 .scale-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -198,6 +216,57 @@ body {
   margin-bottom: 8px;
 }
 
+/* Info box */
+.info-box {
+  background: var(--bg-page);
+  border: 2px solid var(--border-light);
+  border-radius: 10px;
+  padding: 20px;
+  margin: 20px 0;
+}
+
+/* Profile explanation box */
+.profile-explain-box {
+  background: var(--bg-page);
+  border-left: 4px solid var(--accent-main);
+  padding: 25px;
+  border-radius: 8px;
+  margin: 25px 0;
+}
+
+.profile-explain-box h4 {
+  color: var(--accent-main);
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 1.2em;
+}
+
+.profile-result-display {
+  background: var(--bg-code);
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 1.1em;
+  font-weight: 600;
+  color: var(--accent-main);
+  text-align: center;
+}
+
+.profile-direction {
+  margin-top: 20px;
+}
+
+.profile-direction h5 {
+  color: var(--text-main);
+  margin-bottom: 10px;
+  font-size: 1.05em;
+}
+
+.profile-direction p {
+  margin-bottom: 12px;
+  line-height: 1.8;
+}
+
 /* Warning box */
 .limitation-box {
   background: #FFF9E6;
@@ -210,15 +279,6 @@ body {
 .limitation-box h3 {
   color: #8B6914;
   margin-top: 0;
-}
-
-.limitation-box ul {
-  margin-left: 25px;
-  margin-top: 15px;
-}
-
-.limitation-box li {
-  margin-bottom: 10px;
 }
 
 /* Buttons */
@@ -252,28 +312,13 @@ body {
 }
 
 .btn-secondary {
-  background: transparent;
-  border: 2px solid var(--border-light);
+  background: var(--bg-page);
   color: var(--text-main);
+  border: 2px solid var(--border-light);
 }
 
 .btn-secondary:hover {
-  background: var(--bg-box);
-}
-
-/* Info box */
-.info-box {
-  background: #E8F4F8;
-  border-left: 4px solid var(--accent-main);
-  padding: 20px;
-  border-radius: 8px;
-  margin: 20px 0;
-}
-
-.info-box strong {
-  display: block;
-  margin-bottom: 8px;
-  color: var(--accent-main);
+  border-color: var(--accent-main);
 }
 
 @media print {
@@ -283,227 +328,754 @@ body {
   }
   
   .action-buttons {
-    display: none !important;
+    display: none;
+  }
+  
+  .method-section {
+    break-inside: avoid;
+    page-break-inside: avoid;
   }
 }
 </style>
-</head>
 
+</head>
 <body>
+
 <div class="container">
 
   <!-- HEADER -->
   <header class="method-header">
-    <h1>Wie wird Ihr Profil berechnet?</h1>
+    <h1>Berechnungsmethodik</h1>
     <p class="method-subtitle">
-      Transparente Erklärung unserer Methodik und Ihrer individuellen Auswertung
+      Wie Ihre Testergebnisse berechnet und interpretiert werden – 
+      wissenschaftlich fundiert, transparent erklärt.
     </p>
   </header>
 
-  <!-- TEIL 1: ALLGEMEINE METHODIK -->
+  <!-- WISSENSCHAFTLICHE GRUNDLAGEN -->
   <section class="method-section">
-    <h2>1. Allgemeine Methodik</h2>
+    <h2>Wissenschaftliche Grundlagen</h2>
     
-    <h3>Die 10 Skalen</h3>
     <p>
-      Der Test erfasst 10 verschiedene Bereiche neurodivergenter Kognition. Jede Skala besteht aus 9-10 Fragen, 
-      die auf einer 5-Punkte-Skala beantwortet werden (1 = trifft nicht zu, 5 = trifft völlig zu). 
-      Ihre Antworten werden pro Skala zu einem Prozentwert umgerechnet (50% = Bevölkerungsdurchschnitt).
+      Dieser Test basiert auf aktueller Forschung zu Neurodivergenz, insbesondere ADHS und Autismus. 
+      Die Skalen wurden aus etablierten diagnostischen Kriterien (DSM-5, ICD-11) und dem 
+      Research Domain Criteria Framework (RDoC) abgeleitet.
     </p>
+
+    <h3>Die 10 gemessenen Bereiche (Skalen)</h3>
     
+    <p>
+      <strong>Was ist eine Skala?</strong> Eine Skala ist ein einzelner Messbereich, der einen 
+      spezifischen Aspekt Ihres Erlebens erfasst. Aus Ihren Antworten auf die Testfragen wird 
+      für jede Skala ein Wert zwischen 0% und 100% berechnet. Höhere Werte bedeuten stärkere 
+      Ausprägung in diesem Bereich.
+    </p>
+
     <div class="scale-grid">
       <div class="scale-item">
         <strong>Aufmerksamkeit</strong>
-        Interessenbasierte vs. anforderungsbasierte Fokussteuerung
+        Wie leicht oder schwer fällt es Ihnen, sich auf Aufgaben zu konzentrieren, besonders wenn sie nicht interessant sind?
       </div>
+      
       <div class="scale-item">
         <strong>Sensorische Empfindlichkeit</strong>
-        Intensität der Wahrnehmung von Sinnesreizen
+        Wie intensiv nehmen Sie Reize wie Geräusche, Licht, Gerüche oder Berührungen wahr?
       </div>
+      
       <div class="scale-item">
         <strong>Soziale Wahrnehmung</strong>
-        Analytische vs. intuitive Verarbeitung sozialer Signale
+        Wie viel Energie kostet es Sie, soziale Signale zu verstehen und in sozialen Situationen zu navigieren?
       </div>
+      
       <div class="scale-item">
         <strong>Maskierung</strong>
-        Bewusste/unbewusste Anpassung an neurotypische Erwartungen
+        Wie viel Energie investieren Sie, um neurotypisch zu wirken und Ihre natürlichen Reaktionen zu unterdrücken?
       </div>
+      
       <div class="scale-item">
-        <strong>Struktur & Sicherheit</strong>
-        Bedürfnis nach Vorhersehbarkeit und Routinen
+        <strong>Struktur & Vorhersehbarkeit</strong>
+        Wie wichtig sind Ihnen feste Abläufe, Routinen und klare Erwartungen?
       </div>
+      
       <div class="scale-item">
         <strong>Überlastung</strong>
-        Sensorische und emotionale Belastungsgrenzen
+        Wie schnell erreichen Sie Ihre Belastungsgrenze bei Reizen, Anforderungen oder Veränderungen?
       </div>
+      
       <div class="scale-item">
-        <strong>Emotionswahrnehmung</strong>
-        Fähigkeit eigene Gefühle zu erkennen und zu benennen
+        <strong>Emotionswahrnehmung (Alexithymie)</strong>
+        Wie leicht oder schwer fällt es Ihnen, eigene Gefühle zu erkennen und zu benennen?
       </div>
+      
       <div class="scale-item">
-        <strong>Exekutivfunktionen</strong>
-        Arbeitsgedächtnis, Handlungsplanung, Impulskontrolle
+        <strong>Exekutive Funktionen</strong>
+        Wie gut funktionieren Planung, Organisation, Impulskontrolle und Arbeitsgedächtnis bei Ihnen?
       </div>
+      
       <div class="scale-item">
         <strong>Emotionale Regulation</strong>
-        Steuerung von Intensität und Dauer von Gefühlen
+        Wie gut können Sie intensive Gefühle steuern und ausgleichen?
       </div>
+      
       <div class="scale-item">
         <strong>Hyperfokus</strong>
-        Vertiefungsfähigkeit bei intrinsischem Interesse
+        Wie stark können Sie sich in interessante Themen vertiefen, bis Zeit und Umgebung verschwinden?
       </div>
     </div>
 
-    <h3>Cluster-Bildung</h3>
+    <h3>Was bedeuten die Prozentwerte?</h3>
+    
     <p>
-      Die 10 Skalen werden zu 4 übergeordneten Clustern zusammengefasst, die verschiedene neurodivergente 
-      Profile abbilden. Die Berechnung erfolgt als <strong>gewichteter Durchschnitt</strong>, da nicht alle 
-      Skalen gleich wichtig für ein Cluster sind.
-    </p>
-
-    <div class="formula-box">
-      <strong>ADHS-Cluster:</strong>
-      = (Aufmerksamkeit × 1.2 + Exekutivfunktionen × 1.2 + Hyperfokus × 0.6) / 3
-      <br><br>
-      <em>Aufmerksamkeit und Exekutive höher gewichtet (Kernsymptome nach DSM-5)</em>
-    </div>
-
-    <div class="formula-box">
-      <strong>Autismus-Cluster:</strong>
-      = (Sensorik × 1.2 + Soziales × 1.2 + Struktur × 0.8) / 3
-      <br><br>
-      <em>Sensorik und Soziales höher gewichtet (Kernsymptome nach DSM-5)</em>
-    </div>
-
-    <div class="formula-box">
-      <strong>Emotionale Verarbeitung:</strong>
-      = (Alexithymie × 1.0 + Emotionsregulation × 1.0) / 2
-      <br><br>
-      <em>Beide gleich gewichtet (tritt bei ADHS und Autismus auf)</em>
-    </div>
-
-    <div class="formula-box">
-      <strong>Kompensation & Belastung:</strong>
-      = (Maskierung × 1.0 + Überlastung × 1.0) / 2
-      <br><br>
-      <em>Beide gleich gewichtet (Sekundärphänomene)</em>
-    </div>
-
-    <h3>Konfidenz - Was bedeutet das?</h3>
-    <p>
-      <strong>Konfidenz beschreibt, wie sicher die Einordnung ist.</strong> Sie wird nicht einfach aus der 
-      Höhe der Werte berechnet, sondern berücksichtigt mehrere Faktoren:
+      Jede Skala wird auf einen Wert zwischen 0% und 100% normiert. Dabei gilt:
     </p>
     
-    <ul style="margin-left: 25px; margin-top: 15px;">
-      <li><strong>Stärke der Ausprägung:</strong> Je höher die Cluster-Scores, desto höher die Basis-Konfidenz</li>
-      <li><strong>Eindeutigkeit:</strong> Ist ein Profil dominant oder gibt es Überlappungen?</li>
-      <li><strong>Muster-Erkennung:</strong> Werden spezifische Kombinationen erkannt?</li>
-      <li><strong>Meta-Daten:</strong> Geschlecht, Symptombeginn, Stress, Diagnosen</li>
-      <li><strong>Kompensation:</strong> Hohe Maskierung kann Werte verschleiern</li>
+    <ul>
+      <li><strong>50%</strong> entspricht dem Bevölkerungsdurchschnitt</li>
+      <li><strong>Unter 50%</strong> bedeutet weniger ausgeprägt als durchschnittlich</li>
+      <li><strong>Über 50%</strong> bedeutet stärker ausgeprägt als durchschnittlich</li>
+      <li><strong>Ab 55%</strong> sprechen wir von "leicht erhöht"</li>
+      <li><strong>Ab 65%</strong> sprechen wir von "deutlich erhöht"</li>
+      <li><strong>Ab 75%</strong> sprechen wir von "stark erhöht"</li>
+      <li><strong>Ab 85%</strong> sprechen wir von "sehr stark erhöht"</li>
     </ul>
+  </section>
 
-    <div class="info-box">
-      <strong>Konfidenz-Stufen:</strong>
-      <ul style="margin-left: 20px; margin-top: 10px;">
-        <li><strong>85-100%:</strong> Sehr hohe Konfidenz - klares, eindeutiges Profil</li>
-        <li><strong>75-84%:</strong> Hohe Konfidenz - deutliche Hinweise</li>
-        <li><strong>60-74%:</strong> Mittlere Konfidenz - wahrscheinliches Profil</li>
-        <li><strong>45-59%:</strong> Niedrige Konfidenz - Tendenzen erkennbar</li>
-        <li><strong><45%:</strong> Sehr niedrig - unklares oder gemischtes Bild</li>
-      </ul>
-    </div>
-
-    <h3>Pattern-Erkennung</h3>
+  <!-- BERECHNUNGSLOGIK -->
+  <section class="method-section">
+    <h2>Wie Ihr Profil berechnet wird</h2>
+    
     <p>
-      Neben den Cluster-Scores analysiert das System spezifische <strong>Muster</strong>, die auf bestimmte 
-      Konstellationen hinweisen:
+      Die Berechnung erfolgt in mehreren Schritten: Aus den 10 einzelnen Skalen werden zunächst 
+      4 übergeordnete Bereiche (Cluster) gebildet. Dann werden Muster (Patterns) erkannt. 
+      Schließlich wird daraus Ihr wahrscheinlichstes Profil mit einer Konfidenz (Zuverlässigkeit) bestimmt.
     </p>
 
-    <ul style="margin-left: 25px; margin-top: 15px;">
-      <li><strong>High Masking:</strong> Maskierung ≥65% + erhöhte soziale/sensorische Werte + Meta-Daten (Geschlecht, Onset)</li>
-      <li><strong>Late Recognition:</strong> Maskierung ≥65% + weiblich/divers + Symptombeginn nicht in Kindheit erkannt</li>
-      <li><strong>Stress Overlay:</strong> Überlastung ≥80% + hoher aktueller Stress</li>
-      <li><strong>AuDHD-spezifisch:</strong> Beide Cluster ≥65% + Hyperfokus ≥65% + Struktur ≥65% + Überlastung ≥65%</li>
-      <li><strong>Traits only:</strong> Durchschnitt 55-65%, kein Einzelwert >78%</li>
-    </ul>
-
-    <h3>Profil-Bestimmung</h3>
+    <h3>Schritt 1: Cluster-Bildung</h3>
+    
     <p>
-      Das System prüft in dieser Reihenfolge, welches Profil am besten passt:
+      <strong>Was ist ein Cluster?</strong> Ein Cluster ist eine Gruppe von zusammengehörigen 
+      Skalen, die gemeinsam einen größeren Bereich beschreiben. Zum Beispiel gehören die Skalen 
+      "Aufmerksamkeit", "Exekutive Funktionen" und "Hyperfokus" alle zum ADHS-Cluster, weil sie 
+      typische ADHS-Merkmale erfassen.
+    </p>
+    
+    <p>
+      Die 10 Skalen werden zu 4 Clustern zusammengefasst. Dabei werden manche Skalen stärker 
+      gewichtet als andere, weil sie diagnostisch aussagekräftiger sind:
+    </p>
+
+    <div class="formula-box">
+      <strong>ADHS-Cluster</strong>
+      = (Aufmerksamkeit × 1.2 + Exekutive Funktionen × 1.2 + Hyperfokus × 0.6) / 3
+    </div>
+
+    <div class="formula-box">
+      <strong>Autismus-Cluster</strong>
+      = (Sensorische Empfindlichkeit × 1.2 + Soziale Wahrnehmung × 1.2 + Struktur × 0.8) / 3
+    </div>
+
+    <div class="formula-box">
+      <strong>Emotionale Verarbeitung</strong>
+      = (Emotionswahrnehmung + Emotionale Regulation) / 2
+    </div>
+
+    <div class="formula-box">
+      <strong>Kompensation & Belastung</strong>
+      = (Maskierung + Überlastung) / 2
+    </div>
+
+    <p>
+      <strong>Warum diese Gewichtung?</strong> Aufmerksamkeit und Exekutive Funktionen sind 
+      Kern-Merkmale von ADHS, deshalb werden sie mit 1.2 gewichtet. Hyperfokus ist ein häufiges, 
+      aber nicht zwingendes Merkmal, daher 0.6. Ähnlich bei Autismus: Sensorik und Soziales sind 
+      Kern-Merkmale (1.2), Struktur ist wichtig aber nicht immer gleich stark (0.8).
+    </p>
+
+    <h3>Schritt 2: Muster-Erkennung (Pattern Detection)</h3>
+    
+    <p>
+      <strong>Was ist ein Pattern?</strong> Ein Pattern (Muster) ist eine spezifische Kombination 
+      von Werten, die auf eine bestimmte Situation oder einen Subtyp hinweist. Das System sucht 
+      nach folgenden Mustern:
+    </p>
+
+    <h4>Hochmaskierung (High Masking)</h4>
+    <p>
+      <strong>Bedingung:</strong> Maskierung ≥ 65% UND (Soziale Wahrnehmung ≥ 65% ODER Sensorische Empfindlichkeit ≥ 65%)
+    </p>
+    <p>
+      <strong>Bedeutung:</strong> Sie investieren sehr viel Energie darin, neurotypisch zu wirken, 
+      besonders in sozialen oder reizintensiven Situationen. Dieses Muster ist häufig bei Frauen 
+      und nicht-binären Menschen, die jahrelang unerkannt blieben.
+    </p>
+
+    <h4>Späte Erkennung (Late Recognition)</h4>
+    <p>
+      <strong>Bedingung:</strong> Maskierung ≥ 65% UND Geschlecht weiblich/divers UND Symptombeginn nicht in der Kindheit
+    </p>
+    <p>
+      <strong>Bedeutung:</strong> Das Muster spricht für langjährige, unerkannte Kompensation. 
+      Oft haben Betroffene Jahrzehnte damit verbracht, sich anzupassen, bevor sie erkannten, 
+      dass sie neurodivergent sind.
+    </p>
+
+    <h4>Stress-Überlagerung (Stress Overlay)</h4>
+    <p>
+      <strong>Bedingung:</strong> Überlastung ≥ 80% UND aktueller Stress nicht niedrig
+    </p>
+    <p>
+      <strong>Bedeutung:</strong> Aktuelle Belastung (Burnout, Trauma, Depression) kann 
+      neurodivergente Merkmale verstärken oder überlagern. Das Profil könnte sich nach 
+      Entlastung verändern.
+    </p>
+
+    <h4>AuDHD-spezifisch</h4>
+    <p>
+      <strong>Bedingung:</strong> ADHS-Cluster ≥ 65% UND Autismus-Cluster ≥ 65% UND 
+      Hyperfokus ≥ 65% UND Struktur ≥ 65% UND Überlastung ≥ 65%
+    </p>
+    <p>
+      <strong>Bedeutung:</strong> Dieses Muster spricht für AuDHD als eigenständiges Profil, 
+      nicht nur als Kombination zweier getrennter Zustände. Die Wechselwirkung zwischen ADHS 
+      und Autismus erzeugt einzigartige Herausforderungen.
+    </p>
+
+    <h4>Traits Only (Neurodivergente Züge)</h4>
+    <p>
+      <strong>Bedingung:</strong> Durchschnitt ≥ 55% UND Durchschnitt < 65% UND höchster Wert < 78%
+    </p>
+    <p>
+      <strong>Bedeutung:</strong> Sie zeigen neurodivergente Merkmale, die aber möglicherweise 
+      nicht stark genug sind, um im Alltag beeinträchtigend zu wirken. Manche Menschen mit 
+      Traits profitieren trotzdem von neurodivergenz-freundlichen Strategien.
+    </p>
+
+    <h3>Schritt 3: Profil-Bestimmung</h3>
+    
+    <p>
+      Das System prüft in dieser Reihenfolge, welches Profil am besten zu Ihren Werten passt:
     </p>
 
     <ol style="margin-left: 25px; margin-top: 15px;">
-      <li><strong>Spezial-Checks:</strong> Alle Werte <35% (Unterdurchschnittlich) oder <55% (Unauffällig)?</li>
-      <li><strong>Hauptprofile:</strong> ADHS, Autismus oder AuDHD mit Konfidenz ≥60%?</li>
-      <li><strong>Overlay-Profile:</strong> Hochmaskierung oder Überlastung dominant?</li>
-      <li><strong>Traits:</strong> Moderate Werte ohne klare Richtung?</li>
-      <li><strong>Gemischt:</strong> Wenn kein Profil die Schwellen erreicht</li>
+      <li>
+        <strong>Einzelne dominante Skala (Single Dominant):</strong><br>
+        Wenn eine einzelne Skala ≥ 85% ist ODER ≥ 75% mit mindestens 15% Abstand zur zweithöchsten Skala, 
+        wird diese Skala als dominant erkannt. Beispiel: Wenn Ihre Maskierung bei 87% liegt und alle 
+        anderen Werte deutlich niedriger sind, ist Ihr Profil "Intensive Maskierung".
+      </li>
+      
+      <li>
+        <strong>Sehr niedrige Werte (Very Low):</strong><br>
+        Wenn alle Werte < 35% liegen, werden keine neurodivergenten Merkmale erkannt.
+      </li>
+      
+      <li>
+        <strong>Unauffällig (Unremarkable):</strong><br>
+        Wenn höchster Wert < 55% und Durchschnitt < 52%, sind die Werte im neurotypischen Bereich.
+      </li>
+      
+      <li>
+        <strong>AuDHD:</strong><br>
+        Wenn sowohl ADHS-Cluster ≥ 65% als auch Autismus-Cluster ≥ 65%.
+      </li>
+      
+      <li>
+        <strong>ADHS:</strong><br>
+        Wenn ADHS-Cluster ≥ 65% (ohne dass Autismus-Cluster gleichzeitig so hoch ist).
+      </li>
+      
+      <li>
+        <strong>Autismus:</strong><br>
+        Wenn Autismus-Cluster ≥ 65% (ohne dass ADHS-Cluster gleichzeitig so hoch ist).
+      </li>
+      
+      <li>
+        <strong>Hochmaskierung:</strong><br>
+        Wenn das High-Masking-Pattern erkannt wurde und die Konfidenz ≥ 60%.
+      </li>
+      
+      <li>
+        <strong>Überlastung/Burnout:</strong><br>
+        Wenn Überlastung ≥ 80% oder das Stress-Overlay-Pattern erkannt wurde.
+      </li>
+      
+      <li>
+        <strong>Neurodivergente Züge (Traits):</strong><br>
+        Wenn Durchschnitt ≥ 55% aber < 65% und kein dominantes Profil erkannt wurde.
+      </li>
+      
+      <li>
+        <strong>Gemischt (Mixed):</strong><br>
+        Wenn keines der obigen Profile eindeutig zutrifft, aber erhöhte Werte vorliegen.
+      </li>
     </ol>
 
-    <p style="margin-top: 20px;">
-      Das Profil mit der <strong>höchsten Konfidenz</strong> wird als Hauptprofil gewählt. Bei gleicher Konfidenz 
-      entscheiden spezifische Regeln (z.B. AuDHD bei beiden Clustern erhöht).
+    <h3>Schritt 4: Konfidenz-Berechnung</h3>
+    
+    <p>
+      <strong>Was ist Konfidenz?</strong> Konfidenz (auch: Zuverlässigkeit oder Sicherheit) 
+      gibt an, wie sicher das System ist, dass das erkannte Profil wirklich zu Ihnen passt. 
+      Die Konfidenz wird als Prozentwert zwischen 0% und 95% angegeben. Höhere Konfidenz bedeutet 
+      eindeutigere Ergebnisse.
     </p>
+
+    <h4>Basis-Konfidenz (abhängig von Cluster-Scores):</h4>
+    <ul>
+      <li>Score ≥ 85% → Basis-Konfidenz 85%</li>
+      <li>Score ≥ 75% → Basis-Konfidenz 75%</li>
+      <li>Score ≥ 65% → Basis-Konfidenz 65%</li>
+      <li>Score ≥ 55% → Basis-Konfidenz 45%</li>
+      <li>Score < 55% → Basis-Konfidenz 25%</li>
+    </ul>
+
+    <h4>Konfidenz wird reduziert bei:</h4>
+    <ul>
+      <li><strong>Überlappung zweier Cluster:</strong> Wenn ADHS- und Autismus-Cluster beide hoch sind, 
+      wird die Konfidenz um 15% reduziert, weil die Unterscheidung schwieriger ist.</li>
+      <li><strong>Stress-Overlay:</strong> Wenn das Stress-Pattern erkannt wurde, wird die Konfidenz 
+      um 10% reduziert, weil aktuelle Belastung die Werte verzerren kann.</li>
+      <li><strong>Hochmaskierung:</strong> Wenn das High-Masking-Pattern erkannt wurde, wird die 
+      Konfidenz um 15% reduziert, weil Maskierung die Selbsteinschätzung verfälschen kann.</li>
+    </ul>
+
+    <h4>AuDHD-spezielle Konfidenz-Berechnung:</h4>
+    <p>
+      Wenn beide Cluster ≥ 65% sind, startet die Konfidenz bei 60%. Sie erhöht sich um:
+    </p>
+    <ul>
+      <li>+20%, wenn beide Cluster ≥ 75%</li>
+      <li>+15%, wenn das AuDHD-spezifische Pattern erkannt wurde</li>
+      <li>+10%, wenn die Differenz zwischen beiden Clustern < 10% (sehr ausgeglichen)</li>
+    </ul>
+
+    <h4>Warum nie 100% Konfidenz?</h4>
+    <p>
+      Selbst bei sehr eindeutigen Profilen liegt die maximale Konfidenz bei 95%. Das ist bewusst so 
+      gewählt, weil Selbsteinschätzungs-Tests prinzipielle Grenzen haben:
+    </p>
+    <ul>
+      <li>Menschen vergleichen sich mit unterschiedlichen Bezugsrahmen (Familie, Freunde, Arbeit)</li>
+      <li>Maskierung kann die Selbstwahrnehmung verzerren</li>
+      <li>Aktuelle Belastung beeinflusst die Antworten</li>
+      <li>Manche Merkmale sind schwer selbst einzuschätzen</li>
+      <li>Komorbide Zustände (z.B. Depression, Angst) können das Bild überlagern</li>
+    </ul>
   </section>
 
-  <!-- TEIL 2: INDIVIDUELLE BERECHNUNG -->
+  <!-- PROFILE IM ALLTAG -->
   <section class="method-section">
-    <h2>2. Ihre individuelle Berechnung</h2>
+    <h2>Profile im Alltag – Was bedeutet Ihr Ergebnis?</h2>
     
-    <div id="personal-calculation">
-      <p style="text-align: center; padding: 40px; color: var(--text-secondary);">
-        Ihre persönlichen Berechnungsdetails werden hier angezeigt, sobald die Daten geladen sind...
+    <p>
+      In diesem Abschnitt erklären wir, was die verschiedenen Profile konkret bedeuten und wie sie 
+      sich im Alltag zeigen. Für jedes Profil beschreiben wir, was höhere und niedrigere Werte bedeuten – 
+      nicht als starre Diagnose, sondern als Orientierung für Ihre eigenen Erfahrungen.
+    </p>
+
+    <div id="profile-explanations">
+      <!-- Wird dynamisch mit JavaScript gefüllt -->
+    </div>
+
+    <!-- Static explanations as fallback -->
+    <div class="profile-explain-box">
+      <h4>ADHS-Profil</h4>
+      
+      <div class="profile-direction">
+        <h5>Was bedeuten höhere Werte?</h5>
+        <p>
+          Aufmerksamkeit kostet Sie deutlich mehr Energie als den meisten Menschen. Ihr Gehirn sucht 
+          ständig nach interessanten Reizen – Routine-Aufgaben fühlen sich an, als würden Sie gegen 
+          eine unsichtbare Wand arbeiten. Das ist keine Willensschwäche, sondern Neurologie: Ihr 
+          Dopamin-System funktioniert anders. Interesse ist Ihr Treibstoff, ohne ihn läuft der Motor 
+          schwer.
+        </p>
+        <p>
+          Planung und Organisation kosten Sie mehr Kraft. Was andere nebenbei erledigen – Termine 
+          im Kopf behalten, Prioritäten setzen, Impulse zurückhalten – verbraucht bei Ihnen bewusste 
+          Anstrengung. Gleichzeitig können Sie in Themen, die Sie faszinieren, vollständig versinken 
+          (Hyperfokus). Zeit verschwindet, Bedürfnisse werden vergessen. Diese intensive Vertiefung 
+          ist eine echte Stärke – viele erleben sie als Flow oder Superkraft.
+        </p>
+        <p>
+          Im Alltag bedeutet das: Sie brauchen externe Hilfsmittel (Timer, Listen, Erinnerungen), 
+          klare Strukturen, die Sie nicht selbst aufrechterhalten müssen, und die Erlaubnis, Ihre 
+          Energie gezielt auf interessante Projekte zu lenken, statt sich durch uninteressante zu quälen.
+        </p>
+      </div>
+
+      <div class="profile-direction">
+        <h5>Was bedeuten niedrigere Werte?</h5>
+        <p>
+          Aufmerksamkeit und Konzentration kosten Sie ähnlich viel Energie wie durchschnittlich. Sie 
+          können sich auch auf weniger interessante Aufgaben fokussieren, ohne dass es sich wie ein 
+          innerer Kampf anfühlt. Planung, Organisation und Impulskontrolle funktionieren, ohne dass 
+          Sie ständig gegensteuern müssen.
+        </p>
+        <p>
+          Das bedeutet nicht, dass Sie nie abgelenkt sind oder Schwierigkeiten haben – aber es passiert 
+          seltener und kostet weniger Energie als bei Menschen mit ADHS. Ihr Dopamin-System reagiert 
+          relativ gleichmäßig auf verschiedene Aufgaben, nicht nur auf hochinteressante.
+        </p>
+      </div>
+    </div>
+
+    <div class="profile-explain-box">
+      <h4>Autismus-Profil</h4>
+      
+      <div class="profile-direction">
+        <h5>Was bedeuten höhere Werte?</h5>
+        <p>
+          Reize – Geräusche, Licht, Gerüche, Berührungen – erreichen Sie ungefiltert und intensiver 
+          als bei neurotypischen Menschen. Was anderen nicht auffällt, kann für Sie überwältigend sein. 
+          Das ist keine Überempfindlichkeit im Sinne von "zu sensibel", sondern ein neurologischer 
+          Unterschied in der Reizverarbeitung. Ihr Nervensystem hat weniger Filter.
+        </p>
+        <p>
+          Soziale Situationen kosten Sie deutlich mehr Energie, weil Sie soziale Signale eher analytisch 
+          als intuitiv verarbeiten müssen. Was andere unbewusst verstehen – Mimik, Tonfall, ungeschriebene 
+          Regeln – müssen Sie aktiv entschlüsseln. Das ist anstrengend. Nach sozialen Ereignissen brauchen 
+          Sie oft Ruhe, um sich zu erholen.
+        </p>
+        <p>
+          Struktur und Vorhersehbarkeit sind für Sie kein Luxus, sondern Schutz. Feste Abläufe geben 
+          Sicherheit in einer oft chaotischen Welt. Veränderungen – selbst kleine – kosten Energie, 
+          weil Ihr Gehirn sich neu orientieren muss. Das ist kein Zwang oder Sturheit, sondern ein 
+          echtes Bedürfnis.
+        </p>
+        <p>
+          Im Alltag bedeutet das: Reizabschirmung (Kopfhörer, Sonnenbrillen, ruhige Orte) ist notwendige 
+          Selbstfürsorge. Soziale Pausen sind legitim. Routinen zu schützen ist wichtig. Und: Ihre Art, 
+          die Welt wahrzunehmen, ist anders, nicht falsch.
+        </p>
+      </div>
+
+      <div class="profile-direction">
+        <h5>Was bedeuten niedrigere Werte?</h5>
+        <p>
+          Reize belasten Sie nicht überdurchschnittlich. Soziale Situationen kosten Sie ähnlich viel 
+          Energie wie den meisten Menschen – Sie verstehen soziale Signale eher intuitiv als analytisch. 
+          Veränderungen und Unvorhersehbarkeit sind herausfordernd, aber nicht erschöpfend.
+        </p>
+        <p>
+          Das bedeutet nicht, dass Sie nie überfordert sind – aber es passiert seltener und in geringerem 
+          Ausmaß als bei autistischen Menschen. Ihr Nervensystem filtert Reize durchschnittlich gut, 
+          und soziale Regeln erschließen sich Ihnen meist nebenbei.
+        </p>
+      </div>
+    </div>
+
+    <div class="profile-explain-box">
+      <h4>AuDHD-Profil</h4>
+      
+      <div class="profile-direction">
+        <h5>Was bedeuten höhere Werte?</h5>
+        <p>
+          Sie erleben eine einzigartige Kombination: Die Aufmerksamkeit sucht ständig nach Reizen (ADHS), 
+          während gleichzeitig Reize ungefiltert und intensiv ankommen (Autismus). Das kann sich anfühlen 
+          wie ein Motor, der gleichzeitig Gas gibt und bremst. Einerseits der Drang nach Stimulation, 
+          andererseits schnelle Überlastung.
+        </p>
+        <p>
+          Struktur ist wichtig für Sie (Autismus), aber gleichzeitig schwer aufrechtzuerhalten (ADHS). 
+          Sie brauchen Routinen, um sich sicher zu fühlen, aber Ihr ADHS macht es schwer, sie konsequent 
+          zu befolgen. Dieser innere Widerspruch ist anstrengend – es fühlt sich an, als würden Sie gegen 
+          sich selbst arbeiten.
+        </p>
+        <p>
+          Hyperfokus ist bei AuDHD oft besonders intensiv. Wenn ein Thema sowohl Ihre Aufmerksamkeit fesselt 
+          (ADHS) als auch Ihre Detailtiefe anspricht (Autismus), können Sie stundenlang versinken. Das ist 
+          eine enorme Stärke – gleichzeitig kann der "Ausstieg" danach erschöpfend sein.
+        </p>
+        <p>
+          Soziale Situationen sind doppelt anstrengend: Sie müssen soziale Signale analytisch verarbeiten 
+          (Autismus) und gleichzeitig Ihre Impulse und Ablenkbarkeit kontrollieren (ADHS). Maskierung kostet 
+          Sie deshalb oft mehr Energie als bei Menschen, die nur ADHS oder nur Autismus haben.
+        </p>
+        <p>
+          Im Alltag bedeutet das: Sie brauchen flexible Strukturen – Routinen, die Spielraum lassen. 
+          Reizschutz UND Stimulation, je nach Situation. Sehr bewusste Energieverwaltung. Und vor allem: 
+          Das Wissen, dass AuDHD kein "doppeltes Problem" ist, sondern eine eigene Neurologie mit eigenen 
+          Stärken und Herausforderungen.
+        </p>
+      </div>
+
+      <div class="profile-direction">
+        <h5>Was bedeuten niedrigere Werte?</h5>
+        <p>
+          Sie erleben nicht die intensive Wechselwirkung zwischen ADHS- und Autismus-Merkmalen. Wenn Ihre 
+          Werte in beiden Bereichen niedriger liegen, kostet Sie weder Aufmerksamkeitssteuerung noch 
+          Reizverarbeitung überdurchschnittlich viel Energie. Strukturbedürfnis und Ablenkbarkeit stehen 
+          nicht im Widerspruch zueinander.
+        </p>
+      </div>
+    </div>
+
+    <div class="profile-explain-box">
+      <h4>Hochmaskierungs-Profil (High Masking)</h4>
+      
+      <div class="profile-direction">
+        <h5>Was bedeuten höhere Werte?</h5>
+        <p>
+          Sie haben jahrelang – vielleicht Jahrzehnte – gelernt, Ihre natürlichen Reaktionen zu unterdrücken 
+          und neurotypisch zu wirken. Das passiert oft unbewusst: Sie beobachten andere, kopieren deren 
+          Verhalten, verstecken Ihre Überforderung. Nach außen funktionieren Sie perfekt. Innen sind Sie 
+          erschöpft.
+        </p>
+        <p>
+          Maskierung ist keine bewusste Täuschung, sondern ein Überlebensmechanismus. Viele haben früh 
+          gelernt, dass "anders sein" nicht sicher ist – also haben Sie sich angepasst. Das Problem: 
+          Maskierung verbraucht enorme Energie. Jeden Tag. Oft merken Sie es erst, wenn Sie zusammenbrechen 
+          (Burnout, Depression, Erschöpfung).
+        </p>
+        <p>
+          Besonders häufig ist Hochmaskierung bei Frauen und nicht-binären Menschen, weil sie stärkeren 
+          sozialen Druck erleben, "sozial kompetent" zu wirken. Viele wurden erst spät (im Erwachsenenalter) 
+          oder gar nicht diagnostiziert, weil ihre Neurodivergenz hinter der Maske unsichtbar blieb.
+        </p>
+        <p>
+          Im Alltag bedeutet das: Sie brauchen sichere Räume, in denen Sie die Maske ablegen dürfen. 
+          Authentisch sein – stimmen, bewegen, reagieren wie es sich natürlich anfühlt – ohne Angst vor 
+          Ablehnung. Weniger maskieren ist keine Faulheit, sondern Selbstschutz. Es kann den Unterschied 
+          zwischen Erschöpfung und Erholung machen.
+        </p>
+      </div>
+
+      <div class="profile-direction">
+        <h5>Was bedeuten niedrigere Werte?</h5>
+        <p>
+          Sie investieren weniger Energie in bewusste Anpassung. Entweder wurden Sie früh akzeptiert, wie 
+          Sie sind, oder Ihre neurodivergenten Merkmale sind weniger stark ausgeprägt, sodass Maskierung 
+          nicht notwendig war. Soziale Situationen kosten Sie Energie, aber nicht primär durch das Verstecken 
+          Ihrer natürlichen Reaktionen.
+        </p>
+      </div>
+    </div>
+
+    <div class="profile-explain-box">
+      <h4>Überlastungs-/Burnout-Profil</h4>
+      
+      <div class="profile-direction">
+        <h5>Was bedeuten höhere Werte?</h5>
+        <p>
+          Sie sind an oder über Ihrer Belastungsgrenze. Reize, Anforderungen, Veränderungen – alles fühlt 
+          sich zu viel an. Ihre Batterie ist leer, und selbst kleine Dinge kosten unverhältnismäßig viel 
+          Kraft. Das kann verschiedene Ursachen haben: Chronische Überforderung, Trauma, Depression, oder 
+          jahrelange Maskierung neurodivergenter Merkmale.
+        </p>
+        <p>
+          Wichtig: Hohe Überlastungswerte können sowohl Ursache als auch Folge von Neurodivergenz sein. 
+          Manche Menschen sind neurodivergent UND überlastet – die Neurodivergenz führte zur Überlastung, 
+          weil die Welt nicht für sie gemacht ist. Andere erleben Überlastung aus anderen Gründen (z.B. Trauma), 
+          die dann neurodivergenz-ähnliche Symptome erzeugen kann.
+        </p>
+        <p>
+          Im Alltag bedeutet das: Priorität hat Entlastung. Weniger Verpflichtungen, mehr Pausen, Reizschutz. 
+          Wenn nach Entlastung die Werte sinken, war Überlastung wahrscheinlich primär. Wenn sie hoch bleiben, 
+          ist Neurodivergenz wahrscheinlich die Grundlage. Eine Re-Evaluation nach einigen Monaten Erholung 
+          kann sinnvoll sein.
+        </p>
+      </div>
+
+      <div class="profile-direction">
+        <h5>Was bedeuten niedrigere Werte?</h5>
+        <p>
+          Sie erreichen Ihre Belastungsgrenze nicht schneller als durchschnittlich. Reize, Anforderungen 
+          und Veränderungen sind herausfordernd, aber nicht chronisch überfordernd. Sie haben Zugang zu 
+          Erholung und können Ihre Energie relativ gut regulieren.
+        </p>
+      </div>
+    </div>
+
+    <div class="profile-explain-box">
+      <h4>Traits-Profil (Neurodivergente Züge)</h4>
+      
+      <div class="profile-direction">
+        <h5>Was bedeuten höhere Werte?</h5>
+        <p>
+          Sie zeigen neurodivergente Merkmale, aber in moderater Ausprägung. Manche Bereiche kosten Sie 
+          mehr Energie als durchschnittlich, andere weniger. Insgesamt bewegen Sie sich zwischen 
+          "neurotypisch" und "klar neurodivergent" – eine Grauzone, die oft übersehen wird.
+        </p>
+        <p>
+          Das kann bedeuten: Sie sind neurodivergent, aber Ihre Merkmale sind gut kompensierbar oder werden 
+          durch unterstützende Umgebungen abgefedert. Oder: Sie haben neurodivergente Züge, ohne die vollen 
+          diagnostischen Kriterien zu erfüllen. Beides ist gültig.
+        </p>
+        <p>
+          Im Alltag bedeutet das: Auch moderate Merkmale können belastend sein, besonders in stressigen Phasen. 
+          Strategien aus der Neurodivergenz-Community (Reizschutz, Struktur, Selbstregulation) können hilfreich 
+          sein, auch ohne formale Diagnose. Ihre Erfahrungen sind real und verdienen Anerkennung.
+        </p>
+      </div>
+
+      <div class="profile-direction">
+        <h5>Was bedeuten niedrigere Werte?</h5>
+        <p>
+          Ihre Werte liegen im neurotypischen Bereich. Aufmerksamkeit, Reizverarbeitung, soziale Interaktion – 
+          all das kostet Sie ähnlich viel Energie wie den meisten Menschen. Das bedeutet nicht, dass Sie nie 
+          Schwierigkeiten haben, aber sie sind nicht neurologisch bedingt.
+        </p>
+      </div>
+    </div>
+
+    <div class="profile-explain-box">
+      <h4>Single Dominant (Einzelne dominante Skala)</h4>
+      
+      <div class="profile-direction">
+        <h5>Was bedeutet dieses Profil?</h5>
+        <p>
+          Eine einzelne Skala ist bei Ihnen extrem hoch (≥ 85% oder ≥ 75% mit großem Abstand zu allen anderen). 
+          Das bedeutet: Dieser eine Bereich prägt Ihren Alltag am stärksten, während die anderen Werte durchschnittlich 
+          oder nur leicht erhöht sind.
+        </p>
+        <p>
+          Beispiele: Sehr hohe Maskierung (aber keine anderen autistischen Merkmale stark ausgeprägt). Extreme 
+          sensorische Empfindlichkeit (aber sozial und strukturell unauffällig). Intensiver Hyperfokus (aber 
+          Aufmerksamkeit ansonsten gut steuerbar).
+        </p>
+        <p>
+          Im Alltag bedeutet das: Sie brauchen gezielte Strategien für diesen einen Bereich. Gleichzeitig ist 
+          wichtig zu verstehen, dass eine einzelne dominante Skala auch Teil eines größeren neurodivergenten 
+          Bildes sein kann – nur eben weniger gleichmäßig verteilt.
+        </p>
+      </div>
+    </div>
+
+    <div class="profile-explain-box">
+      <h4>Gemischtes Profil (Mixed)</h4>
+      
+      <div class="profile-direction">
+        <h5>Was bedeutet dieses Profil?</h5>
+        <p>
+          Ihre Werte sind erhöht, aber kein einzelnes Profil dominiert klar. Das kann verschiedene Gründe haben: 
+          Komorbide Zustände (z.B. ADHS + Angst + Trauma), atypische Neurodivergenz, oder eine Mischung aus 
+          mehreren Faktoren, die sich nicht eindeutig zuordnen lassen.
+        </p>
+        <p>
+          Im Alltag bedeutet das: Sie brauchen individuelle Strategien, die auf Ihre spezifische Kombination 
+          zugeschnitten sind. Ein "gemischtes" Profil ist nicht weniger gültig – es zeigt nur, dass Ihr 
+          Erleben komplexer ist als die Standard-Kategorien.
+        </p>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- DEINE BERECHNUNG -->
+  <section class="method-section">
+    <h2>Ihre persönliche Berechnung</h2>
+    
+    <p>
+      Hier sehen Sie, wie genau Ihre Testergebnisse zu Ihrem Profil führten. Die Berechnung erfolgt 
+      Schritt für Schritt – von Ihren Rohwerten über die Cluster-Bildung bis zur finalen Profil-Bestimmung.
+    </p>
+
+    <div id="personal-calculation" class="calc-steps">
+      <p style="color: var(--text-secondary); text-align: center;">
+        Keine Testdaten gefunden. Bitte führen Sie zuerst den Test durch.
       </p>
     </div>
   </section>
 
-  <!-- TEIL 3: LIMITATIONEN -->
+  <!-- GRENZEN & NUTZUNG -->
   <section class="method-section">
-    <h2>3. Limitationen & Grenzen</h2>
-    
+    <h2>Grenzen dieses Tests & wie Sie die Ergebnisse nutzen können</h2>
+
     <div class="limitation-box">
-      <h3>Was dieser Test NICHT kann:</h3>
+      <h3>Wichtige Einschränkungen</h3>
+      
+      <p>
+        Dieser Test ist ein Screening-Tool, keine Diagnose. Er kann Hinweise geben, aber niemals eine 
+        professionelle Einschätzung durch Fachpersonen (Psychiater, Psychologen, Neuropsychologen) ersetzen.
+      </p>
+
       <ul>
-        <li><strong>Keine formale Diagnose:</strong> Diagnosen nach ICD-11 oder DSM-5 können nur durch qualifizierte 
-        Fachpersonen (Psychiatrie, Neurologie, spezialisierte Psychologie) nach umfassender Untersuchung gestellt werden.</li>
+        <li>
+          <strong>Selbsteinschätzung hat Grenzen:</strong> Wie Sie sich sehen, kann von außen anders wirken. 
+          Maskierung verzerrt die Selbstwahrnehmung. Aktuelle Belastung beeinflusst die Antworten. 
+          Manche Merkmale sind schwer selbst zu beurteilen.
+        </li>
         
-        <li><strong>Keine 100% Sicherheit:</strong> Selbsteinschätzung unterliegt vielen Einflüssen: Tagesform, 
-        Vergleichsmaßstäbe, Selbstwahrnehmung, aktuelle Belastung. Konfidenzwerte spiegeln diese Unsicherheit wider.</li>
+        <li>
+          <strong>Keine Differenzierung zwischen Ursachen:</strong> Der Test misst Symptome, nicht Ursachen. 
+          Hohe Werte können durch Neurodivergenz entstehen, aber auch durch Trauma, Angst, Depression, 
+          Burnout oder chronische Erkrankungen. Der Test kann diese nicht sicher unterscheiden.
+        </li>
         
-        <li><strong>Keine Differentialdiagnostik:</strong> Viele Symptome überlappen mit anderen Zuständen (Depression, 
-        Angst, Trauma, Burnout, chronische Erkrankungen). Der Test kann diese nicht sicher unterscheiden.</li>
+        <li>
+          <strong>Keine Verlaufsbeobachtung:</strong> Der Test erfasst einen Zeitpunkt. Neurodivergenz ist 
+          stabil über die Lebensspanne, während Belastung schwankt. Bei unklaren Ergebnissen kann eine 
+          Re-Evaluation nach Entlastung sinnvoll sein.
+        </li>
         
-        <li><strong>Keine Verlaufsbeobachtung:</strong> Der Test erfasst einen Zeitpunkt. Neurodivergenz ist aber stabil 
-        über die Lebensspanne, während Belastung schwankt. Bei unklaren Ergebnissen kann Re-Evaluation nach Entlastung 
-        sinnvoll sein.</li>
-        
-        <li><strong>Kulturelle Einflüsse:</strong> Der Test ist auf westeuropäische Normen kalibriert. Kulturelle 
-        Unterschiede in Sozialverhalten, Emotionsausdruck oder Selbstwahrnehmung werden nicht vollständig abgebildet.</li>
+        <li>
+          <strong>Kulturelle Einflüsse:</strong> Der Test ist auf westeuropäische Normen kalibriert. 
+          Kulturelle Unterschiede in Sozialverhalten, Emotionsausdruck oder Selbstwahrnehmung werden 
+          nicht vollständig abgebildet.
+        </li>
       </ul>
     </div>
 
-    <h3>Warum keine 100% Konfidenz möglich ist:</h3>
-    <p>
-      Selbst bei sehr klaren Profilen liegt die maximale Konfidenz bei ~95%. Dies ist bewusst so gewählt, 
-      weil Selbsteinschätzungs-Tests prinzipielle Grenzen haben:
-    </p>
-
-    <ul style="margin-left: 25px; margin-top: 15px;">
-      <li>Menschen vergleichen sich mit ihrem Umfeld (unterschiedliche Bezugsrahmen)</li>
-      <li>Maskierung kann Selbstwahrnehmung verzerren</li>
-      <li>Aktuelle Belastung beeinflusst Antworten</li>
-      <li>Manche Merkmale sind nicht direkt erfragbar (z.B. motorische Koordination)</li>
-      <li>Komorbide Zustände können Bild überlagern</li>
+    <h3>Wie Sie die Ergebnisse nutzen können</h3>
+    
+    <ul>
+      <li>
+        <strong>Selbstreflexion:</strong> Erkennen von Mustern und Zusammenhängen im eigenen Erleben. 
+        Der Test kann helfen zu verstehen, warum bestimmte Situationen anstrengender sind als für andere.
+      </li>
+      
+      <li>
+        <strong>Gesprächsgrundlage:</strong> Konkrete Anhaltspunkte für Gespräche mit Ärzten, Therapeuten 
+        oder anderen Fachpersonen. Die Ergebnisse können als Ausgangspunkt dienen, nicht als Beweis.
+      </li>
+      
+      <li>
+        <strong>Alltagsanpassungen:</strong> Auch ohne formale Diagnose können passende Strategien hilfreich 
+        sein. Wenn Reizschutz, Struktur oder Fidget-Tools Ihnen helfen, dürfen Sie sie nutzen – unabhängig 
+        davon, ob Sie eine Diagnose haben oder nicht.
+      </li>
+      
+      <li>
+        <strong>Validierung:</strong> Bestätigung, dass Ihre Erfahrungen real und nachvollziehbar sind. 
+        Viele Menschen erleben nach dem Test Erleichterung, weil sie verstehen, dass ihre Schwierigkeiten 
+        einen Namen und eine Erklärung haben.
+      </li>
+      
+      <li>
+        <strong>Community:</strong> Orientierung, ob Austausch mit neurodivergenten Menschen relevant sein 
+        könnte. Selbsthilfegruppen, Foren oder lokale Treffen können wertvolle Unterstützung bieten.
+      </li>
     </ul>
 
-    <h3>Wie Sie die Ergebnisse nutzen können:</h3>
-    <ul style="margin-left: 25px; margin-top: 15px;">
-      <li><strong>Selbstreflexion:</strong> Erkennen von Mustern und Zusammenhängen im eigenen Erleben</li>
-      <li><strong>Gesprächsgrundlage:</strong> Konkrete Anhaltspunkte für Gespräche mit Fachpersonen</li>
-      <li><strong>Alltagsanpassungen:</strong> Auch ohne Diagnose können passende Strategien hilfreich sein</li>
-      <li><strong>Validierung:</strong> Bestätigung, dass Ihre Erfahrungen real und nachvollziehbar sind</li>
-      <li><strong>Community:</strong> Orientierung, ob Austausch mit neurodivergenten Menschen relevant sein könnte</li>
+    <h3>Nächste Schritte</h3>
+    
+    <p>
+      Wenn Ihre Ergebnisse auf Neurodivergenz hindeuten und Sie im Alltag Schwierigkeiten erleben, 
+      können folgende Schritte hilfreich sein:
+    </p>
+
+    <ul>
+      <li>
+        <strong>Fachliche Einschätzung einholen:</strong> Sprechen Sie mit Ihrem Hausarzt oder suchen 
+        Sie direkt Kontakt zu Fachpersonen (Psychiater, Psychologen mit Schwerpunkt Neurodivergenz, 
+        spezialisierte Ambulanzen).
+      </li>
+      
+      <li>
+        <strong>Selbsthilfe & Community:</strong> Tauschen Sie sich mit anderen neurodivergenten Menschen 
+        aus. Oft finden Sie dort mehr praktische Tipps als in Lehrbüchern.
+      </li>
+      
+      <li>
+        <strong>Strategien ausprobieren:</strong> Experimentieren Sie mit Reizschutz, Strukturhilfen, 
+        Selbstregulations-Techniken. Was hilft, ist richtig – unabhängig davon, ob es "offiziell" 
+        empfohlen wurde.
+      </li>
+      
+      <li>
+        <strong>Selbstakzeptanz stärken:</strong> Ihre Art zu denken, zu fühlen und die Welt wahrzunehmen 
+        ist gültig. Neurodivergenz ist eine andere, nicht falsche Neurologie.
+      </li>
     </ul>
   </section>
 
@@ -516,32 +1088,301 @@ body {
 </div>
 
 <script type="module">
-// Daten aus localStorage laden
+// =====================================================
+// DATEN AUS LOCALSTORAGE LADEN
+// =====================================================
+
 let profileData = null;
 
 try {
   const dataString = localStorage.getItem('neurodivergenz_profile_data');
   if (!dataString) {
-    document.getElementById('personal-calculation').innerHTML = 
-      '<p style="color: #ef4444; text-align: center;">Keine Testdaten gefunden. Bitte führen Sie zuerst den Test durch.</p>';
+    console.log('Keine Testdaten gefunden');
   } else {
     const data = JSON.parse(dataString);
     profileData = data;
     renderPersonalCalculation(data);
+    renderProfileExplanations(data);
   }
 } catch (error) {
   console.error('Fehler beim Laden:', error);
 }
 
+// =====================================================
+// PROFIL-ERKLÄRUNGEN MIT DYNAMISCHEN WERTEN
+// =====================================================
+
+function renderProfileExplanations(data) {
+  const container = document.getElementById('profile-explanations');
+  if (!container || !data.scores) return;
+
+  const scores = data.scores;
+  const profileResult = data.profileResult || {};
+  
+  // ADHS-Cluster berechnen
+  const adhdScore = Math.round(
+    (scores.attention * 1.2 + scores.executive * 1.2 + scores.hyperfocus * 0.6) / 3
+  );
+  
+  // Autismus-Cluster berechnen
+  const autismScore = Math.round(
+    (scores.sensory * 1.2 + scores.social * 1.2 + scores.structure * 0.8) / 3
+  );
+  
+  // Emotional Processing
+  const emotionalScore = Math.round(
+    (scores.alexithymia + scores.emotreg) / 2
+  );
+  
+  // Compensation
+  const compensationScore = Math.round(
+    (scores.masking + scores.overload) / 2
+  );
+
+  let html = '';
+
+  // ADHS
+  html += `
+    <div class="profile-explain-box">
+      <h4>ADHS-Profil</h4>
+      <div class="profile-result-display">Ihr ADHS-Cluster: ${adhdScore}%</div>
+      
+      <div class="profile-direction">
+        <h5>Was bedeuten höhere Werte?</h5>
+        <p>
+          Aufmerksamkeit kostet Sie deutlich mehr Energie als den meisten Menschen. Ihr Gehirn sucht 
+          ständig nach interessanten Reizen – Routine-Aufgaben fühlen sich an, als würden Sie gegen 
+          eine unsichtbare Wand arbeiten. Das ist keine Willensschwäche, sondern Neurologie: Ihr 
+          Dopamin-System funktioniert anders. Interesse ist Ihr Treibstoff, ohne ihn läuft der Motor 
+          schwer.
+        </p>
+        <p>
+          Planung und Organisation kosten Sie mehr Kraft. Was andere nebenbei erledigen – Termine 
+          im Kopf behalten, Prioritäten setzen, Impulse zurückhalten – verbraucht bei Ihnen bewusste 
+          Anstrengung. Gleichzeitig können Sie in Themen, die Sie faszinieren, vollständig versinken 
+          (Hyperfokus). Zeit verschwindet, Bedürfnisse werden vergessen. Diese intensive Vertiefung 
+          ist eine echte Stärke – viele erleben sie als Flow oder Superkraft.
+        </p>
+        <p>
+          Im Alltag bedeutet das: Sie brauchen externe Hilfsmittel (Timer, Listen, Erinnerungen), 
+          klare Strukturen, die Sie nicht selbst aufrechterhalten müssen, und die Erlaubnis, Ihre 
+          Energie gezielt auf interessante Projekte zu lenken, statt sich durch uninteressante zu quälen.
+        </p>
+      </div>
+
+      <div class="profile-direction">
+        <h5>Was bedeuten niedrigere Werte?</h5>
+        <p>
+          Aufmerksamkeit und Konzentration kosten Sie ähnlich viel Energie wie durchschnittlich. Sie 
+          können sich auch auf weniger interessante Aufgaben fokussieren, ohne dass es sich wie ein 
+          innerer Kampf anfühlt. Planung, Organisation und Impulskontrolle funktionieren, ohne dass 
+          Sie ständig gegensteuern müssen.
+        </p>
+        <p>
+          Das bedeutet nicht, dass Sie nie abgelenkt sind oder Schwierigkeiten haben – aber es passiert 
+          seltener und kostet weniger Energie als bei Menschen mit ADHS. Ihr Dopamin-System reagiert 
+          relativ gleichmäßig auf verschiedene Aufgaben, nicht nur auf hochinteressante.
+        </p>
+      </div>
+    </div>
+  `;
+
+  // Autismus
+  html += `
+    <div class="profile-explain-box">
+      <h4>Autismus-Profil</h4>
+      <div class="profile-result-display">Ihr Autismus-Cluster: ${autismScore}%</div>
+      
+      <div class="profile-direction">
+        <h5>Was bedeuten höhere Werte?</h5>
+        <p>
+          Reize – Geräusche, Licht, Gerüche, Berührungen – erreichen Sie ungefiltert und intensiver 
+          als bei neurotypischen Menschen. Was anderen nicht auffällt, kann für Sie überwältigend sein. 
+          Das ist keine Überempfindlichkeit im Sinne von "zu sensibel", sondern ein neurologischer 
+          Unterschied in der Reizverarbeitung. Ihr Nervensystem hat weniger Filter.
+        </p>
+        <p>
+          Soziale Situationen kosten Sie deutlich mehr Energie, weil Sie soziale Signale eher analytisch 
+          als intuitiv verarbeiten müssen. Was andere unbewusst verstehen – Mimik, Tonfall, ungeschriebene 
+          Regeln – müssen Sie aktiv entschlüsseln. Das ist anstrengend. Nach sozialen Ereignissen brauchen 
+          Sie oft Ruhe, um sich zu erholen.
+        </p>
+        <p>
+          Struktur und Vorhersehbarkeit sind für Sie kein Luxus, sondern Schutz. Feste Abläufe geben 
+          Sicherheit in einer oft chaotischen Welt. Veränderungen – selbst kleine – kosten Energie, 
+          weil Ihr Gehirn sich neu orientieren muss. Das ist kein Zwang oder Sturheit, sondern ein 
+          echtes Bedürfnis.
+        </p>
+        <p>
+          Im Alltag bedeutet das: Reizabschirmung (Kopfhörer, Sonnenbrillen, ruhige Orte) ist notwendige 
+          Selbstfürsorge. Soziale Pausen sind legitim. Routinen zu schützen ist wichtig. Und: Ihre Art, 
+          die Welt wahrzunehmen, ist anders, nicht falsch.
+        </p>
+      </div>
+
+      <div class="profile-direction">
+        <h5>Was bedeuten niedrigere Werte?</h5>
+        <p>
+          Reize belasten Sie nicht überdurchschnittlich. Soziale Situationen kosten Sie ähnlich viel 
+          Energie wie den meisten Menschen – Sie verstehen soziale Signale eher intuitiv als analytisch. 
+          Veränderungen und Unvorhersehbarkeit sind herausfordernd, aber nicht erschöpfend.
+        </p>
+        <p>
+          Das bedeutet nicht, dass Sie nie überfordert sind – aber es passiert seltener und in geringerem 
+          Ausmaß als bei autistischen Menschen. Ihr Nervensystem filtert Reize durchschnittlich gut, 
+          und soziale Regeln erschließen sich Ihnen meist nebenbei.
+        </p>
+      </div>
+    </div>
+  `;
+
+  // AuDHD
+  const audhd = Math.round((adhdScore + autismScore) / 2);
+  html += `
+    <div class="profile-explain-box">
+      <h4>AuDHD-Profil</h4>
+      <div class="profile-result-display">ADHS: ${adhdScore}% | Autismus: ${autismScore}% | Durchschnitt: ${audhd}%</div>
+      
+      <div class="profile-direction">
+        <h5>Was bedeuten höhere Werte?</h5>
+        <p>
+          Sie erleben eine einzigartige Kombination: Die Aufmerksamkeit sucht ständig nach Reizen (ADHS), 
+          während gleichzeitig Reize ungefiltert und intensiv ankommen (Autismus). Das kann sich anfühlen 
+          wie ein Motor, der gleichzeitig Gas gibt und bremst. Einerseits der Drang nach Stimulation, 
+          andererseits schnelle Überlastung.
+        </p>
+        <p>
+          Struktur ist wichtig für Sie (Autismus), aber gleichzeitig schwer aufrechtzuerhalten (ADHS). 
+          Sie brauchen Routinen, um sich sicher zu fühlen, aber Ihr ADHS macht es schwer, sie konsequent 
+          zu befolgen. Dieser innere Widerspruch ist anstrengend – es fühlt sich an, als würden Sie gegen 
+          sich selbst arbeiten.
+        </p>
+        <p>
+          Hyperfokus ist bei AuDHD oft besonders intensiv. Wenn ein Thema sowohl Ihre Aufmerksamkeit fesselt 
+          (ADHS) als auch Ihre Detailtiefe anspricht (Autismus), können Sie stundenlang versinken. Das ist 
+          eine enorme Stärke – gleichzeitig kann der "Ausstieg" danach erschöpfend sein.
+        </p>
+        <p>
+          Soziale Situationen sind doppelt anstrengend: Sie müssen soziale Signale analytisch verarbeiten 
+          (Autismus) und gleichzeitig Ihre Impulse und Ablenkbarkeit kontrollieren (ADHS). Maskierung kostet 
+          Sie deshalb oft mehr Energie als bei Menschen, die nur ADHS oder nur Autismus haben.
+        </p>
+        <p>
+          Im Alltag bedeutet das: Sie brauchen flexible Strukturen – Routinen, die Spielraum lassen. 
+          Reizschutz UND Stimulation, je nach Situation. Sehr bewusste Energieverwaltung. Und vor allem: 
+          Das Wissen, dass AuDHD kein "doppeltes Problem" ist, sondern eine eigene Neurologie mit eigenen 
+          Stärken und Herausforderungen.
+        </p>
+      </div>
+
+      <div class="profile-direction">
+        <h5>Was bedeuten niedrigere Werte?</h5>
+        <p>
+          Sie erleben nicht die intensive Wechselwirkung zwischen ADHS- und Autismus-Merkmalen. Wenn Ihre 
+          Werte in beiden Bereichen niedriger liegen, kostet Sie weder Aufmerksamkeitssteuerung noch 
+          Reizverarbeitung überdurchschnittlich viel Energie. Strukturbedürfnis und Ablenkbarkeit stehen 
+          nicht im Widerspruch zueinander.
+        </p>
+      </div>
+    </div>
+  `;
+
+  // Hochmaskierung
+  html += `
+    <div class="profile-explain-box">
+      <h4>Hochmaskierungs-Profil (High Masking)</h4>
+      <div class="profile-result-display">Ihr Maskierungs-Wert: ${scores.masking}%</div>
+      
+      <div class="profile-direction">
+        <h5>Was bedeuten höhere Werte?</h5>
+        <p>
+          Sie haben jahrelang – vielleicht Jahrzehnte – gelernt, Ihre natürlichen Reaktionen zu unterdrücken 
+          und neurotypisch zu wirken. Das passiert oft unbewusst: Sie beobachten andere, kopieren deren 
+          Verhalten, verstecken Ihre Überforderung. Nach außen funktionieren Sie perfekt. Innen sind Sie 
+          erschöpft.
+        </p>
+        <p>
+          Maskierung ist keine bewusste Täuschung, sondern ein Überlebensmechanismus. Viele haben früh 
+          gelernt, dass "anders sein" nicht sicher ist – also haben Sie sich angepasst. Das Problem: 
+          Maskierung verbraucht enorme Energie. Jeden Tag. Oft merken Sie es erst, wenn Sie zusammenbrechen 
+          (Burnout, Depression, Erschöpfung).
+        </p>
+        <p>
+          Besonders häufig ist Hochmaskierung bei Frauen und nicht-binären Menschen, weil sie stärkeren 
+          sozialen Druck erleben, "sozial kompetent" zu wirken. Viele wurden erst spät (im Erwachsenenalter) 
+          oder gar nicht diagnostiziert, weil ihre Neurodivergenz hinter der Maske unsichtbar blieb.
+        </p>
+        <p>
+          Im Alltag bedeutet das: Sie brauchen sichere Räume, in denen Sie die Maske ablegen dürfen. 
+          Authentisch sein – stimmen, bewegen, reagieren wie es sich natürlich anfühlt – ohne Angst vor 
+          Ablehnung. Weniger maskieren ist keine Faulheit, sondern Selbstschutz. Es kann den Unterschied 
+          zwischen Erschöpfung und Erholung machen.
+        </p>
+      </div>
+
+      <div class="profile-direction">
+        <h5>Was bedeuten niedrigere Werte?</h5>
+        <p>
+          Sie investieren weniger Energie in bewusste Anpassung. Entweder wurden Sie früh akzeptiert, wie 
+          Sie sind, oder Ihre neurodivergenten Merkmale sind weniger stark ausgeprägt, sodass Maskierung 
+          nicht notwendig war. Soziale Situationen kosten Sie Energie, aber nicht primär durch das Verstecken 
+          Ihrer natürlichen Reaktionen.
+        </p>
+      </div>
+    </div>
+  `;
+
+  // Überlastung
+  html += `
+    <div class="profile-explain-box">
+      <h4>Überlastungs-/Burnout-Profil</h4>
+      <div class="profile-result-display">Ihr Überlastungs-Wert: ${scores.overload}%</div>
+      
+      <div class="profile-direction">
+        <h5>Was bedeuten höhere Werte?</h5>
+        <p>
+          Sie sind an oder über Ihrer Belastungsgrenze. Reize, Anforderungen, Veränderungen – alles fühlt 
+          sich zu viel an. Ihre Batterie ist leer, und selbst kleine Dinge kosten unverhältnismäßig viel 
+          Kraft. Das kann verschiedene Ursachen haben: Chronische Überforderung, Trauma, Depression, oder 
+          jahrelange Maskierung neurodivergenter Merkmale.
+        </p>
+        <p>
+          Wichtig: Hohe Überlastungswerte können sowohl Ursache als auch Folge von Neurodivergenz sein. 
+          Manche Menschen sind neurodivergent UND überlastet – die Neurodivergenz führte zur Überlastung, 
+          weil die Welt nicht für sie gemacht ist. Andere erleben Überlastung aus anderen Gründen (z.B. Trauma), 
+          die dann neurodivergenz-ähnliche Symptome erzeugen kann.
+        </p>
+        <p>
+          Im Alltag bedeutet das: Priorität hat Entlastung. Weniger Verpflichtungen, mehr Pausen, Reizschutz. 
+          Wenn nach Entlastung die Werte sinken, war Überlastung wahrscheinlich primär. Wenn sie hoch bleiben, 
+          ist Neurodivergenz wahrscheinlich die Grundlage. Eine Re-Evaluation nach einigen Monaten Erholung 
+          kann sinnvoll sein.
+        </p>
+      </div>
+
+      <div class="profile-direction">
+        <h5>Was bedeuten niedrigere Werte?</h5>
+        <p>
+          Sie erreichen Ihre Belastungsgrenze nicht schneller als durchschnittlich. Reize, Anforderungen 
+          und Veränderungen sind herausfordernd, aber nicht chronisch überfordernd. Sie haben Zugang zu 
+          Erholung und können Ihre Energie relativ gut regulieren.
+        </p>
+      </div>
+    </div>
+  `;
+
+  container.innerHTML = html;
+}
+
+// =====================================================
+// PERSÖNLICHE BERECHNUNG RENDERN
+// =====================================================
+
 function renderPersonalCalculation(data) {
   const container = document.getElementById('personal-calculation');
   
-  // Scores und Meta holen
   const scores = data.scores;
   const meta = data.meta;
-  const answers = data.answers || {};
-  
-  // Profil-Result neu berechnen (import später, erstmal hardcoded)
   const profileResult = data.profileResult || {};
   
   let html = '';
@@ -549,9 +1390,9 @@ function renderPersonalCalculation(data) {
   // SCHRITT 1: Rohwerte
   html += `
     <div class="calc-step">
-      <div class="step-title">Schritt 1: Ihre Rohwerte (Skalen-Scores)</div>
+      <div class="step-title">Schritt 1: Ihre Rohwerte (10 Skalen)</div>
       <div class="step-content">
-        <p>Jede Skala wurde aus Ihren Antworten berechnet und auf einen Prozentwert normiert (50% = Durchschnitt):</p>
+        <p>Aus Ihren Antworten wurden für jede der 10 Skalen Werte zwischen 0% und 100% berechnet:</p>
         <div class="value-list">
           <div class="value-item"><span class="value-name">Aufmerksamkeit</span><span class="value-score">${scores.attention}%</span></div>
           <div class="value-item"><span class="value-name">Sensorik</span><span class="value-score">${scores.sensory}%</span></div>
@@ -570,7 +1411,7 @@ function renderPersonalCalculation(data) {
   
   // SCHRITT 2: Meta-Daten
   const genderMap = {male: 'Männlich', female: 'Weiblich', diverse: 'Divers', 'prefer-not': 'Keine Angabe'};
-  const onsetMap = {childhood: 'Kindheit', adolescence: 'Jugend', adult: 'Erwachsenenalter', unknown: 'Unbekannt'};
+  const onsetMap = {childhood: 'Kindheit', adolescence: 'Jugend', adult: 'Erwachsenenalter', recent: 'Kürzlich', unsure: 'Unsicher', unknown: 'Unbekannt'};
   const stressMap = {low: 'Niedrig', moderate: 'Moderat', high: 'Hoch', 'very-high': 'Sehr hoch'};
   
   html += `
@@ -624,10 +1465,10 @@ function renderPersonalCalculation(data) {
     </div>
   `;
   
-  // SCHRITT 4: Pattern-Erkennung (vereinfacht, echte Patterns würden von profileResult kommen)
+  // SCHRITT 4: Pattern-Erkennung
   html += `
     <div class="calc-step">
-      <div class="step-title">Schritt 4: Pattern-Erkennung</div>
+      <div class="step-title">Schritt 4: Muster-Erkennung (Patterns)</div>
       <div class="step-content">
         <p>Das System prüft spezifische Muster basierend auf Ihren Werten und Meta-Daten:</p>
   `;
@@ -636,45 +1477,64 @@ function renderPersonalCalculation(data) {
   if (scores.masking >= 65 && (scores.social >= 65 || scores.sensory >= 65)) {
     html += `
       <div class="pattern-box">
-        <div class="pattern-name">✓ High Masking Pattern erkannt</div>
+        <div class="pattern-name">✓ Hochmaskierungs-Muster erkannt</div>
         <ul style="margin-left: 20px; margin-top: 8px;">
           <li>Maskierung ${scores.masking}% ≥ 65% ✓</li>
           <li>Sozial/Sensorisch erhöht ✓</li>
-          ${meta.gender === 'female' || meta.gender === 'diverse' ? '<li>Weiblich/Divers: +15% Konfidenz</li>' : ''}
-          ${meta.onset === 'childhood' ? '<li>Symptombeginn Kindheit: +15% Konfidenz</li>' : ''}
+          ${meta.gender === 'female' || meta.gender === 'diverse' ? '<li>Weiblich/Divers: Erhöht Konfidenz</li>' : ''}
+          ${meta.onset === 'childhood' ? '<li>Symptombeginn Kindheit: Erhöht Konfidenz</li>' : ''}
         </ul>
       </div>
     `;
   } else {
-    html += `<p style="margin-left: 20px;">• High Masking: Nicht erkannt (Maskierung ${scores.masking}% < 65% oder Sozial/Sensorisch nicht erhöht)</p>`;
+    html += `<p style="margin-left: 20px;">• Hochmaskierung: Nicht erkannt (Maskierung ${scores.masking}% < 65% oder Sozial/Sensorisch nicht erhöht)</p>`;
   }
   
   // Stress Overlay Check
   if (scores.overload >= 80 && meta.stress !== 'low') {
     html += `
       <div class="pattern-box">
-        <div class="pattern-name">✓ Stress Overlay Pattern erkannt</div>
+        <div class="pattern-name">✓ Stress-Überlagerungs-Muster erkannt</div>
         <ul style="margin-left: 20px; margin-top: 8px;">
           <li>Überlastung ${scores.overload}% ≥ 80% ✓</li>
           <li>Aktueller Stress: ${stressMap[meta.stress]}</li>
+          <li>Hinweis: Aktuelle Belastung kann Werte beeinflussen</li>
         </ul>
       </div>
     `;
   } else {
-    html += `<p style="margin-left: 20px;">• Stress Overlay: Nicht erkannt (Überlastung ${scores.overload}% < 80%)</p>`;
+    html += `<p style="margin-left: 20px;">• Stress-Überlagerung: Nicht erkannt (Überlastung ${scores.overload}% < 80%)</p>`;
   }
   
   // AuDHD Check
   if (adhdCalc >= 65 && autismCalc >= 65 && scores.hyperfocus >= 65 && scores.structure >= 65 && scores.overload >= 65) {
     html += `
       <div class="pattern-box">
-        <div class="pattern-name">✓ AuDHD-spezifisches Pattern erkannt</div>
+        <div class="pattern-name">✓ AuDHD-spezifisches Muster erkannt</div>
         <ul style="margin-left: 20px; margin-top: 8px;">
           <li>ADHS-Cluster ${adhdCalc}% ≥ 65% ✓</li>
           <li>Autismus-Cluster ${autismCalc}% ≥ 65% ✓</li>
           <li>Hyperfokus ${scores.hyperfocus}% ≥ 65% ✓</li>
           <li>Struktur ${scores.structure}% ≥ 65% ✓</li>
           <li>Überlastung ${scores.overload}% ≥ 65% ✓</li>
+        </ul>
+      </div>
+    `;
+  }
+  
+  // Traits Check
+  const allScores = Object.values(scores);
+  const avgScore = allScores.reduce((a, b) => a + b, 0) / allScores.length;
+  const maxScore = Math.max(...allScores);
+  
+  if (avgScore >= 55 && avgScore < 65 && maxScore < 78) {
+    html += `
+      <div class="pattern-box">
+        <div class="pattern-name">✓ Neurodivergente Züge (Traits) erkannt</div>
+        <ul style="margin-left: 20px; margin-top: 8px;">
+          <li>Durchschnitt ${Math.round(avgScore)}% ≥ 55% und < 65% ✓</li>
+          <li>Höchster Wert ${maxScore}% < 78% ✓</li>
+          <li>Merkmale erkennbar, aber moderat ausgeprägt</li>
         </ul>
       </div>
     `;
@@ -690,26 +1550,29 @@ function renderPersonalCalculation(data) {
     <div class="calc-step">
       <div class="step-title">Schritt 5: Profil-Bestimmung & Konfidenz</div>
       <div class="step-content">
-        <p>Basierend auf Cluster-Scores, Patterns und Meta-Daten wird das wahrscheinlichste Profil bestimmt:</p>
+        <p>Basierend auf Cluster-Scores, erkannten Mustern und Meta-Daten wird das wahrscheinlichste Profil bestimmt:</p>
         
         <div style="margin-top: 20px;">
-          <strong>Geprüfte Profile (in Reihenfolge):</strong>
-          <ul style="margin-left: 20px; margin-top: 10px;">
-            <li>ADHS-Profil: Cluster ${adhdCalc}%, Konfidenz-Check...</li>
-            <li>Autismus-Profil: Cluster ${autismCalc}%, Konfidenz-Check...</li>
-            <li>AuDHD-Profil: Beide Cluster erhöht? ${adhdCalc >= 65 && autismCalc >= 65 ? 'Ja' : 'Nein'}</li>
-            <li>Hochmaskierung: Pattern erkannt? ${scores.masking >= 65 && (scores.social >= 65 || scores.sensory >= 65) ? 'Ja' : 'Nein'}</li>
-            <li>Überlastung: ${scores.overload >= 80 ? 'Ja' : 'Nein'}</li>
-            <li>Traits: Moderate Werte ohne Dominanz? Check...</li>
-            <li>Gemischt: Wenn kein Profil Schwelle erreicht</li>
-          </ul>
+          <strong>Prüfungs-Reihenfolge:</strong>
+          <ol style="margin-left: 20px; margin-top: 10px;">
+            <li>Einzelne dominante Skala? ${maxScore >= 85 || (maxScore >= 75 && (maxScore - allScores.sort((a,b) => b-a)[1]) >= 15) ? 'Ja ✓' : 'Nein'}</li>
+            <li>Sehr niedrige Werte (< 35%)? ${maxScore < 35 ? 'Ja ✓' : 'Nein'}</li>
+            <li>Unauffällig (< 55% und avg < 52%)? ${maxScore < 55 && avgScore < 52 ? 'Ja ✓' : 'Nein'}</li>
+            <li>AuDHD (beide Cluster ≥ 65%)? ${adhdCalc >= 65 && autismCalc >= 65 ? 'Ja ✓' : 'Nein'}</li>
+            <li>ADHS-Profil (Cluster ≥ 65%)? ${adhdCalc >= 65 ? 'Ja' : 'Nein'}</li>
+            <li>Autismus-Profil (Cluster ≥ 65%)? ${autismCalc >= 65 ? 'Ja' : 'Nein'}</li>
+            <li>Hochmaskierung? ${scores.masking >= 65 && (scores.social >= 65 || scores.sensory >= 65) ? 'Ja' : 'Nein'}</li>
+            <li>Überlastung? ${scores.overload >= 80 ? 'Ja' : 'Nein'}</li>
+            <li>Traits (avg ≥ 55% und < 65%)? ${avgScore >= 55 && avgScore < 65 ? 'Ja' : 'Nein'}</li>
+            <li>Sonst: Gemischtes Profil</li>
+          </ol>
         </div>
         
         <div class="info-box" style="margin-top: 20px;">
           <strong>Ihr Ergebnis:</strong>
           <p style="margin-top: 10px;">
             Das System hat basierend auf allen Faktoren Ihr Profil bestimmt. 
-            Die genauen Werte sehen Sie in Ihrer Profil-Übersicht.
+            Die genauen Werte und Interpretationen sehen Sie in Ihrer Profil-Übersicht.
           </p>
         </div>
       </div>

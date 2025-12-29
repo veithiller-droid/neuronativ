@@ -9,14 +9,16 @@
 /* =========================
    FARBKONZEPT - UPDATE
 ========================= */
+/* Default Theme: SANFT */
 :root {
-  --bg-page: #F0F9FF;        /* Türkis */
-  --bg-box: #FFFFFF;         /* Weiß */
+  --bg-page: #F0F9FF;
+  --bg-box: #FFFFFF;
   --bg-box-alt: #EEEAF3;
-  --bg-highlight: #FFFBEA;   /* Helles Senf */
+  --bg-box-soft: #F2F5F7;
+  --bg-highlight: #FFFBEA;
   --border-light: #D8DEE4;
-  --accent-main: #EAB308;    /* Senf */
-  --accent-soft: #FACC15;    /* Heller Senf */
+  --accent-main: #EAB308;
+  --accent-soft: #FACC15;
   --accent-warm: #E6B980;
   --accent-turquoise: #06B6D4;
   --text-main: #2F3A40;
@@ -26,6 +28,62 @@
   --confidence-low: #ef4444;
 }
 
+/* Theme: KONTRAST */
+[data-theme="contrast"] {
+  --bg-page: #FFFFFF;
+  --bg-box: #F9FAFB;
+  --bg-box-alt: #F3F4F6;
+  --bg-box-soft: #F3F4F6;
+  --bg-highlight: #FEF3C7;
+  --border-light: #000000;
+  --accent-main: #1E3A8A;
+  --accent-soft: #3B82F6;
+  --accent-warm: #1E3A8A;
+  --accent-turquoise: #0284C7;
+  --text-main: #000000;
+  --text-secondary: #374151;
+  --confidence-high: #16a34a;
+  --confidence-medium: #facc15;
+  --confidence-low: #ef4444;
+}
+
+/* Theme: DUNKEL */
+[data-theme="dark"] {
+  --bg-page: #111827;
+  --bg-box: #1F2937;
+  --bg-box-alt: #374151;
+  --bg-box-soft: #374151;
+  --bg-highlight: #374151;
+  --border-light: #4B5563;
+  --accent-main: #22D3EE;
+  --accent-soft: #06B6D4;
+  --accent-warm: #22D3EE;
+  --accent-turquoise: #0EA5E9;
+  --text-main: #F9FAFB;
+  --text-secondary: #D1D5DB;
+  --confidence-high: #22c55e;
+  --confidence-medium: #facc15;
+  --confidence-low: #ef4444;
+}
+
+/* Theme: WARM */
+[data-theme="warm"] {
+  --bg-page: #FAF8F3;
+  --bg-box: #FFFFFF;
+  --bg-box-alt: #FEF3E2;
+  --bg-box-soft: #FEF3E2;
+  --bg-highlight: #FED7AA;
+  --border-light: #E7E5E4;
+  --accent-main: #C2410C;
+  --accent-soft: #EA580C;
+  --accent-warm: #C2410C;
+  --accent-turquoise: #F97316;
+  --text-main: #292524;
+  --text-secondary: #57534E;
+  --confidence-high: #16a34a;
+  --confidence-medium: #facc15;
+  --confidence-low: #ef4444;
+}
 /* =========================
    BASIS
 ========================= */
@@ -41,6 +99,7 @@ body {
   color: var(--text-main);
   line-height: 1.6;
   padding: 40px 20px;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .container {
@@ -539,21 +598,51 @@ body {
 /* =========================
    DISCLAIMER
 ========================= */
+/* =========================
+   DISCLAIMER – theme-sicher & auffällig
+========================= */
 .disclaimer {
-  background: #fef2f2;
-  border: 2px solid #fca5a5;
+  background: #fef2f2;           /* light: helles Rot */
+  border: 3px solid #fca5a5;
   border-radius: 12px;
   padding: 24px;
-  margin-bottom: 40px;
+  margin: 40px 0;
   font-size: 0.95em;
   line-height: 1.7;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
+/* Dark-Theme Anpassung */
+[data-theme="dark"] .disclaimer {
+  background: #450a0a;           /* dunkles Rot */
+  border-color: #f87171;         /* mittleres Rot */
+  color: #fecaca;                /* helles Rosa für Text */
+}
+
+/* Contrast-Theme (falls nötig) */
+[data-theme="contrast"] .disclaimer {
+  background: #fee2e2;
+  border-color: #dc2626;
+  color: #000000;
+}
+
+/* Warm-Theme (falls nötig) */
+[data-theme="warm"] .disclaimer {
+  background: #fee2e2;
+  border-color: #dc2626;
+}
+
+/* Strong-Text in allen Themes */
 .disclaimer strong {
   display: block;
-  margin-bottom: 8px;
-  font-size: 1.05em;
-  color: #991b1b;
+  margin-bottom: 10px;
+  font-size: 1.1em;
+  font-weight: 700;
+  color: #dc2626;                /* kräftiges Rot */
+}
+
+[data-theme="dark"] .disclaimer strong {
+  color: #fca5a5;                /* helleres Rot für Dark */
 }
 
 /* =========================
@@ -771,6 +860,9 @@ body {
   <!-- ACTIONS -->
   <div class="action-buttons">
     <button class="btn btn-primary" onclick="window.print()">Als PDF speichern</button>
+    <button class="btn btn-primary" onclick="window.open('druckbericht.html', '_blank')">
+  Bericht
+</button>
     <button class="btn btn-secondary" onclick="window.close()">Fenster schließen</button>
     <button class="btn btn-secondary" onclick="window.open('methodology.html', '_blank')">Zur Methodik</button>
   </div>
@@ -778,6 +870,13 @@ body {
 </div>
 
 <script type="module">
+  // =========================
+  // THEME LADEN – direkt am Anfang
+  // =========================
+  (function() {
+    const savedTheme = localStorage.getItem('preferred-theme') || 'soft';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+  })();
   // =========================
   // MODULE IMPORTS
   // =========================
@@ -810,26 +909,87 @@ body {
   // RENDER-FUNKTIONEN
   // =========================
 
-  function renderMainProfile() {
+    function renderMainProfile() {
     if (!profileResult?.mainProfile) return;
 
     const main = profileResult.mainProfile;
+    const type = main.type;
+    const level = main.level || 'high';
 
-    // 1. Haupt-Titel
-    let mainTitle = 'Individuelles Profil';
-    const clusters = profileResult.clusterScores || {};
+    // Initiale Werte
+    let mainTitle = PROFILE_TEXTS.ui.hero.main_title_fallback;
+    let descriptionText = PROFILE_TEXTS.ui.hero.description.default;
 
-    if (clusters.autism >= 75 && clusters.adhd >= 75) {
-      mainTitle = 'AuDHD-Profil';
-    } else if (clusters.autism >= clusters.adhd && clusters.autism >= 70) {
-      mainTitle = 'Autismus-Profil';
-    } else if (clusters.adhd >= 70) {
-      mainTitle = 'ADHS-Profil';
+    // Spezialfall: Cluster fast so hoch wie dominante Skala → Cluster priorisieren
+    if (main.type === 'single_dominant') {
+      const dominantScore = main.score || 0;
+      const autismScore = profileResult.clusterScores.autism || 0;
+      const adhdScore = profileResult.clusterScores.adhd || 0;
+      const audhdScore = Math.round((adhdScore + autismScore) / 2);
+
+      // Autismus priorisieren
+      if (autismScore >= 85 && dominantScore - autismScore <= 10) {
+        mainTitle = 'Autismus-Profil';
+        if (main.dominant_scale === 'structure') {
+          mainTitle += ' mit extrem starkem Strukturbedürfnis';
+        }
+        if (PROFILE_DESCRIPTIONS.autism.very_high) {
+          descriptionText = PROFILE_DESCRIPTIONS.autism.very_high.description;
+        }
+      }
+      // ADHS priorisieren
+      else if (adhdScore >= 85 && dominantScore - adhdScore <= 10) {
+        mainTitle = 'ADHS-Profil';
+        if (main.dominant_scale === 'hyperfocus') {
+          mainTitle += ' mit extrem starkem Hyperfokus';
+        }
+        if (PROFILE_DESCRIPTIONS.adhd.very_high) {
+          descriptionText = PROFILE_DESCRIPTIONS.adhd.very_high.description;
+        }
+      }
+      // AuDHD priorisieren
+      else if (audhdScore >= 85 && dominantScore - audhdScore <= 10) {
+        mainTitle = 'AuDHD-Profil';
+        if (PROFILE_DESCRIPTIONS.audhd.very_high) {
+          descriptionText = PROFILE_DESCRIPTIONS.audhd.very_high.description;
+        }
+      }
     }
 
-    document.getElementById('profile-type').textContent = mainTitle;
+    // Normale dynamische Logik (falls Spezialfall nicht greift)
+    if (PROFILE_DESCRIPTIONS[type] && PROFILE_DESCRIPTIONS[type][level]) {
+      const entry = PROFILE_DESCRIPTIONS[type][level];
 
-    // 2. Sub-Line 1: Subtyp
+      if (typeof entry.title === 'function') {
+        mainTitle = entry.title(main.dominant_scale || '');
+      } else if (entry.title) {
+        mainTitle = entry.title;
+      }
+
+      if (typeof entry.description === 'function') {
+        descriptionText = entry.description(main.dominant_scale || '', main.score || 0);
+      } else if (entry.description) {
+        descriptionText = entry.description;
+      }
+    }
+
+    // Fallback-Titel (alte Cluster-Logik)
+    if (mainTitle === PROFILE_TEXTS.ui.hero.main_title_fallback) {
+      const clusters = profileResult.clusterScores || {};
+      if (clusters.autism >= 75 && clusters.adhd >= 75) {
+        mainTitle = 'AuDHD-Profil';
+      } else if (clusters.autism >= clusters.adhd && clusters.autism >= 70) {
+        mainTitle = 'Autismus-Profil';
+      } else if (clusters.adhd >= 70) {
+        mainTitle = 'ADHS-Profil';
+      }
+    }
+
+    // Titel setzen
+    const titleEl = document.getElementById('profile-type');
+    if (titleEl) titleEl.textContent = mainTitle;
+
+    // Sub-Line 1: Subtyp
     const subtype1 = document.getElementById('profile-subtype-1');
     if (main.subtype?.user_description) {
       subtype1.textContent = main.subtype.user_description;
@@ -838,7 +998,7 @@ body {
       subtype1.style.display = 'none';
     }
 
-    // 3. Sub-Line 2: Dominierendes Merkmal
+    // Sub-Line 2: Dominierendes Merkmal
     const subtype2 = document.getElementById('profile-subtype-2');
     let detailText = '';
     if (main.dominant_label && main.dominant_score) {
@@ -851,44 +1011,14 @@ body {
       subtype2.style.display = 'none';
     }
 
-    // 4. Konfidenz
+    // Konfidenz
     const confidence = Math.round((main.confidence || 0) * 100);
     document.getElementById('profile-confidence').textContent = `Konfidenz: ${confidence}%`;
 
-    // 5. Beschreibung – personalisiert aus PROFILE_TEXTS
-  const ui = PROFILE_TEXTS.ui.hero;
-
-// Durchschnittsscore berechnen
-const avgScore = (
-  main.adhd_cluster + 
-  main.autism_cluster + 
-  main.emotional_processing + 
-  main.compensation_burden
-) / 4;
-
-// Beschreibungstext-Schlüssel bestimmen
-let descKey = main.type;
-
-// Wenn kein spezifisches Profil erkannt, nach Score entscheiden
-if (!descKey) {
-  if (avgScore < 25) {
-    descKey = 'very_low';
-  } else if (avgScore < 45) {
-    descKey = 'low';
-  } else if (avgScore < 65) {
-    descKey = 'moderate';
-  } else if (avgScore >= 65) {
-    descKey = 'high';
-  } else {
-    descKey = 'default';
+    // Beschreibung setzen
+    document.getElementById('profile-description').textContent = descriptionText;
   }
-}
-
-// Text setzen
-const descriptionText = ui.description[descKey] || ui.description.default;
-document.getElementById('profile-description').textContent = descriptionText;
-}
-
+   
   function renderOnsetBadge() {
     if (!profileResult?.onsetAnalysis) return;
 

@@ -1,74 +1,48 @@
-// profile_scoring.js v2.0
+// profile_scoring.js v2.1
 // Differentialdiagnostisches Profiling-System
 // Medizinisch präzise, kommunikativ empathisch
-
-/* =====================================================
-   PHASE 2 - ERWEITERUNGEN
-   
-   Neu hinzugefügt:
-   - ADHS-Subtypen (Inattentive, Hyperactive, Combined)
-   - Autismus-Subtypenerkennung (Classic, Masked, Female)
-   - Diskrepanz-Analyse (ungewöhnliche Muster)
-   - Onset-basierte Differenzierung
-   - Komorbidität vs. Primär-Differenzierung
-   - Überlagerungs-Erkennung
-   
-   Medizinisches Niveau: 90% diagnostische Präzision
-   Kommunikation: Alltagssprache, keine Fachterminologie
-===================================================== */
-
-/* =====================================================
-   1. SKALEN-CLUSTER DEFINITIONEN
-===================================================== */
+// Update für 115 Fragen: Erweiterte Skalen (executive 17, sensory 14, masking 12, alexithymia 11)
 
 const CLUSTERS = {
   
-  // ADHS-Kernsymptome
   adhd: {
     primary: ['attention', 'executive'],
     secondary: ['hyperfocus'],
     weight: {
       attention: 1.2,
-      executive: 1.2,
+      executive: 1.4,     // Erhöht wegen +7 Items
       hyperfocus: 0.6
     }
   },
   
-  // Autismus-Kernsymptome
   autism: {
     primary: ['sensory', 'social'],
     secondary: ['structure'],
     weight: {
-      sensory: 1.2,
+      sensory: 1.4,       // Erhöht wegen +5 Items
       social: 1.2,
       structure: 0.8
     }
   },
   
-  // Emotionale Verarbeitung
   emotional: {
     primary: ['alexithymia', 'emotreg'],
     secondary: [],
     weight: {
-      alexithymia: 1.0,
+      alexithymia: 1.1,   // Leicht erhöht wegen +2 Items
       emotreg: 1.0
     }
   },
   
-  // Kompensation & Maskierung
   compensation: {
     primary: ['masking', 'overload'],
     secondary: [],
     weight: {
-      masking: 1.0,
+      masking: 1.2,       // Erhöht wegen +4 Items
       overload: 1.0
     }
   }
 };
-
-/* =====================================================
-   2. SCHWELLENWERTE
-===================================================== */
 
 const THRESHOLDS = {
   subclinical: 55,
@@ -76,10 +50,6 @@ const THRESHOLDS = {
   high: 75,
   very_high: 85
 };
-
-/* =====================================================
-   3. CLUSTER-SCORE BERECHNUNG
-===================================================== */
 
 function calculateClusterScore(scores, cluster) {
   const allScales = [...cluster.primary, ...cluster.secondary];
@@ -97,27 +67,50 @@ function calculateClusterScore(scores, cluster) {
   
   return totalWeight > 0 ? Math.round(weightedSum / totalWeight) : 0;
 }
+// =====================================================
+// SUB-SCORES BERECHNUNG (neu – für präzisere Analyse)
+// =====================================================
 
-/* =====================================================
-   4. SUBTYP-ERKENNUNG - NEU!
-   
-   Identifiziert spezifische Subtypen basierend auf
-   Skalenkombinationen und Diskrepanzen
-===================================================== */
+function calculateSubScores(scores) {
+  return {
+    // Executive Subfunktionen
+    executive_initiation: Math.round((scores.exe_15 + scores.exe_16) / 2 || 0),  // Task Initiation
+    executive_impulse: Math.round((scores.exe_11 + scores.exe_03 + scores.exe_04) / 3 || 0),  // Impulsivität
+    executive_workingmemory: Math.round((scores.exe_01 + scores.exe_02 + scores.exe_09) / 3 || 0),  // Arbeitsgedächtnis
+    executive_priority: scores.exe_17 || 0,  // Priorisierung
+
+    // Sensory Subfunktionen
+    sensory_hyper: Math.round((
+      scores.sen_01 + scores.sen_02 + scores.sen_03 + scores.sen_04 + 
+      scores.sen_05 + scores.sen_06 + scores.sen_07 + scores.sen_08 + 
+      scores.sen_09 + scores.sen_11 + scores.sen_12
+    ) / 11 || 0),  // Überempfindlichkeit (inkl. Geruch/Geschmack)
+    sensory_hypo: scores.sen_10 || 0,  // Unterempfindlichkeit / Reize suchen
+    sensory_intero: scores.sen_13 || 0,  // Interozeption
+
+    // Masking Subfunktionen
+    masking_eyecontact: scores.mas_11 || 0,  // Augenkontakt
+    masking_scripts: Math.round((scores.mas_03 + scores.mas_12) / 2 || 0),  // Skripte/Vorbereitung
+    masking_burnout: scores.mas_09 || 0,  // Burnout-Folgen
+
+    // Alexithymia Subfunktionen
+    alexithymia_self: Math.round((
+      scores.alx_01 + scores.alx_02 + scores.alx_03 + scores.alx_04 + 
+      scores.alx_05 + scores.alx_06 + scores.alx_07 + scores.alx_08 + 
+      scores.alx_09
+    ) / 9 || 0),  // Eigene Gefühle
+    alexithymia_other: scores.alx_10 || 0,  // Gefühle anderer
+    alexithymia_affective: scores.alx_11 || 0  // Affektive Empathie
+  };
+}
 
 function detectSubtypes(scores, meta) {
   const subtypes = [];
-  
-  // =====================================================
-  // ADHS-SUBTYPEN
-  // =====================================================
   
   const adhdCluster = calculateClusterScore(scores, CLUSTERS.adhd);
   
   if (adhdCluster >= THRESHOLDS.elevated) {
     
-    // ADHS-I (Predominantly Inattentive)
-    // Attention dominant, Executive moderat, Hyperfocus niedrig/moderat
     if (scores.attention >= THRESHOLDS.high && 
         scores.executive < THRESHOLDS.high &&
         scores.hyperfocus < THRESHOLDS.high) {
@@ -129,8 +122,6 @@ function detectSubtypes(scores, meta) {
       });
     }
     
-    // ADHS-H (Predominantly Hyperactive-Impulsive)
-    // Executive + Emotreg dominant, Attention moderat
     else if (scores.executive >= THRESHOLDS.high && 
              scores.emotreg >= THRESHOLDS.high &&
              scores.attention < THRESHOLDS.high) {
@@ -142,8 +133,6 @@ function detectSubtypes(scores, meta) {
       });
     }
     
-    // ADHS-C (Combined Type)
-    // Attention + Executive beide hoch
     else if (scores.attention >= THRESHOLDS.elevated && 
              scores.executive >= THRESHOLDS.elevated) {
       subtypes.push({
@@ -154,8 +143,6 @@ function detectSubtypes(scores, meta) {
       });
     }
     
-    // ADHS + Emotionale Dysregulation
-    // ADHS-Cluster + Emotreg extrem
     if (scores.emotreg >= THRESHOLDS.very_high) {
       subtypes.push({
         type: 'adhd_emotional',
@@ -166,16 +153,10 @@ function detectSubtypes(scores, meta) {
     }
   }
   
-  // =====================================================
-  // AUTISMUS-SUBTYPEN
-  // =====================================================
-  
   const autismCluster = calculateClusterScore(scores, CLUSTERS.autism);
   
   if (autismCluster >= THRESHOLDS.elevated) {
     
-    // Klassisches Autismus-Profil
-    // Sensory + Social + Structure alle erhöht
     if (scores.sensory >= THRESHOLDS.elevated && 
         scores.social >= THRESHOLDS.elevated &&
         scores.structure >= THRESHOLDS.elevated) {
@@ -187,8 +168,6 @@ function detectSubtypes(scores, meta) {
       });
     }
     
-    // Hochmaskiertes Autismus-Profil
-    // Social + Masking sehr hoch, Sensory moderat
     else if (scores.social >= THRESHOLDS.high && 
              scores.masking >= THRESHOLDS.high &&
              scores.sensory >= THRESHOLDS.subclinical) {
@@ -200,8 +179,6 @@ function detectSubtypes(scores, meta) {
       });
     }
     
-    // Weibliche/diverse Präsentation
-    // Social hoch, Masking hoch, Sensory moderat, Structure moderat
     else if ((meta.gender === 'female' || meta.gender === 'diverse') &&
              scores.social >= THRESHOLDS.high &&
              scores.masking >= THRESHOLDS.elevated) {
@@ -213,8 +190,6 @@ function detectSubtypes(scores, meta) {
       });
     }
     
-    // Autismus mit Hyperfokus-Komponente
-    // Autism-Cluster + Hyperfocus sehr hoch
     if (scores.hyperfocus >= THRESHOLDS.high) {
       subtypes.push({
         type: 'autism_hyperfocus',
@@ -225,15 +200,9 @@ function detectSubtypes(scores, meta) {
     }
   }
   
-  // =====================================================
-  // AuDHD-SPEZIFISCH
-  // =====================================================
-  
   if (adhdCluster >= THRESHOLDS.elevated && 
       autismCluster >= THRESHOLDS.elevated) {
     
-    // Spezifisches AuDHD-Muster
-    // Hyperfocus + Structure + moderate Overload
     if (scores.hyperfocus >= THRESHOLDS.elevated && 
         scores.structure >= THRESHOLDS.elevated &&
         scores.overload >= THRESHOLDS.elevated) {
@@ -245,8 +214,6 @@ function detectSubtypes(scores, meta) {
       });
     }
     
-    // AuDHD mit inneren Widersprüchen
-    // Attention vs. Structure Konflikt
     if (scores.attention >= THRESHOLDS.high && 
         scores.structure >= THRESHOLDS.high) {
       subtypes.push({
@@ -261,21 +228,9 @@ function detectSubtypes(scores, meta) {
   return subtypes;
 }
 
-/* =====================================================
-   5. DISKREPANZ-ANALYSE - NEU!
-   
-   Erkennt ungewöhnliche Muster die auf:
-   - Atypische Präsentation
-   - Überlagerung durch andere Faktoren
-   - Notwendigkeit weiterer Abklärung
-   hinweisen
-===================================================== */
-
 function analyzeDiscrepancies(scores, meta) {
   const discrepancies = [];
   
-  // Diskrepanz 1: Attention hoch, Executive niedrig
-  // Ungewöhnlich für ADHS - könnte auf Depression/Fatigue hinweisen
   if (scores.attention >= THRESHOLDS.high && 
       scores.executive < THRESHOLDS.elevated) {
     discrepancies.push({
@@ -287,8 +242,6 @@ function analyzeDiscrepancies(scores, meta) {
     });
   }
   
-  // Diskrepanz 2: Executive hoch, Attention niedrig
-  // Ungewöhnlich - könnte auf Angst/Zwang hinweisen
   if (scores.executive >= THRESHOLDS.high && 
       scores.attention < THRESHOLDS.elevated) {
     discrepancies.push({
@@ -300,8 +253,6 @@ function analyzeDiscrepancies(scores, meta) {
     });
   }
   
-  // Diskrepanz 3: Social hoch, Sensory niedrig
-  // Soziale Erschöpfung ohne sensorische Ursache
   if (scores.social >= THRESHOLDS.high && 
       scores.sensory < THRESHOLDS.elevated) {
     discrepancies.push({
@@ -313,8 +264,6 @@ function analyzeDiscrepancies(scores, meta) {
     });
   }
   
-  // Diskrepanz 4: Masking extrem, Overload niedrig
-  // Erfolgreiche Kompensation (noch) ohne Erschöpfung
   if (scores.masking >= THRESHOLDS.very_high && 
       scores.overload < THRESHOLDS.elevated) {
     discrepancies.push({
@@ -326,8 +275,6 @@ function analyzeDiscrepancies(scores, meta) {
     });
   }
   
-  // Diskrepanz 5: Overload extrem, andere Werte moderat
-  // Überlastung überlagert möglicherweise zugrundeliegende ND
   if (scores.overload >= THRESHOLDS.very_high) {
     const otherScores = Object.entries(scores)
       .filter(([key]) => key !== 'overload')
@@ -345,8 +292,6 @@ function analyzeDiscrepancies(scores, meta) {
     }
   }
   
-  // Diskrepanz 6: Alexithymia extrem, Emotreg niedrig
-  // Emotionswahrnehmung gestört, aber keine Dysregulation
   if (scores.alexithymia >= THRESHOLDS.very_high && 
       scores.emotreg < THRESHOLDS.elevated) {
     discrepancies.push({
@@ -358,8 +303,6 @@ function analyzeDiscrepancies(scores, meta) {
     });
   }
   
-  // Diskrepanz 7: Emotreg extrem, Alexithymia niedrig
-  // Dysregulation ohne Wahrnehmungsstörung - eher ADHS/Trauma
   if (scores.emotreg >= THRESHOLDS.very_high && 
       scores.alexithymia < THRESHOLDS.elevated) {
     discrepancies.push({
@@ -371,8 +314,6 @@ function analyzeDiscrepancies(scores, meta) {
     });
   }
   
-  // Diskrepanz 8: Alle Werte moderat (55-70%), keine Spitzen
-  // Ausgeglichenes subklinisches Profil
   const allScores = Object.values(scores);
   const maxScore = Math.max(...allScores);
   const minScore = Math.min(...allScores);
@@ -391,122 +332,101 @@ function analyzeDiscrepancies(scores, meta) {
     });
   }
   
-  // Diskrepanz 9: Masking + Overload + hohe Kompensation
-// KRITISCH: Hohes Burnout-Risiko
-if (scores.masking >= THRESHOLDS.high && 
-    scores.overload >= THRESHOLDS.high &&
-    scores.executive >= THRESHOLDS.elevated) {
-  discrepancies.push({
-    type: 'burnout_risk_critical',
-    severity: 'high',
-    clinical_note: 'Critical burnout risk - high masking + overload + compensation',
-    user_description: '⚠️ HOHES BURNOUT-RISIKO: Ihre Kombination aus sehr hoher Maskierung (' + scores.masking + '%), hoher Überlastung (' + scores.overload + '%) und gleichzeitiger exekutiver Kompensation (' + scores.executive + '%) ist langfristig nicht nachhaltig. Sie halten nach außen vieles aufrecht, während innerlich extreme Belastung herrscht. Diese Kompensation kostet massive Energie.',
-    flag: 'urgent_intervention_needed'
-  });
-}
-
-// Diskrepanz 10: AuDHD + Alexithymia kombiniert
-// KRITISCH: Triple-Challenge
-if (scores.attention >= THRESHOLDS.elevated && 
-    scores.social >= THRESHOLDS.elevated &&
-    scores.alexithymia >= THRESHOLDS.high) {
-  discrepancies.push({
-    type: 'audhd_alexithymia_combined',
-    severity: 'high',
-    clinical_note: 'AuDHD + alexithymia - triple challenge pattern',
-    user_description: '⚠️ TRIPLE-CHALLENGE: Die Kombination aus ADHS-Merkmalen (' + scores.attention + '%), autistischen Merkmalen (' + scores.social + '%) und erschwerter Emotionswahrnehmung (' + scores.alexithymia + '%) ist besonders herausfordernd. Emotionen sind intensiv (ADHS), schwer regulierbar, körperlich spürbar aber schwer einordbar (Autismus), und zusätzlich schwer benennbar (Alexithymia).',
-    flag: 'complex_emotional_pattern'
-  });
-}
-
-// Diskrepanz 11: Hohe Executive trotz hoher Belastung
-// INFO: Starke Kompensation maskiert Probleme
-if (scores.executive >= THRESHOLDS.high && 
-    scores.overload >= THRESHOLDS.high &&
-    scores.masking >= THRESHOLDS.elevated) {
-  discrepancies.push({
-    type: 'high_executive_despite_overload',
-    severity: 'moderate',
-    clinical_note: 'Strong compensation masking underlying difficulties',
-    user_description: 'ℹ️ STARKE KOMPENSATION: Ihre exekutiven Funktionen (' + scores.executive + '%) ermöglichen es Ihnen, trotz hoher Belastung (' + scores.overload + '%) funktional zu bleiben. Dies kann Maskierung begünstigen: Nach außen wirken Sie organisiert und stabil, während innerlich hohe Anstrengung herrscht. Diese Kompensation ist energieintensiv und kann zu verzögertem Burnout führen.',
-    flag: 'monitor_delayed_burnout'
-  });
-}
-
-// Diskrepanz 12: AuDHD ohne Hyperfokus
-// INFO: Ungewöhnliches Muster
-if (scores.attention >= THRESHOLDS.elevated && 
-    scores.social >= THRESHOLDS.elevated &&
-    scores.hyperfocus < THRESHOLDS.elevated) {
-  const adhdScore = calculateClusterScore(scores, CLUSTERS.adhd);
-  const autismScore = calculateClusterScore(scores, CLUSTERS.autism);
-  
-  if (adhdScore >= THRESHOLDS.elevated && autismScore >= THRESHOLDS.elevated) {
+  if (scores.masking >= THRESHOLDS.high && 
+      scores.overload >= THRESHOLDS.high &&
+      scores.executive >= THRESHOLDS.elevated) {
     discrepancies.push({
-      type: 'audhd_without_hyperfocus',
-      severity: 'low',
-      clinical_note: 'Atypical AuDHD pattern - hyperfocus suppressed or absent',
-      user_description: 'ℹ️ UNGEWÖHNLICH: Ihr AuDHD-Profil zeigt sich OHNE das typische Hyperfokus-Muster (' + scores.hyperfocus + '%). Dies kann bedeuten: (1) Kompensation verhindert Vertiefung, (2) Erschöpfung blockiert Flow, (3) Individuelles Muster. Falls Sie früher Hyperfokus hatten und dieser verschwunden ist, könnte dies auf Erschöpfung hinweisen.',
-      flag: 'check_historical_hyperfocus'
+      type: 'burnout_risk_critical',
+      severity: 'high',
+      clinical_note: 'Critical burnout risk - high masking + overload + compensation',
+      user_description: '⚠️ HOHES BURNOUT-RISIKO: Ihre Kombination aus sehr hoher Maskierung (' + scores.masking + '%), hoher Überlastung (' + scores.overload + '%) und gleichzeitiger exekutiver Kompensation (' + scores.executive + '%) ist langfristig nicht nachhaltig. Sie halten nach außen vieles aufrecht, während innerlich extreme Belastung herrscht. Diese Kompensation kostet massive Energie.',
+      flag: 'urgent_intervention_needed'
     });
   }
-}
-
-// Diskrepanz 13: Autismus-Profil + hohes Executive
-// INFO: Struktur-Bedürfnis OHNE ADHS
-if (scores.structure >= THRESHOLDS.high && 
-    scores.executive < THRESHOLDS.elevated) {
-  const autismScore = calculateClusterScore(scores, CLUSTERS.autism);
   
-  if (autismScore >= THRESHOLDS.elevated) {
+  if (scores.attention >= THRESHOLDS.elevated && 
+      scores.social >= THRESHOLDS.elevated &&
+      scores.alexithymia >= THRESHOLDS.high) {
     discrepancies.push({
-      type: 'autism_structure_without_adhd',
-      severity: 'low',
-      clinical_note: 'Autism-based structure need (not ADHD executive dysfunction)',
-      user_description: 'ℹ️ UNTERSCHIED: Ihr hohes Bedürfnis nach Struktur (' + scores.structure + '%) stammt nicht aus exekutiver Schwäche (ADHS), sondern aus Vorhersehbarkeit als Schutz vor Überlastung (Autismus). Strukturen dienen bei Ihnen der Reizreduktion und emotionalen Stabilität. UNTERSCHIED: ADHS braucht Struktur für Organisation. Autismus braucht Struktur für Sicherheit.',
-      flag: 'autism_specific_structure_need'
+      type: 'audhd_alexithymia_combined',
+      severity: 'high',
+      clinical_note: 'AuDHD + alexithymia - triple challenge pattern',
+      user_description: '⚠️ TRIPLE-CHALLENGE: Die Kombination aus ADHS-Merkmalen (' + scores.attention + '%), autistischen Merkmalen (' + scores.social + '%) und erschwerter Emotionswahrnehmung (' + scores.alexithymia + '%) ist besonders herausfordernd. Emotionen sind intensiv (ADHS), schwer regulierbar, körperlich spürbar aber schwer einordbar (Autismus), und zusätzlich schwer benennbar (Alexithymia).',
+      flag: 'complex_emotional_pattern'
     });
   }
+  
+  if (scores.executive >= THRESHOLDS.high && 
+      scores.overload >= THRESHOLDS.high &&
+      scores.masking >= THRESHOLDS.elevated) {
+    discrepancies.push({
+      type: 'high_executive_despite_overload',
+      severity: 'moderate',
+      clinical_note: 'Strong compensation masking underlying difficulties',
+      user_description: 'ℹ️ STARKE KOMPENSATION: Ihre exekutiven Funktionen (' + scores.executive + '%) ermöglichen es Ihnen, trotz hoher Belastung (' + scores.overload + '%) funktional zu bleiben. Dies kann Maskierung begünstigen: Nach außen wirken Sie organisiert und stabil, während innerlich hohe Anstrengung herrscht. Diese Kompensation ist energieintensiv und kann zu verzögertem Burnout führen.',
+      flag: 'monitor_delayed_burnout'
+    });
+  }
+  
+  if (scores.attention >= THRESHOLDS.elevated && 
+      scores.social >= THRESHOLDS.elevated &&
+      scores.hyperfocus < THRESHOLDS.elevated) {
+    const adhdScore = calculateClusterScore(scores, CLUSTERS.adhd);
+    const autismScore = calculateClusterScore(scores, CLUSTERS.autism);
+  
+    if (adhdScore >= THRESHOLDS.elevated && autismScore >= THRESHOLDS.elevated) {
+      discrepancies.push({
+        type: 'audhd_without_hyperfocus',
+        severity: 'low',
+        clinical_note: 'Atypical AuDHD pattern - hyperfocus suppressed or absent',
+        user_description: 'ℹ️ UNGEWÖHNLICH: Ihr AuDHD-Profil zeigt sich OHNE das typische Hyperfokus-Muster (' + scores.hyperfocus + '%). Dies kann bedeuten: (1) Kompensation verhindert Vertiefung, (2) Erschöpfung blockiert Flow, (3) Individuelles Muster. Falls Sie früher Hyperfokus hatten und dieser verschwunden ist, könnte dies auf Erschöpfung hinweisen.',
+        flag: 'check_historical_hyperfocus'
+      });
+    }
+  }
+  
+  if (scores.structure >= THRESHOLDS.high && 
+      scores.executive < THRESHOLDS.elevated) {
+    const autismScore = calculateClusterScore(scores, CLUSTERS.autism);
+  
+    if (autismScore >= THRESHOLDS.elevated) {
+      discrepancies.push({
+        type: 'autism_structure_without_adhd',
+        severity: 'low',
+        clinical_note: 'Autism-based structure need (not ADHD executive dysfunction)',
+        user_description: 'ℹ️ UNTERSCHIED: Ihr hohes Bedürfnis nach Struktur (' + scores.structure + '%) stammt nicht aus exekutiver Schwäche (ADHS), sondern aus Vorhersehbarkeit als Schutz vor Überlastung (Autismus). Strukturen dienen bei Ihnen der Reizreduktion und emotionalen Stabilität. UNTERSCHIED: ADHS braucht Struktur für Organisation. Autismus braucht Struktur für Sicherheit.',
+        flag: 'autism_specific_structure_need'
+      });
+    }
+  }
+  
+  if (scores.sensory >= THRESHOLDS.elevated && 
+      scores.alexithymia >= THRESHOLDS.high &&
+      scores.overload >= THRESHOLDS.high) {
+    discrepancies.push({
+      type: 'sensory_emotional_overload_combined',
+      severity: 'high',
+      clinical_note: 'Intense sensory-emotional processing pattern',
+      user_description: '⚠️ INTENSIVE VERARBEITUNG: Ihre Kombination aus erhöhter sensorischer Sensibilität (' + scores.sensory + '%), erschwerter Emotionswahrnehmung (' + scores.alexithymia + '%) und schneller Überlastung (' + scores.overload + '%) ist bei autistischen Menschen häufig. Reize kommen intensiv an, werden aber schwerer emotional eingeordnet, was zu Überforderung führen kann, bevor bewusst wird, was gefühlt wird.',
+      flag: 'autism_sensory_emotional_pattern'
+    });
+  }
+  
+  const veryHighCount = Object.values(scores).filter(s => s >= 80).length;
+  const totalScales = Object.values(scores).length;
+  
+  if (veryHighCount >= totalScales * 0.7) {
+    discrepancies.push({
+      type: 'systemic_extreme_presentation',
+      severity: 'high',
+      clinical_note: 'Systemic extreme presentation - check for crisis state',
+      user_description: '⚠️ SYSTEMISCHE BELASTUNG: Die meisten Ihrer Werte liegen im sehr hohen Bereich (≥80%). Dies kann bedeuten: (1) Akute Krisensituation überlagert alle Bereiche, (2) Sehr intensive neurodivergente Ausprägung, (3) Chronische Überlastung verstärkt alle Merkmale. Eine professionelle Abklärung ist dringend empfohlen.',
+      flag: 'urgent_professional_assessment'
+    });
+  }
+  
+  return discrepancies;
 }
-
-// Diskrepanz 14: Sensory + Alexithymia + Overload kombiniert
-// WARNUNG: Intensive sensorisch-emotionale Verarbeitung
-if (scores.sensory >= THRESHOLDS.elevated && 
-    scores.alexithymia >= THRESHOLDS.high &&
-    scores.overload >= THRESHOLDS.high) {
-  discrepancies.push({
-    type: 'sensory_emotional_overload_combined',
-    severity: 'high',
-    clinical_note: 'Intense sensory-emotional processing pattern',
-    user_description: '⚠️ INTENSIVE VERARBEITUNG: Ihre Kombination aus erhöhter sensorischer Sensibilität (' + scores.sensory + '%), erschwerter Emotionswahrnehmung (' + scores.alexithymia + '%) und schneller Überlastung (' + scores.overload + '%) ist bei autistischen Menschen häufig. Reize kommen intensiv an, werden aber schwerer emotional eingeordnet, was zu Überforderung führen kann, bevor bewusst wird, was gefühlt wird.',
-    flag: 'autism_sensory_emotional_pattern'
-  });
-}
-
-// Diskrepanz 15: Alle Skalen extrem hoch (80%+)
-// KRITISCH: Systemische Überlastung
-const veryHighCount = Object.values(scores).filter(s => s >= 80).length;
-const totalScales = Object.values(scores).length;
-
-if (veryHighCount >= totalScales * 0.7) {  // 70% der Skalen ≥80%
-  discrepancies.push({
-    type: 'systemic_extreme_presentation',
-    severity: 'high',
-    clinical_note: 'Systemic extreme presentation - check for crisis state',
-    user_description: '⚠️ SYSTEMISCHE BELASTUNG: Die meisten Ihrer Werte liegen im sehr hohen Bereich (≥80%). Dies kann bedeuten: (1) Akute Krisensituation überlagert alle Bereiche, (2) Sehr intensive neurodivergente Ausprägung, (3) Chronische Überlastung verstärkt alle Merkmale. Eine professionelle Abklärung ist dringend empfohlen.',
-    flag: 'urgent_professional_assessment'
-  });
-}
-
-return discrepancies;
-}
-
-/* =====================================================
-   6. ONSET-BASIERTE DIFFERENZIERUNG - NEU!
-   
-   Verwendet Onset-Timing für differentialdiagnostische
-   Einordnung
-===================================================== */
 
 function analyzeOnset(scores, meta, patterns) {
   const onsetAnalysis = {
@@ -572,14 +492,9 @@ function analyzeOnset(scores, meta, patterns) {
   return onsetAnalysis;
 }
 
-/* =====================================================
-   7. PATTERN DETECTION (Original + erweitert)
-===================================================== */
-
 function detectPatterns(scores, meta) {
   const patterns = [];
   
-  // Pattern 1: Hochmaskierung
   if (scores.masking >= 65 &&
       (scores.social >= THRESHOLDS.elevated || scores.sensory >= THRESHOLDS.elevated)) {
     patterns.push({
@@ -589,7 +504,6 @@ function detectPatterns(scores, meta) {
     });
   }
   
-  // Pattern 2: Späte Kompensation
   if (scores.masking >= THRESHOLDS.elevated && 
       (meta.gender === 'female' || meta.gender === 'diverse') &&
       meta.onset !== 'childhood') {
@@ -600,7 +514,6 @@ function detectPatterns(scores, meta) {
     });
   }
   
-  // Pattern 3: Burnout/Überlastung dominiert
   if (scores.overload >= 80 &&
       meta.stress && meta.stress !== 'low') {
     patterns.push({
@@ -610,7 +523,6 @@ function detectPatterns(scores, meta) {
     });
   }
   
-  // Pattern 4: AuDHD-spezifisch
   const adhdScore = calculateClusterScore(scores, CLUSTERS.adhd);
   const autismScore = calculateClusterScore(scores, CLUSTERS.autism);
   
@@ -626,7 +538,6 @@ function detectPatterns(scores, meta) {
     }
   }
   
-  // Pattern 5: Subklinisch/Traits
   const allScores = Object.values(scores);
   const avgScore = allScores.reduce((a, b) => a + b, 0) / allScores.length;
   const maxScore = Math.max(...allScores);
@@ -643,10 +554,6 @@ function detectPatterns(scores, meta) {
   
   return patterns;
 }
-
-/* =====================================================
-   8. MASKIERUNGS-KONFIDENZ
-===================================================== */
 
 function calculateMaskingConfidence(scores, meta) {
   let confidence = 0.5;
@@ -673,15 +580,7 @@ function calculateMaskingConfidence(scores, meta) {
   return Math.min(confidence, 0.95);
 }
 
-/* =====================================================
-   9. HAUPTPROFIL BESTIMMEN (erweitert)
-===================================================== */
-
 function determineMainProfile(profiles, patterns, scores, subtypes, discrepancies) {
-  
-  // =====================================================
-  // 0. DOMINANTE EINZELSKALA PRÜFEN
-  // =====================================================
   
   const sortedScales = Object.entries(scores)
     .sort((a, b) => b[1] - a[1]);
@@ -717,15 +616,11 @@ function determineMainProfile(profiles, patterns, scores, subtypes, discrepancie
       score: topScore,
       confidence: topScore >= 90 ? 0.95 : topScore >= 85 ? 0.90 : 0.85,
       level: topScore >= 90 ? 'very_high' : 'high',
-      subtypes: subtypes, // NEU: Subtypen anhängen
-      discrepancies: discrepancies // NEU: Diskrepanzen anhängen
+      subtypes: subtypes,
+      discrepancies: discrepancies
     };
   }
 
-  // =====================================================
-  // 1. SPEZIAL-CHECKS
-  // =====================================================
-  
   const allScores = Object.values(scores);
   const avgScore = allScores.reduce((a, b) => a + b, 0) / allScores.length;
   const maxScore = Math.max(...allScores);
@@ -750,17 +645,11 @@ function determineMainProfile(profiles, patterns, scores, subtypes, discrepancie
     };
   }
   
-  // =====================================================
-  // 2. HAUPTPROFILE MIT SUBTYP-PRIORISIERUNG
-  // =====================================================
-  
   const candidates = [];
   
-  // Subtyp-basierte Kandidaten haben Priorität
   if (subtypes.length > 0) {
     const bestSubtype = subtypes.sort((a, b) => b.confidence - a.confidence)[0];
     
-    // ADHS-Subtypen
     if (bestSubtype.type.startsWith('adhd_')) {
       candidates.push({
         type: 'adhd',
@@ -770,7 +659,6 @@ function determineMainProfile(profiles, patterns, scores, subtypes, discrepancie
       });
     }
     
-    // Autismus-Subtypen
     if (bestSubtype.type.startsWith('autism_')) {
       candidates.push({
         type: 'autism',
@@ -780,7 +668,6 @@ function determineMainProfile(profiles, patterns, scores, subtypes, discrepancie
       });
     }
     
-    // AuDHD-Subtypen
     if (bestSubtype.type.startsWith('audhd_')) {
       candidates.push({
         type: 'audhd',
@@ -791,7 +678,6 @@ function determineMainProfile(profiles, patterns, scores, subtypes, discrepancie
     }
   }
   
-  // Standard-Kandidaten (falls keine Subtypen)
   if (profiles.adhd.confidence >= 0.60) {
     candidates.push({
       type: 'adhd',
@@ -843,10 +729,6 @@ function determineMainProfile(profiles, patterns, scores, subtypes, discrepancie
     });
   }
   
-  // =====================================================
-  // 3. BESTEN KANDIDATEN WÄHLEN
-  // =====================================================
-  
   if (candidates.length === 0) {
     return {
       type: 'mixed',
@@ -877,10 +759,6 @@ function determineMainProfile(profiles, patterns, scores, subtypes, discrepancie
     discrepancies: discrepancies
   };
 }
-
-/* =====================================================
-   10. KONFIDENZ-BERECHNUNG
-===================================================== */
 
 function calculateConfidence(primaryScore, secondaryScore, type, patterns) {
   let confidence = 0;
@@ -937,140 +815,117 @@ function calculateAuDHDConfidence(adhdScore, autismScore, patterns) {
   return Math.min(confidence, 0.95);
 }
 
-/* =====================================================
-   11. HAUPTFUNKTION - calculateProfile (erweitert)
-===================================================== */
-
 export function calculateProfile(scores, meta, answers = {}) {
   
-  // 1. Cluster-Scores berechnen
   const adhdScore = calculateClusterScore(scores, CLUSTERS.adhd);
   const autismScore = calculateClusterScore(scores, CLUSTERS.autism);
   const compensationScore = calculateClusterScore(scores, CLUSTERS.compensation);
   const emotionalScore = calculateClusterScore(scores, CLUSTERS.emotional);
+  const subScores = calculateSubScores(scores);
   
-  // 2. Muster erkennen (Original)
   const patterns = detectPatterns(scores, meta);
   
-  // 3. NEU: Subtypen erkennen
   const subtypes = detectSubtypes(scores, meta);
   
-  // 4. NEU: Diskrepanzen analysieren
   const discrepancies = analyzeDiscrepancies(scores, meta);
   
-  // 5. NEU: Onset analysieren
   const onsetAnalysis = analyzeOnset(scores, meta, patterns);
   
- // 6. Profil-Konfidenz berechnen
-const profiles = {
-  
-  adhd: {
-    score: adhdScore,
-    confidence: scores.executive < THRESHOLDS.elevated 
-      ? Math.min(calculateConfidence(adhdScore, autismScore, 'adhd', patterns), 0.4)
-      : calculateConfidence(adhdScore, autismScore, 'adhd', patterns),
-    primary: adhdScore >= THRESHOLDS.elevated && scores.executive >= THRESHOLDS.elevated,
-    dominant: adhdScore >= THRESHOLDS.high && autismScore < THRESHOLDS.elevated && scores.executive >= THRESHOLDS.elevated
+  const profiles = {
+    
+    adhd: {
+      score: adhdScore,
+      confidence: scores.executive < THRESHOLDS.elevated 
+        ? Math.min(calculateConfidence(adhdScore, autismScore, 'adhd', patterns), 0.4)
+        : calculateConfidence(adhdScore, autismScore, 'adhd', patterns),
+      primary: adhdScore >= THRESHOLDS.elevated && scores.executive >= THRESHOLDS.elevated,
+      dominant: adhdScore >= THRESHOLDS.high && autismScore < THRESHOLDS.elevated && scores.executive >= THRESHOLDS.elevated
+    },
+      
+      autism: {
+        score: autismScore,
+        confidence: calculateConfidence(autismScore, adhdScore, 'autism', patterns),
+        primary: autismScore >= THRESHOLDS.elevated,
+        dominant: autismScore >= THRESHOLDS.high && adhdScore < THRESHOLDS.elevated
+      },
+      
+     audhd: {
+    score: Math.round((adhdScore + autismScore) / 2),
+    confidence: calculateAuDHDConfidence(adhdScore, autismScore, patterns),
+    primary: adhdScore >= THRESHOLDS.elevated && autismScore >= THRESHOLDS.elevated && scores.executive >= THRESHOLDS.elevated,
+    specific: patterns.some(p => p.type === 'audhd_specific')
   },
+      
+      high_masking: {
+        score: compensationScore,
+        confidence: patterns.find(p => p.type === 'high_masking')?.confidence 
+          || calculateFallbackConfidence(compensationScore) / 100,
+        present: patterns.some(p => p.type === 'high_masking'),
+        overlay: true
+      },
+      
+      stress: {
+        score: scores.overload,
+        confidence: patterns.find(p => p.type === 'stress_overlay')?.confidence 
+          || calculateFallbackConfidence(scores.overload) / 100,
+        primary: patterns.some(p => p.type === 'stress_overlay'),
+        overlay: true
+      },
+      
+      traits: {
+        score: Math.round(Object.values(scores).reduce((a, b) => a + b, 0) / Object.values(scores).length),
+        confidence: patterns.find(p => p.type === 'traits_only')?.confidence 
+          || calculateFallbackConfidence(
+              Math.round(Object.values(scores).reduce((a, b) => a + b, 0) / Object.values(scores).length)
+            ) / 100,
+        subclinical: patterns.some(p => p.type === 'traits_only')
+      }
+    };
     
-    autism: {
-      score: autismScore,
-      confidence: calculateConfidence(autismScore, adhdScore, 'autism', patterns),
-      primary: autismScore >= THRESHOLDS.elevated,
-      dominant: autismScore >= THRESHOLDS.high && adhdScore < THRESHOLDS.elevated
-    },
+    const mainProfile = determineMainProfile(profiles, patterns, scores, subtypes, discrepancies);
     
-   audhd: {
-  score: Math.round((adhdScore + autismScore) / 2),
-  confidence: calculateAuDHDConfidence(adhdScore, autismScore, patterns),
-  primary: adhdScore >= THRESHOLDS.elevated && autismScore >= THRESHOLDS.elevated && scores.executive >= THRESHOLDS.elevated,
-  specific: patterns.some(p => p.type === 'audhd_specific')
-},
-    
-    high_masking: {
-      score: compensationScore,
-      confidence: patterns.find(p => p.type === 'high_masking')?.confidence 
-        || calculateFallbackConfidence(compensationScore) / 100,
-      present: patterns.some(p => p.type === 'high_masking'),
-      overlay: true
-    },
-    
-    stress: {
-      score: scores.overload,
-      confidence: patterns.find(p => p.type === 'stress_overlay')?.confidence 
-        || calculateFallbackConfidence(scores.overload) / 100,
-      primary: patterns.some(p => p.type === 'stress_overlay'),
-      overlay: true
-    },
-    
-    traits: {
-      score: Math.round(Object.values(scores).reduce((a, b) => a + b, 0) / Object.values(scores).length),
-      confidence: patterns.find(p => p.type === 'traits_only')?.confidence 
-        || calculateFallbackConfidence(
-            Math.round(Object.values(scores).reduce((a, b) => a + b, 0) / Object.values(scores).length)
-          ) / 100,
-      subclinical: patterns.some(p => p.type === 'traits_only')
-    }
-  };
-  
-  // 7. Hauptprofil bestimmen (mit Subtypen und Diskrepanzen)
-  const mainProfile = determineMainProfile(profiles, patterns, scores, subtypes, discrepancies);
-  
-  // 8. Begründung generieren (wird noch erweitert)
-  const reasoning = generateReasoning(scores, profiles, patterns, meta, mainProfile, subtypes, discrepancies, onsetAnalysis);
-  
-  // 9. Nächste Schritte (wird noch erweitert)
-  const nextSteps = generateNextSteps(mainProfile, profiles, patterns, meta, scores, answers);
-  
-  return {
-    profiles,
-    mainProfile,
-    clusterScores: {
-      adhd: adhdScore,
-      autism: autismScore,
-      compensation: compensationScore,
-      emotional: emotionalScore // NEU: Emotional-Cluster
-    },
-    patterns,
-    subtypes, // NEU
-    discrepancies, // NEU
-    onsetAnalysis, // NEU
-    reasoning,
-    nextSteps,
-    metadata: {
-      testDate: new Date().toISOString(),
-      version: '2.0', // Version erhöht
-      meta: meta
-    }
-  };
-}
+const reasoning = generateReasoning(scores, profiles, patterns, meta, mainProfile, subtypes, discrepancies, onsetAnalysis, subScores);  
 
-/* =====================================================
-   12. BEGRÜNDUNG GENERIEREN (wird erweitert)
-   
-   PLACEHOLDER - Wird im nächsten Schritt ausgebaut
-===================================================== */
+const nextSteps = generateNextSteps(mainProfile, profiles, patterns, meta, scores, answers, subScores);    
+    return {
+      profiles,
+      mainProfile,
+      clusterScores: {
+        adhd: adhdScore,
+        autism: autismScore,
+        compensation: compensationScore,
+        emotional: emotionalScore
+      },
+      patterns,
+      subtypes,
+      discrepancies,
+      onsetAnalysis,
+      reasoning,
+      nextSteps,
+      subScores: subScores,
+      metadata: {
+        testDate: new Date().toISOString(),
+        version: '2.1',
+        meta: meta
+      }
+    };
+  }
 
-function generateReasoning(scores, profiles, patterns, meta, mainProfile, subtypes, discrepancies, onsetAnalysis) {
-  const reasons = [];
+function generateReasoning(scores, profiles, patterns, meta, mainProfile, subtypes, discrepancies, onsetAnalysis, subScores) {  const reasons = [];
   
-  // Alte Logik bleibt erstmal
   const allScores = Object.values(scores);
   const avgScore = Math.round(allScores.reduce((a, b) => a + b, 0) / allScores.length);
   const maxScore = Math.max(...allScores);
   const minScore = Math.min(...allScores);
   
-  // NEU: Onset-Kontext einbeziehen
   if (onsetAnalysis.user_explanation) {
     reasons.push(onsetAnalysis.user_explanation);
   }
   
-  // NEU: Subtyp-spezifische Erklärung
   if (mainProfile.subtype) {
     reasons.push(mainProfile.subtype.user_description);
   }
   
-  // NEU: Diskrepanzen erwähnen
   if (discrepancies.length > 0) {
     const primaryDiscrepancy = discrepancies
       .filter(d => d.severity === 'high' || d.severity === 'moderate')
@@ -1084,7 +939,6 @@ function generateReasoning(scores, profiles, patterns, meta, mainProfile, subtyp
     }
   }
   
-  // Dominante Einzelskala
   if (mainProfile.type === 'single_dominant') {
     const scaleNames = {
       attention: 'Aufmerksamkeit',
@@ -1134,7 +988,6 @@ function generateReasoning(scores, profiles, patterns, meta, mainProfile, subtyp
     );
   }
   
-  // Detaillierte Werte-Aufschlüsselung
   const scaleNames = {
     attention: 'Aufmerksamkeit',
     sensory: 'Sensorische Empfindlichkeit',
@@ -1179,32 +1032,106 @@ function generateReasoning(scores, profiles, patterns, meta, mainProfile, subtyp
       `Im moderat erhöhten Bereich liegen: **${scaleList}**. Diese Merkmale sind vorhanden und können je nach Situation oder Kontext stärker oder schwächer wirken. Sie sind oft gut kompensierbar, können aber in stressigen Phasen deutlicher werden.`
     );
   }
+    // Ergänzung: Neue Fragen in Begründung erwähnen (wenn relevant)
+  if (scores.sensory >= 70) {
+    reasons.push("Ihre sensorische Verarbeitung ist intensiv – das umfasst nicht nur Überempfindlichkeit, sondern kann auch bedeuten, dass Sie aktiv Reize suchen (z. B. Druck, Bewegung), um sich zu regulieren, oder Körpersignale wie Hunger erst verspätet wahrnehmen. Das ist eine typische neurodivergente Verarbeitungsweise und erklärt vieles im Alltag.");
+  }
+
+  if (scores.executive >= 70) {
+    reasons.push("Exekutive Funktionen wie Priorisierung, Impulskontrolle oder der Einstieg in Aufgaben kosten Sie besonders viel Energie. Das ist kein Versagen, sondern eine andere neurologische Belastung – externe Hilfsmittel können hier stark entlasten.");
+  }
+
+  if (scores.masking >= 70) {
+    reasons.push("Sie investieren viel Energie in Anpassung – z. B. Augenkontakt halten oder Gespräche vorplanen. Diese Maskierung ist oft unsichtbar, aber hoch anstrengend und kann langfristig zu Erschöpfung führen.");
+  }
+
+  if (scores.alexithymia >= 70) {
+    reasons.push("Das Benennen und Einordnen eigener Gefühle fällt schwerer – manchmal auch das Einschätzen von Gefühlen anderer. Das ist keine mangelnde Empathie, sondern eine andere Verarbeitungsweise (häufig bei Autismus).");
+  }
+    // Sub-Scores in Begründung einbauen (wenn relevant)
+  if (subScores.executive_initiation >= 70) {
+    reasons.push("Der Einstieg in Aufgaben (Task Initiation) fällt besonders schwer – das ist ein häufiges Merkmal bei ADHS und kostet viel Energie. Externe Hilfsmittel können hier stark entlasten.");
+  }
+
+  if (subScores.executive_impulse >= 70) {
+    reasons.push("Impulskontrolle ist deutlich erschwert – schnelle Reaktionen oder Unterbrechungen sind typisch. Kurze Pausen vor Antworten können helfen.");
+  }
+
+  if (subScores.sensory_hypo >= 70) {
+    reasons.push("Hyposensitivität – Sie suchen aktiv Reize (z. B. Druck, Bewegung), um sich zu regulieren. Das ist eine wirksame Strategie und kein „Zappeln“.");
+  }
+
+  if (subScores.sensory_intero >= 70) {
+    reasons.push("Interozeption – Körpersignale wie Hunger oder Müdigkeit kommen verspätet an. Regelmäßige Check-ins können helfen, diese besser wahrzunehmen.");
+  }
+
+  if (subScores.masking_eyecontact >= 70) {
+    reasons.push("Augenkontakt kostet besonders viel Energie – das ist eine häufige Maskierungsstrategie bei Autismus.");
+  }
+
+  if (subScores.alexithymia_other >= 70) {
+    reasons.push("Das Einschätzen von Gefühlen anderer fällt schwer – das ist keine mangelnde Empathie, sondern eine andere Verarbeitungsweise.");
+  }
   
   return reasons;
 }
 
-/* =====================================================
-   13. NÄCHSTE SCHRITTE (wird erweitert)
-   
-===================================================== */
-
-function generateNextSteps(mainProfile, profiles, patterns, meta, scores, answers) {
+function generateNextSteps(mainProfile, profiles, patterns, meta, scores, answers, subScores) {
   const steps = [];
 
-  // Durchschnittsscore berechnen (für Basis-Tipps-Entscheidung)
   const avgScore = (
     scores.attention + scores.sensory + scores.social + scores.structure +
     scores.overload + scores.alexithymia + scores.executive + 
-    scores.emotreg + scores.hyperfocus
-  ) / 9;
+    scores.emotreg + scores.hyperfocus + scores.masking
+  ) / 10;
 
-  // FRÜHER EXIT: Wenn sehr niedrige Werte (< 25%) → Neurotypische Empfehlungen
+ // ===== DRINGENDE WARNUNGEN (priorisiert) =====
+
+  // 1. Starke Überlastung
+  if (scores.overload >= 80) {
+    steps.push(`🚨 SOFORTMASSNAHMEN bei chronischer Überlastung:
+- Medizinischen Check erwägen: Schilddrüse, Vitamin B12, Eisen, Cortisol – körperliche Ursachen ausschließen.
+- Professionelle Unterstützung suchen: Psychotherapie, Coaching oder ärztliche Abklärung – Sie sind nicht allein.
+- Belastung reduzieren: Krankschreibung oder Auszeit in Betracht ziehen – Erholung geht vor Leistung.
+- Basishygiene stabilisieren: Schlaf, Ernährung, Bewegung – kleine, machbare Schritte zuerst.
+- Erst danach neurodivergente Strategien ausprobieren – der Körper braucht jetzt Schutz.`);
+  }
+
+  // 2. Hohe Maskierung + niedrige Overload (verzögerter Burnout)
+  if (scores.masking >= 80 && scores.overload < 60) {
+    steps.push(`🚨 DRINGEND - BURNOUT-PRÄVENTION:
+Ihre Maskierung ist extrem hoch (${scores.masking}%), während Überlastung noch niedrig ist (${scores.overload}%). Das ist eine trügerische Kombination!
+Sie halten nach außen vieles aufrecht, während Ihre Energie-Reserven schleichend aufgebraucht werden. Burnout kommt oft plötzlich („von 100 auf 0").
+WARNSIGNALE ERNST NEHMEN:
+- Zunehmende Gereiztheit
+- Schlafprobleme
+- Rückzugswunsch intensiviert sich
+- "Ich kann nicht mehr" Gefühle
+→ Jetzt gegensteuern ist einfacher als später Reparatur! Reduzieren Sie Maskierung in sicheren Räumen.`);
+  }
+
+  // 3. Hohe emotionale Dysregulation + hohe Alexithymia
+  if (scores.emotreg >= 80 && scores.alexithymia >= 70) {
+    steps.push(`🚨 DRINGEND – EMOTIONALE ÜBERLASTUNG:
+Ihre Gefühle sind sehr intensiv (${scores.emotreg}%), aber schwer wahrzunehmen/benennbar (${scores.alexithymia}%). Das ist eine belastende Kombination.
+Mögliche Folgen: Überforderung oder Krisen, ohne dass es vorher „sichtbar" wird.
+→ Professionelle Unterstützung (Therapie/Coaching) ist hier besonders wichtig. Sie sind nicht „zu sensibel" – Ihre Neurologie verarbeitet einfach anders.`);
+  }
+
+  // 4. Systemische Belastung (viele Skalen extrem hoch)
+  const highCount = Object.values(scores).filter(s => s >= 80).length;
+  if (highCount >= 6) {
+    steps.push(`🚨 DRINGEND – SYSTEMISCHE BELASTUNG:
+${highCount} von 10 Bereichen liegen extrem hoch. Das deutet auf eine sehr intensive Ausprägung oder akute Krise hin.
+→ Professionelle Abklärung und Entlastung sind dringend empfohlen. Sie brauchen jetzt Schutz und Unterstützung.`);
+  }
+
+  // ===== ALLGEMEINE TIPPS (bei avgScore ≥50%) =====
   if (avgScore < 25) {
     steps.push("Ihre Ergebnisse zeigen keine ausgeprägten neurodivergenten Merkmale. Falls Sie dennoch Schwierigkeiten im Alltag erleben, können allgemeine Strategien zur Stressbewältigung, Achtsamkeit oder ein Gespräch mit einer Fachperson hilfreich sein.");
     return steps;
   }
 
-  // FRÜHER EXIT: Wenn niedrige Werte (< 50%) → Subklinische Empfehlungen
   if (avgScore < 50) {
     steps.push("Ihre Ergebnisse zeigen einige neurodivergente Merkmale, die jedoch nicht stark ausgeprägt sind. Falls bestimmte Bereiche Sie belasten, können gezielte Strategien hilfreich sein:");
     
@@ -1219,13 +1146,10 @@ function generateNextSteps(mainProfile, profiles, patterns, meta, scores, answer
     return steps;
   }
 
-  // AB HIER (≥ 50%): Neurodivergente Empfehlungen
-  
-  // Basis-Tipps (NUR bei mittleren bis hohen Werten)
   steps.push("Selbstregulation bewusst erlauben: Bewegung, Fidget-Tools, repetitive Handlungen oder beruhigende Rituale sind keine \"schlechten Angewohnheiten\", sondern wirksame Werkzeuge Ihrer Neurologie.");
   steps.push("Bewegung & Natur: Regelmäßige körperliche Aktivität – auch kleine Spaziergänge – unterstützt Dopamin-Regulation, emotionale Balance und reduziert Überlastung oft stärker als erwartet.");
 
-  // UNVERÄNDERT: Profil-spezifisch (ADHD)
+  // Profil-spezifisch (ADHD)
   if (mainProfile.type === 'adhd' || mainProfile.type === 'audhd') {
     steps.push("Interessen gezielt nutzen: Planen Sie Aufgaben um Ihre Hyperfokus-Phasen herum – das macht Dinge motivierender und leichter erledigbar.");
     if (scores.hyperfocus >= 80) {
@@ -1236,7 +1160,7 @@ function generateNextSteps(mainProfile, profiles, patterns, meta, scores, answer
     }
   }
 
-  // UNVERÄNDERT: Profil-spezifisch (Autism)
+  // Profil-spezifisch (Autism)
   if (mainProfile.type === 'autism' || mainProfile.type === 'audhd') {
     steps.push("Sensorische Bedürfnisse ernst nehmen: Noise-Cancelling-Kopfhörer, Sonnenbrille oder ruhige Räume sind keine Übertreibung, sondern notwendige Selbstfürsorge.");
     steps.push("Struktur als Schutz nutzen: Feste Routinen oder klare Pläne geben Sicherheit – sie sind ein Anker in einer oft unvorhersehbaren Welt.");
@@ -1245,7 +1169,6 @@ function generateNextSteps(mainProfile, profiles, patterns, meta, scores, answer
     }
   }
 
-  // UNVERÄNDERT: Maskierung & Überlastung
   if (profiles.high_masking?.present || scores.masking >= 70) {
     steps.push("Maskierung bewusst reduzieren: In sicheren Räumen authentisch sein spart enorme Energie und schützt vor Burnout.");
   }
@@ -1254,19 +1177,68 @@ function generateNextSteps(mainProfile, profiles, patterns, meta, scores, answer
     steps.push("Überlastung früh erkennen: Frühe Warnsignale (z. B. Reizbarkeit, Rückzugswunsch) ernst nehmen und sofort Pausen einlegen.");
   }
 
-  // UNVERÄNDERT: Hypnose-Therapie
   if (scores.emotreg >= 70 || scores.overload >= 70 || profiles.high_masking?.present || mainProfile.type === 'audhd') {
     steps.push("Hypnose-Therapie in Betracht ziehen: Hypnose kann besonders bei emotionaler Dysregulation, Überlastung oder langjähriger Maskierung helfen, innere Blockaden zu lösen und Selbstregulation zu stärken – ideal in Kombination mit neurodivergentem Verständnis.");
   }
 
-  // UNVERÄNDERT: Neurodivergentes Coaching
   if (mainProfile.confidence >= 0.6 && mainProfile.type !== 'very_low' && mainProfile.type !== 'unremarkable') {
     steps.push("Neurodivergentes Coaching: Ein Coach mit Schwerpunkt Neurodivergenz kann helfen, passende Strategien für Ihren Alltag zu entwickeln – von Struktur über Selbstakzeptanz bis hin zu Beruf und Beziehungen.");
   }
 
-  // Abschluss-Tipps (NUR bei mittleren bis hohen Werten)
   steps.push("Selbstakzeptanz stärken: Ihre Art zu denken und zu fühlen ist gültig – Neurodivergenz ist eine andere, nicht falsche Neurologie.");
   steps.push("Austausch suchen: Kontakt zu anderen neurodivergenten Menschen (z. B. Foren, Selbsthilfegruppen) kann wertvolle Tipps und das Gefühl von Zugehörigkeit bringen.");
 
-  return steps;
+  // Neue Tipps für sensorische Fragen
+  if (scores.sensory >= 70) {
+    steps.push("Gerüche und Reize managen: Bei starker Geruchsempfindlichkeit duftfreie Produkte und Räume bevorzugen. Nasenklammer oder Maske in belastenden Situationen sind legitim – dein Geruchssinn ist einfach intensiver.");
+    steps.push("Reize suchen als Regulation: Druck (Gewichtsdecke), Bewegung oder Fidget-Tools sind wirksame Werkzeuge, um dich geerdet zu fühlen – keine „Zappelei“, sondern Selbstfürsorge.");
+    steps.push("Interozeption unterstützen: Körpersignale wie Hunger oder Müdigkeit kommen oft verspätet an. Timer oder regelmäßige Check-ins (z. B. „Wie fühlt sich mein Körper jetzt an?“) können helfen.");
+  }
+
+  // Neue Tipps für executive-Fragen
+  if (scores.executive >= 70) {
+    steps.push("Priorisierung erleichtern: Die '3 wichtigste Dinge des Tages'-Methode oder Apps mit Fokus-Modus können helfen, den Überblick zu behalten.");
+    steps.push("Impulskontrolle trainieren: Kurze Pausen vor Reaktionen („10-Sekunden-Regel“) oder Gedanken laut aussprechen reduzieren impulsive Entscheidungen.");
+  }
+
+  // Neue Tipps für masking-Fragen
+  if (scores.masking >= 70) {
+    steps.push("Augenkontakt dosieren: Es ist in Ordnung, Blickkontakt nicht ständig zu halten – auf Nase oder Mund schauen oder Pausen einlegen schont Energie.");
+  }
+
+  // Sub-Scores in Next Steps einbauen
+  if (subScores.executive_initiation >= 70) {
+    steps.push("Task Initiation erleichtern: Body Doubling (mit jemandem zusammen arbeiten) oder die '2-Minuten-Regel' können den Einstieg deutlich erleichtern.");
+  }
+
+  if (subScores.executive_impulse >= 70) {
+    steps.push("Impulskontrolle trainieren: Kurze Pausen vor Reaktionen („10-Sekunden-Regel“) oder Gedanken laut aussprechen reduzieren impulsive Entscheidungen.");
+  }
+
+  if (subScores.sensory_hypo >= 70) {
+    steps.push("Reize suchen als Regulation: Gewichtsdecke, Fidget-Tools oder feste Berührung helfen, sich geerdet zu fühlen – das ist Selbstfürsorge.");
+  }
+
+  if (subScores.sensory_intero >= 70) {
+    steps.push("Interozeption unterstützen: Timer für Essen/Trinken/Schlafen oder regelmäßige Check-ins („Wie fühlt sich mein Körper jetzt an?“) können helfen.");
+  }
+
+  if (subScores.masking_eyecontact >= 70) {
+    steps.push("Augenkontakt dosieren: Es ist okay, Blickkontakt nicht ständig zu halten – auf Nase/Mund schauen oder Pausen einlegen schont Energie.");
+  }
+
+  if (subScores.alexithymia_other >= 70) {
+    steps.push("Gefühle anderer einschätzen: Achtsamkeitsübungen oder Gespräche mit Vertrauten können helfen, diese Fähigkeit zu stärken.");
+  }
+    // Re-Evaluation empfehlen bei überlagernden Faktoren
+  if (scores.overload >= 70 || 
+      (scores.masking >= 80 && scores.overload < 60) || 
+      (scores.emotreg >= 80 && scores.alexithymia >= 70) || 
+      (scores.social >= 80 && scores.masking >= 80)) {
+    steps.push("Re-Evaluation in Betracht ziehen:");
+    steps.push("Bei starker aktueller Überlastung, intensiver Maskierung oder emotionaler Belastung können neurodivergente Merkmale verstärkt, abgeschwächt oder überlagert wirken.");
+    steps.push("Nach einer Phase der Entlastung und Stabilisierung kann eine Wiederholung des Tests ein klareres Bild geben – viele Menschen erleben dann eine präzisere Einschätzung.");
+ 
+  }
+  return steps;  
 }
