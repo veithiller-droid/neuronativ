@@ -1,299 +1,658 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neuronativ – Forum und Selbsttest für Neurodivergenz</title>
 
-  <title>Hypnose Wandel</title>
-  <meta name="description" content="Hypnose Wandel – Hypnose-Expertin für Frauen im Wandel. Virtuelles Magenband Premium, Erstgespräch, Gratis Download, Quiz und FAQ.">
-  <meta name="robots" content="index,follow">
+  <style>
+    /* =========================
+       FARBKONZEPT - THEMES
+    ========================= */
 
-  <link rel="icon" href="./images/logo.webp">
-  <link rel="stylesheet" href="./site.css">
-</head>
+    /* Default Theme: SANFT */
+    :root {
+      --bg-page: #D4F5F3;
+      --bg-box: #FFFFFF;
+      --bg-box-alt: #EEEAF3;
+      --bg-box-soft: #F2F5F7;
+      --bg-highlight: #FFFBEA;
+      --border-light: #D8DEE4;
+      --accent-main: #EAB308;
+      --accent-soft: #FACC15;
+      --accent-warm: #E6B980;
+      --accent-turquoise: #06B6D4;
+      --text-main: #2F3A40;
+      --text-secondary: #5F6C73;
+    }
 
-<body>
-  <div class="frame">
-  <div class="frame-inner">
+    /* Theme: KONTRAST */
+    [data-theme="contrast"] {
+      --bg-page: #FFFFFF;
+      --bg-box: #F9FAFB;
+      --bg-box-alt: #F3F4F6;
+      --bg-box-soft: #F3F4F6;
+      --bg-highlight: #FEF3C7;
+      --border-light: #000000;
+      --accent-main: #1E3A8A;
+      --accent-soft: #3B82F6;
+      --text-main: #000000;
+      --text-secondary: #374151;
+    }
 
-  <div id="Anchor"></div>
+    /* Theme: DUNKEL */
+    [data-theme="dark"] {
+      --bg-page: #111827;
+      --bg-box: #1F2937;
+      --bg-box-alt: #374151;
+      --bg-box-soft: #374151;
+      --bg-highlight: #374151;
+      --border-light: #4B5563;
+      --accent-main: #22D3EE;
+      --accent-soft: #06B6D4;
+      --text-main: #F9FAFB;
+      --text-secondary: #D1D5DB;
+    }
 
-  <!-- HEADER (lädt header.html) -->
-  <div data-include="./header.html"></div>
+    /* Theme: WARM */
+    [data-theme="warm"] {
+      --bg-page: #FAF8F3;
+      --bg-box: #FFFFFF;
+      --bg-box-alt: #FEF3E2;
+      --bg-box-soft: #FEF3E2;
+      --bg-highlight: #FED7AA;
+      --border-light: #E7E5E4;
+      --accent-main: #C2410C;
+      --accent-soft: #EA580C;
+      --text-main: #292524;
+      --text-secondary: #57534E;
+    }
 
-  <main>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-    <!-- HERO (links Text ohne Card, rechts Bild) -->
-    <section id="start" class="hero section tone-sand border-bottom" style="padding:58px 0;">
-      <div class="container hero-grid">
-        <div class="hero-text">
-          <h1 class="hero-title" data-text="home.hero.title"></h1>
-          <div class="hero-subline" data-text="home.hero.subline"></div>
-        </div>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+      color: var(--text-main);
+      background: var(--bg-page);
+      line-height: 1.8;
+      font-size: 18px;
+      margin: 0;
+      padding: 0 60px;
+    }
 
-        <div class="panel">
-          <img src="./images/hero_notizbuecher.webp" alt="">
-        </div>
-      </div>
-    </section>
+    .page-wrapper {
+      max-width: 1400px;
+      margin: 0 auto;
+      background: var(--bg-box);
+      box-shadow: 0 0 40px rgba(0,0,0,0.2);
+    }
 
-    <!-- INTRO (Textblock unter Hero) -->
-    <section class="section tone-white">
-      <div class="container centered">
-    <h2 class="headline--dark" data-text="home.hero.h2"></h2>
-        <div class="divider center"></div>
-        <p class="intro-text" data-text="home.hero.p"></p>
-      </div>
-    </section>
+    /* Header */
+    header {
+      background: var(--bg-box);
+      border-bottom: 1px solid var(--border-light);
+      padding: 20px 0;
+    }
 
-  <!-- VIDEO (sand) -->
-<section class="section tone-sand">
-  <div class="container split">
-    <div class="panel">
-      <video class="video" controls preload="metadata" poster="./images/video_poster.webp">
-        <source src="./images/media/intro.mp4" type="video/mp4">
-      </video>
-    </div>
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-    <div class="panel">
-      <h2 class="headline--gold">Lerne mich persönlich kennen</h2>
-      <div class="divider"></div>
-      <p class="muted">Heidi Schimmel - Hypnose-Expertin für Frauen im Wandel. Wenn du wissen möchtest, wie Hypnose abläuft, was dich in einer Sitzung erwartet und ob das Virtuelle Magenband Premium zu dir passt, bekommst du hier einen ersten Eindruck.</p>
-    </div>
-  </div>
-</section>
+    .logo-text {
+      font-size: 24px;
+      font-weight: 300;
+      letter-spacing: 2px;
+      color: var(--text-main);
+    }
 
+    nav {
+      display: flex;
+      gap: 40px;
+    }
 
-    <!-- ÜBER MICH (Goldfläche) -->
-    <section id="Uber-mich" class="section tone-gold">
-      <div class="container split">
-        <div class="sectionbox">
-        <h2 class="headline--white" data-text="home.about.title"></h2>
-          <div class="divider olive"></div>
-          <p class="sectiontext" data-text="home.about.p"></p>
-        </div>
+    nav a {
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-size: 13px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
 
-        <div class="panel">
-          <img src="./images/uebermich_papierschiff.webp" alt="">
-        </div>
-      </div>
-    </section>
+    nav a:hover {
+      color: var(--accent-main);
+    }
 
-    <!-- HYPNOSE (weiß) -->
-    <section id="Hypnose" class="section tone-white">
-      <div class="container split">
-        <div class="sectionbox">
-        <h2 class="headline--gold" data-text="home.hypnosis.title"></h2>
-          <div class="divider"></div>
-          <p class="sectiontext" data-text="home.hypnosis.p"></p>
-        </div>
+    /* Hero Section */
+    .hero {
+      background: var(--bg-box);
+      padding: 80px 40px;
+    }
 
-        <div class="panel">
-          <img src="./images/hypnose_origami.webp" alt="">
-        </div>
-      </div>
-    </section>
+    .hero-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
 
-    <!-- ANGEBOT (sand, zentriert) -->
-    <section class="section tone-sand">
-      <div class="container centered">
-      <h2 class="headline--dark" data-text="home.offer.title"></h2>
-        <div class="divider center"></div>
-        <h3 data-text="home.offer.subtitle" style="margin-top:0"></h3>
-        <p data-text="home.offer.p"></p>
+    .hero-text h1 {
+      font-size: 3rem;
+      font-weight: 300;
+      margin-bottom: 20px;
+      color: var(--text-main);
+    }
 
-        <div class="cta-row" style="justify-content:center;">
-          <a class="btn"
-             href="https://heidischimmel.tentary.com/p/nuGVeB"
-             data-config-href="booking.buyUrl"
-             data-text="home.offer.buyLabel"></a>
-        </div>
-      </div>
-    </section>
+    .hero-text .tagline {
+      color: var(--text-secondary);
+      font-size: 1.15rem;
+      line-height: 1.8;
+      margin-bottom: 30px;
+    }
 
-<!-- ABLAUF (weiß) -->
-<section class="section tone-white">
-  <div class="container" style="max-width:900px;">
-    <div class="sectionbox">
-      <h2 class="headline--gold" data-text="home.process.title"></h2>
-      <div class="divider"></div>
+    .hero-image {
+      text-align: center;
+    }
 
-      <p class="sectiontext" data-text="home.process.p"></p>
+    .hero-image img {
+      max-width: 100%;
+      width: 400px;
+      height: auto;
+      border-radius: 8px;
+    }
 
-      <h3 style="margin-top:18px;">Das Programm umfasst:</h3>
-      <ul id="process-bullets" class="bullets"></ul>
+    /* Main Content Section */
+    .content-section {
+      background: var(--bg-box);
+      padding: 80px 40px;
+    }
 
-      <h3 class="headline--dark" style="margin-top:18px;" data-text="home.process.erstgespraechTitle"></h3>
-      <p class="sectiontext" data-text="home.process.erstgespraechP"></p>
+    .content-wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
 
-      <div class="cta-row" style="margin-top:14px;">
-        <a class="btn"
-           href="#"
-           data-config-href="booking.consultUrl"
-           data-text="home.booking.ctaLabel"></a>
-      </div>
-    </div>
-  </div>
-</section>
+    .content-section h2 {
+      font-size: 2rem;
+      font-weight: 300;
+      margin-bottom: 30px;
+      color: var(--text-main);
+    }
 
+    .content-section p {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      line-height: 1.8;
+      margin-bottom: 20px;
+      text-align: justify;
+    }
 
-    <!-- 4-KARTEN-BLOCK (Gold-soft Fläche) -->
-    <section class="section tone-gold-soft">
-      <div class="container">
-        <div class="features-grid">
-          <div class="panel">
-            <h3 data-text="home.process.fuerwenTitle"></h3>
-            <div class="divider"></div>
-            <p class="muted" style="margin-bottom:6px;">Hypnose kann dich unterstützen, wenn du</p>
-            <ul id="fuerwen-bullets" class="bullets"></ul>
-            <p class="muted" data-text="home.process.fuerwenNote"></p>
-          </div>
+    /* Highlight Box */
+    .highlight-box {
+      background: var(--bg-box-alt);
+      border-left: 4px solid var(--accent-main);
+      padding: 30px 35px;
+      margin: 40px 0;
+      font-style: italic;
+    }
 
-          <div class="panel">
-            <h3 data-text="home.process.kostenTitle"></h3>
-            <div class="divider"></div>
-            <p data-text="home.process.kostenP"></p>
-          </div>
+    .highlight-box p {
+      margin: 0;
+      font-size: 1.2rem;
+      color: var(--text-main);
+      text-align: center;
+      font-weight: 600;
+    }
 
-          <div class="panel">
-            <h3 data-text="home.process.aboutWandelTitle"></h3>
-            <div class="divider"></div>
-            <p data-text="home.process.aboutWandelP"></p>
-          </div>
+    /* Feature Alternating Layout */
+    .feature-alternating {
+      margin-top: 50px;
+    }
 
-          <div class="panel">
-            <h3 data-text="home.process.legalHintTitle"></h3>
-            <div class="divider"></div>
-            <p class="muted" data-text="home.process.legalHintP"></p>
-          </div>
-        </div>
-      </div>
-    </section>
+    .feature-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: stretch;
+      margin-bottom: 80px;
+    }
 
-<!-- DOWNLOAD TEASER (Goldfläche) -->
-<section class="section tone-gold">
-  <div class="container split">
+    .feature-row:last-child {
+      margin-bottom: 0;
+    }
 
-    <div class="sectionbox">
-      <h2 class="headline--white" data-text="home.downloadTeaser.title"></h2>
-      <div class="divider olive"></div>
-      <p class="sectiontext" data-text="home.downloadTeaser.p"></p>
+    .feature-text {
+      padding: 40px;
+      background: var(--bg-box);
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
 
-      <div class="cta-row">
-        <a class="btn btn-solid"
-           href="./gratis-download.html"
-           data-text="home.downloadTeaser.ctaLabel"
-           data-href-text="home.downloadTeaser.ctaHref">Gratis Download sichern</a>
-      </div>
-    </div>
+    .feature-text h3 {
+      font-size: 1.5rem;
+      font-weight: 400;
+      margin-bottom: 20px;
+      color: var(--text-main);
+    }
 
-    <div class="media-box">
-      <img src="./images/download_origami.webp" alt="">
-    </div>
+    .feature-text p {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin: 0;
+    }
 
-  </div>
-</section>
+    .feature-image {
+      text-align: center;
+    }
 
-<!-- BUCHUNG (weiß) -->
-<section class="section tone-white">
-  <div class="container split">
+    .feature-image img {
+      max-width: 350px;
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
 
-    <div class="sectionbox">
-      <h2 data-text="home.booking.title"></h2>
-      <div class="divider"></div>
-      <p class="sectiontext" data-text="home.booking.p"></p>
+    .feature-image a:hover img {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    }
 
-      <div class="cta-row">
-        <a class="btn"
-           href="https://heidischimmel.tentary.com/p/YMDdrH/checkout"
-           target="_blank" rel="noopener">
-          Kostenloses Erstgespräch buchen
-        </a>
+    /* Test Section */
+    .test-section {
+      background: var(--bg-box-soft);
+      padding: 80px 40px;
+      text-align: center;
+      border: 1px solid var(--border-light);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    }
 
-        <a class="btn btn-ghost" href="./kontakt.html">Kontakt</a>
-      </div>
-    </div>
+    .test-content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
 
-    <div class="panel">
-      <img src="./images/buchung_papierspielzeug.webp" alt="">
-    </div>
+    .test-section h2 {
+      font-size: 2.2rem;
+      font-weight: 300;
+      margin-bottom: 20px;
+      color: var(--text-main);
+    }
 
-  </div>
-</section>
+    .test-description {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      line-height: 1.8;
+      margin-bottom: 30px;
+    }
 
-<!-- QUIZ TEASER (sand) -->
-<section class="section tone-sand">
-  <div class="container split">
-    <div class="panel">
-      <h2 class="headline--dark" data-text="home.quizTeaser.title"></h2>
-      <div class="divider"></div>
-      <p data-text="home.quizTeaser.p"></p>
+    .test-features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px 40px;
+      justify-content: center;
+      margin-bottom: 40px;
+    }
 
-      <div class="cta-row">
-        <a class="btn" href="./quiz.html"
-           data-text="home.quizTeaser.ctaLabel"
-           data-href-text="home.quizTeaser.ctaHref"></a>
+    .test-feature-item {
+      font-weight: 600;
+      color: var(--text-main);
+      font-size: 1rem;
+    }
 
-        <a class="btn btn-ghost" href="./faq.html">FAQ</a>
-      </div>
-    </div>
+    .cta-button {
+      display: inline-block;
+      background: var(--accent-main);
+      color: white;
+      font-size: 1.1rem;
+      font-weight: 600;
+      padding: 15px 40px;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
 
-    <div class="panel">
-      <img src="./images/quiz_papierspielzeug.webp" alt="">
-    </div>
-  </div>
-</section>
+    .cta-button:hover {
+      background: var(--accent-soft);
+      transform: translateY(-2px);
+    }
 
-</main>
+    /* Footer */
+    .footer {
+      background: var(--bg-box);
+      border-top: 1px solid var(--border-light);
+      padding: 40px;
+      text-align: center;
+    }
 
-<!-- FOOTER (muss nach main kommen) -->
-<div data-include="./footer.html"></div>
+    .footer p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+    }
 
+    .footer a {
+      color: var(--accent-main);
+      text-decoration: none;
+      font-weight: 600;
+    }
 
-  <!-- Back to top -->
-  <a class="to-top" href="#Anchor" aria-label="Nach oben">↑</a>
+    .footer a:hover {
+      text-decoration: underline;
+    }
 
-  <noscript>
-    <div class="container section">
-      <p>Diese Website benötigt JavaScript für Navigation/Content-Laden.</p>
-    </div>
-  </noscript>
-
-  <script type="module">
-    import { includePartials } from "./include.js";
-    import { loadJSON, fillConfig, fillText, bindConfigHrefs, bindTextHrefs } from "./content.js";
-    import { initNav } from "./site.js";
-
-    function buildBullets(texts) {
-      const proc = texts?.home?.process;
-      const ul1 = document.getElementById("process-bullets");
-      const ul2 = document.getElementById("fuerwen-bullets");
-
-      if (ul1 && Array.isArray(proc?.bullets)) {
-        ul1.innerHTML = proc.bullets.map(x => `<li>${x}</li>`).join("");
+    /* Responsive */
+    @media (max-width: 768px) {
+      body {
+        font-size: 16px;
+        padding: 0 20px;
       }
-      if (ul2 && Array.isArray(proc?.fuerwenBullets)) {
-        ul2.innerHTML = proc.fuerwenBullets.map(x => `<li>${x}</li>`).join("");
+
+      .hero-content {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-text h1 {
+        font-size: 2.2rem;
+      }
+
+      nav {
+        gap: 20px;
+      }
+
+      .feature-row {
+        grid-template-columns: 1fr;
+        gap: 30px;
       }
     }
 
-    await includePartials();
+    /* =========================
+       THEME-POPUP
+    ========================= */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
 
-    const [cfg, texts] = await Promise.all([
-      loadJSON("./config.json"),
-      loadJSON("./texts.de.json")
-    ]);
+    .modal {
+      background: var(--bg-box);
+      padding: 28px 30px 30px;
+      max-width: 460px;
+      width: 90%;
+      border-radius: 18px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+      text-align: center;
+    }
 
-    fillConfig(cfg);
-    fillText(texts);
-    initNav();
+    .modal h2 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 1.3em;
+      color: var(--text-main);
+    }
 
-    bindConfigHrefs(cfg);
-    bindTextHrefs(texts);
-    buildBullets(texts);
-  </script>
+    .theme-buttons {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin: 20px 0;
+    }
+
+    .theme-btn {
+      padding: 16px;
+      border-radius: 12px;
+      border: 2px solid var(--border-light);
+      background: var(--bg-box);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .theme-btn:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    .theme-icon {
+      font-size: 2.5em;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .theme-name {
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .modal-actions {
+      margin-top: 20px;
+    }
+
+    .btn-primary {
+      padding: 12px 30px;
+      background: var(--accent-main);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+
+    <!-- THEME-POPUP (wie im Test) -->
+    <div id="theme-modal" class="modal-backdrop" style="display: none;">
+      <div class="modal">
+        <h2>Willkommen! 👋</h2>
+        <p class="topic-intro">
+          Wählen Sie ein Farbschema, das für Sie angenehm ist. 
+          Die Einstellung wird gespeichert und gilt für die gesamte Webseite.
+        </p>
+
+        <div class="theme-buttons">
+          <button onclick="setTheme('soft')" class="theme-btn theme-soft">
+            <span class="theme-icon">🌊</span>
+            <span class="theme-name">Sanft</span>
+          </button>
+          <button onclick="setTheme('contrast')" class="theme-btn theme-contrast">
+            <span class="theme-icon">⚫</span>
+            <span class="theme-name">Kontrast</span>
+          </button>
+          <button onclick="setTheme('dark')" class="theme-btn theme-dark">
+            <span class="theme-icon">🌙</span>
+            <span class="theme-name">Dunkel</span>
+          </button>
+          <button onclick="setTheme('warm')" class="theme-btn theme-warm">
+            <span class="theme-icon">🍂</span>
+            <span class="theme-name">Warm</span>
+          </button>
+        </div>
+
+        <div class="modal-actions">
+          <button id="continue-theme" class="btn-primary">Weiter zur Webseite</button>
+        </div>
+      </div>
     </div>
-</div>
+
+    <!-- Header -->
+    <header>
+      <div class="header-content">
+        <div class="logo-text">neuronativ</div>
+        <nav>
+  <a href="wissen.html">Wissen</a>
+  <a href="test/index.html">Selbsttest</a>
+  <a href="#kontakt">Kontakt</a>
+  <a href="#" id="change-theme-link">Farbschema ändern</a>
+</nav>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-content">
+        <div class="hero-text">
+          <h1>Neuronativ</h1>
+          <p class="tagline">
+            Community, Wissen und Selbsteinschätzung für neurodivergente Menschen
+          </p>
+        </div>
+        <div class="hero-image">
+          <img src="images/neuronativlogo.png" alt="Neuronativ Logo">
+        </div>
+      </div>
+    </section>
+
+    <!-- Was ist Neuronativ -->
+    <section class="content-section">
+      <div class="content-wrapper">
+        <h2>Was ist Neuronativ?</h2>
+        <p>
+          Neuronativ ist eine Plattform für Menschen, die sich mit Neurodivergenz beschäftigen – sei es aus persönlicher
+          Betroffenheit, wissenschaftlichem Interesse oder beruflichem Kontext.
+        </p>
+        <p>
+          Neurodivergenz umfasst neurologische Besonderheiten wie ADHS, Autismus-Spektrum-Störungen, Hochsensibilität
+          und weitere Formen der neurokognitiven Vielfalt.
+        </p>
+
+        <div class="highlight-box">
+          <p>Nicht falsch verdrahtet – nur anders verdrahtet.</p>
+        </div>
+
+        <p>
+          Der Schlüssel liegt im Verständnis – nicht in der Pathologisierung.
+        </p>
+      </div>
+    </section>
+
+    <!-- Was wir machen -->
+    <section class="content-section" style="background: var(--bg-box-soft);">
+      <div class="content-wrapper">
+        <h2>Was wir machen</h2>
+
+        <div class="feature-alternating">
+          <!-- Row 1 -->
+          <div class="feature-row">
+            <div class="feature-image">
+              <a href="test/index.html">
+                <img src="images/stairs.png" alt="Art Deco Illustration">
+              </a>
+            </div>
+            <div class="feature-text">
+              <h3><a href="test/index.html" style="color: var(--text-main); text-decoration: none;">Selbsteinschätzung</a></h3>
+              <p>Differenzierter Selbsttest – keine Diagnose</p>
+            </div>
+          </div>
+
+          <!-- Row 2 -->
+          <div class="feature-row">
+            <div class="feature-text">
+              <h3>Community & Austausch</h3>
+              <p>Respektvoller Austausch auf Augenhöhe</p>
+            </div>
+            <div class="feature-image">
+              <img src="images/night.png" alt="Art Deco Illustration">
+            </div>
+          </div>
+
+          <!-- Row 3 -->
+          <div class="feature-row">
+            <div class="feature-image">
+              <a href="wissen.html">
+                <img src="images/reader.png" alt="Art Deco Illustration">
+              </a>
+            </div>
+            <div class="feature-text">
+              <h3><a href="wissen.html" style="color: var(--text-main); text-decoration: none;">Wissen & Aufklärung</a></h3>
+              <p>Fundierte Informationen zu Neurodivergenz</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Selbsttest Section -->
+    <section class="test-section">
+      <div class="test-content">
+        <h2>Neurodiversitäts-Selbsttest</h2>
+        <p class="test-description">
+          Der Test dient der Selbstreflexion und kann Hinweise geben,
+          ob eine fachliche Abklärung sinnvoll ist.
+        </p>
+
+        <div class="test-features">
+          <div class="test-feature-item">✓ ca. 15 Minuten</div>
+          <div class="test-feature-item">✓ wissenschaftlich fundiert</div>
+          <div class="test-feature-item">✓ anonym</div>
+        </div>
+
+        <a href="test/index.html" class="cta-button">Zum Test</a>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>&copy; 2024 Neuronativ</p>
+      <p>
+        <a href="impressum.html">Impressum</a> ·
+        <a href="datenschutz.html">Datenschutz</a> ·
+        <a href="kontakt.html">Kontakt</a>
+      </p>
+    </footer>
+  </div>
+
+  <!-- Theme-Script -->
+ <script>
+  function setTheme(theme) {
+    localStorage.setItem('preferred-theme', theme);
+    document.documentElement.setAttribute('data-theme', theme);
+  }
+
+  (function() {
+    const saved = localStorage.getItem('preferred-theme') || 'soft';
+    document.documentElement.setAttribute('data-theme', saved);
+
+    // Popup nur beim ersten Besuch zeigen
+    if (!localStorage.getItem('theme-seen')) {
+      document.getElementById('theme-modal').style.display = 'flex';
+    }
+
+    // Button: Popup schließen und merken
+    document.getElementById('continue-theme').addEventListener('click', () => {
+      document.getElementById('theme-modal').style.display = 'none';
+      localStorage.setItem('theme-seen', 'true');
+    });
+
+    // Link: Theme-Popup nachträglich öffnen
+    document.getElementById('change-theme-link')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      document.getElementById('theme-modal').style.display = 'flex';
+    });
+  })();
+</script>
 
 </body>
+
 </html>
