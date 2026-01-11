@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Gratis Download – Hypnose Wandel</title>
+  <meta name="description" content="Gratis Download – Ein Moment für dich. Kleine Hypnose für neue Entscheidungen.">
+  <meta name="robots" content="index,follow">
+
+  <link rel="icon" href="./images/logo.webp">
+  <link rel="stylesheet" href="./site.css">
+</head>
+
+<body>
+  <div class="frame">
+    <div class="frame-inner">
+
+      <!-- HEADER -->
+      <div data-include="./header.html"></div>
+
+      <main>
+
+        <!-- HERO / INTRO -->
+        <section class="section tone-gold" style="padding:42px 0;">
+          <div class="container">
+
+            <!-- Headline: einzeilig, über allem -->
+            <h1 class="headline--white"
+                style="margin:0; font-size:34px; line-height:1.15; white-space:nowrap;">
+              Dein Geschenk – Ein Moment für dich
+            </h1>
+            <div class="divider olive"></div>
+
+            <!-- Darunter: links Textblock, rechts Bild -->
+            <div class="split" style="margin-top:18px; align-items:start;">
+              <div class="sectionbox">
+                <p class="sectiontext" style="margin:0; white-space:pre-line;">
+Veränderung beginnt oft mit einem leisen Gedanken:
+„Vielleicht darf es auch leichter gehen.“
+
+Der kostenlose Download ist mein Geschenk an dich.
+Ein kleiner Impuls, um innezuhalten, durchzuatmen und dich wieder mit dir selbst zu verbinden. Kein Kurs, keine Verpflichtung – einfach ein Stück Unterstützung für deinen Weg.
+
+Vielleicht wünschst du dir mehr Ruhe im Alltag, ein liebevolleres Verhältnis zu deinem Körper oder das Gefühl, endlich loszulassen.
+Diese Audio-Übung ist dafür gemacht, dich sanft daran zu erinnern, dass Veränderung nicht durch Druck entsteht, sondern durch Bewusstsein und Zuwendung.
+
+Nimm dir Zeit, dich ganz auf den Moment einzulassen.
+Mach es dir bequem, schließ die Augen und spüre, wie dein Körper zur Ruhe kommt. So beginnt Veränderung – still, aber echt.
+                </p>
+              </div>
+
+              <!-- Bild: "Passpartout"/Rahmen, Höhe darf frei sein -->
+              <div class="panel" style="padding:18px; align-self:start;">
+                <img src="./images/gratisdownload_papierspielzeug.webp"
+                     alt="Gratis Download"
+                     style="width:100%; height:auto;">
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- AUDIO / DETAILS (weiß, übersichtlich) -->
+        <section class="section tone-white">
+          <div class="container" style="max-width:900px;">
+            <div class="sectionbox">
+              <h2 class="headline--gold" style="margin:0;">Ein Moment mit dir – Kleine Hypnose für neue Entscheidungen</h2>
+              <div class="divider"></div>
+
+              <p class="sectiontext" style="white-space:pre-line;">
+Manchmal braucht Veränderung keinen Plan, sondern nur einen stillen Moment mit sich selbst. Diese kurze Hypnose schenkt dir genau das. Sie hilft dir, innezuhalten, durchzuatmen und wieder zu spüren, was dir guttut.
+
+Kein Ziel, kein Druck, einfach ein bewusster Augenblick, der dich zu dir führt. Wenn du möchtest, nimm dir jetzt ein paar Minuten Zeit. Setz Kopfhörer auf, lehn dich zurück und hör dir deine kleine Auszeit an.
+              </p>
+
+              <div style="margin-top:18px; border-top:1px solid var(--line); padding-top:14px;">
+                <p class="muted small" style="margin:0;">
+                  <strong>Ein Moment mit dir</strong> · 7:28
+                </p>
+              </div>
+
+              <!-- EINZIGER BUTTON: am Ende -->
+              <div class="cta-row" style="margin-top:18px;">
+                <a class="btn btn-solid"
+                   href="https://heidischimmel.tentary.com/p/y7PZYT/checkout"
+                   target="_blank" rel="noopener">
+                  Gratis Download sichern
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+
+      <!-- FOOTER -->
+      <div data-include="./footer.html"></div>
+
+      <noscript>
+        <div class="container section">
+          <p>Diese Website benötigt JavaScript für Navigation/Content-Laden.</p>
+        </div>
+      </noscript>
+
+      <script type="module">
+        import { includePartials } from "./include.js";
+        import { loadJSON, fillConfig, fillText } from "./content.js";
+        import { initNav } from "./site.js";
+
+        await includePartials();
+
+        const [cfg, texts] = await Promise.all([
+          loadJSON("./config.json"),
+          loadJSON("./texts.de.json")
+        ]);
+
+        fillConfig(cfg);
+        fillText(texts);
+        initNav();
+      </script>
+
+    </div>
+  </div>
+</body>
+</html>

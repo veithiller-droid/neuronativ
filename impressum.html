@@ -1,82 +1,95 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Impressum – Neuronativ</title>
-  <link rel="stylesheet" href="styles/article.css">
-  <script>
-    // Theme laden
-    (function() {
-      const savedTheme = localStorage.getItem('preferred-theme') || 'soft';
-      document.documentElement.setAttribute('data-theme', savedTheme);
-    })();
-  </script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Impressum – Hypnose Wandel</title>
+  <meta name="description" content="Impressum – Hypnose Wandel.">
+  <meta name="robots" content="index,follow">
+
+  <link rel="icon" href="./images/logo.webp">
+  <link rel="stylesheet" href="./site.css">
 </head>
+
 <body>
-  <div class="page-wrapper">
-    <!-- Header -->
-    <header>
-      <div class="header-content">
-        <a href="index.html" class="logo-text">neuronativ</a>
-        <nav>
-          <a href="wissen.html">Wissen</a>
-          <a href="test/index.html">Selbsttest</a>
-          <a href="index.html#kontakt">Kontakt</a>
-        </nav>
-      </div>
-    </header>
+    <div class="frame">
+  <div class="frame-inner">
 
-    <div class="article-outer">
-      <article class="article-container">
-        <div class="breadcrumb">
-          <a href="index.html">Neuronativ</a> <span>›</span> <strong>Impressum</strong>
-        </div>
+  <!-- HEADER (wird per header.html geladen) -->
+  <div data-include="./header.html"></div>
 
-        <header class="article-header">
-          <h1>Impressum</h1>
-          <div class="article-meta">Angaben gemäß § 5 DDG</div>
-        </header>
+  <main class="section tone-white">
+    <div class="container" style="max-width:900px;">
+      <h1>Impressum</h1>
+      <div class="divider"></div>
 
-        <div class="article-content">
-          <h2>Verantwortlich für den Inhalt</h2>
-          <p>
-            Bianca Hiller<br>
-            Artà, Mallorca<br>
-            Spanien
-          </p>
-
-          <h2>Kontakt</h2>
-          <p>
-            E-Mail: <a href="mailto:neuronativ@icloud.com">neuronativ@icloud.com</a>
-          </p>
-
-          <h2>Haftungsausschluss</h2>
-          <p>
-            Die Inhalte dieser Website dienen ausschließlich Informationszwecken. Trotz sorgfältiger 
-            Recherche übernehmen wir keine Haftung für die Richtigkeit, Vollständigkeit und Aktualität 
-            der Angaben.
-          </p>
-          <p>
-            Externe Links führen zu fremden Websites. Für deren Inhalt übernehmen wir keine Verantwortung.
-          </p>
-        </div>
-
-        <div class="back-button-container">
-          <a href="index.html" class="back-button">Zurück zur Startseite</a>
-        </div>
-      </article>
-    </div>
-
-    <!-- Footer -->
-    <footer class="footer">
-      <p>&copy; 2025 Neuronativ</p>
-      <p>
-        <a href="impressum.html">Impressum</a> ·
-        <a href="datenschutz.html">Datenschutz</a> ·
-        <a href="kontakt.html">Kontakt</a>
+      <h2 class="headline--gold" style="margin-top:22px;">Angaben gemäß § 5 TMG</h2>
+      <p class="sectiontext">
+        <strong>Heidi Schimmel</strong><br>
+        Hypnose-Expertin für Frauen im Wandel<br>
+        Zur Ruppertsklamm 7<br>
+        56112 Lahnstein<br>
+        Deutschland
       </p>
-    </footer>
-  </div>
+
+      <h2 class="headline--gold" style="margin-top:22px;">Kontakt</h2>
+      <p class="sectiontext">
+        Telefon: <a href="tel:+4917661145720">+49 176 611 45 720</a><br>
+        E-Mail: <a href="mailto:info@hypnose-wandel.de">info@hypnose-wandel.de</a>
+      </p>
+
+      <h2 class="headline--gold" style="margin-top:22px;">Verantwortlich für den Inhalt gemäß § 18 Abs. 2 MStV</h2>
+      <p class="sectiontext">
+        Heidi Schimmel<br>
+        Zur Ruppertsklamm 7, 56112 Lahnstein, Deutschland
+      </p>
+
+      <h2 class="headline--gold" style="margin-top:22px;">Haftung für Inhalte</h2>
+      <p class="sectiontext">
+        Inhalte dieser Website wurden mit Sorgfalt erstellt. Für Richtigkeit, Vollständigkeit und Aktualität kann keine Gewähr übernommen werden.
+      </p>
+
+      <h2 class="headline--gold" style="margin-top:22px;">Haftung für Links</h2>
+      <p class="sectiontext">
+        Diese Website enthält ggf. Links zu externen Websites Dritter. Für Inhalte externer Seiten wird keine Verantwortung übernommen; verantwortlich ist der jeweilige Anbieter.
+      </p>
+
+      <h2 class="headline--gold" style="margin-top:22px;">Urheberrecht</h2>
+      <p class="sectiontext">
+        Inhalte und Werke auf dieser Website unterliegen dem Urheberrecht. Jede Verwertung außerhalb der Grenzen des Urheberrechts bedarf der vorherigen Zustimmung.
+      </p>
+
+      <h2 class="headline--gold" style="margin-top:22px;">Verbraucherstreitbeilegung</h2>
+      <p class="sectiontext">
+        Ich bin nicht verpflichtet und nicht bereit, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.
+      </p>
+
+      <hr class="line" style="margin:28px 0;">
+
+      <p class="muted small">
+        <a href="./datenschutz.html">Datenschutz</a>
+      </p>
+    </div>
+  </main>
+
+  <!-- FOOTER (wird per footer.html geladen) -->
+  <div data-include="./footer.html"></div>
+
+  <noscript>
+    <div class="container section">
+      <p>Diese Website benötigt JavaScript für Navigation/Content-Laden.</p>
+    </div>
+  </noscript>
+
+  <script type="module">
+    import { includePartials } from "./include.js";
+    import { initNav } from "./site.js";
+    await includePartials();
+    initNav();
+  </script>
+    </div>
+</div>
+
 </body>
 </html>
