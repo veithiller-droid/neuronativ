@@ -1,6 +1,9 @@
 // server.js
 // Neuronativ Backend – Railway/Express/PostgreSQL
-// Serviert auch Frontend-Files statisch
+// Liegt in: neuronativ/backend/server.js
+// Im Container: /app/backend/server.js
+// __dirname = /app/backend
+// Frontend liegt in: /app/test/, /app/index.html etc.
 
 import express from "express";
 import cors from "cors";
@@ -14,6 +17,7 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 const __dirname = dirname(fileURLToPath(import.meta.url));
+const ROOT = join(__dirname, ".."); // /app
 
 // -------------------------
 // DB Pool
@@ -71,15 +75,17 @@ app.get("/health", (req, res) => {
 // -------------------------
 // Statische Frontend-Files
 // -------------------------
-// /test/* → test/ Ordner
-app.use("/test", express.static(join(__dirname, "..", "test")));
+app.use("/test", express.static(join(ROOT, "test")));
+app.use("/styles", express.static(join(ROOT, "styles")));
+app.use("/images", express.static(join(ROOT, "images")));
+app.use("/wissen", express.static(join(ROOT, "wissen")));
 
-// Root Files (index.html, impressum etc.)
-app.use(express.static(join(__dirname, "..")));
+// Root-Files
+app.use(express.static(ROOT));
 
-// Fallback: alle unbekannten Routen → index.html
+// Fallback
 app.get("*", (req, res) => {
-  res.sendFile(join(__dirname, "..", "index.html"));
+  res.sendFile(join(ROOT, "index.html"));
 });
 
 // -------------------------
