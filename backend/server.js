@@ -1,15 +1,19 @@
 // server.js
 // Neuronativ Backend – Railway/Express/PostgreSQL
+// Serviert auch Frontend-Files statisch
 
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import pg from "pg";
+import { fileURLToPath } from "url";
+import { dirname, join } from "path";
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // -------------------------
 // DB Pool
@@ -28,6 +32,7 @@ app.use(cors({
   origin: [
     "https://neuronativ.de",
     "https://www.neuronativ.de",
+    "https://neuronativ-production.up.railway.app",
     "http://localhost:8000",
     "http://localhost:3000",
   ],
@@ -42,7 +47,7 @@ app.use("/api/webhook", express.raw({ type: "application/json" }), webhookRouter
 app.use(express.json({ limit: "2mb" }));
 
 // -------------------------
-// Routen
+// API Routen
 // -------------------------
 import submitRouter   from "./routes/submit.js";
 import reportRouter   from "./routes/report.js";
@@ -61,6 +66,20 @@ app.use("/api/admin",    adminRouter);
 // -------------------------
 app.get("/health", (req, res) => {
   res.json({ status: "ok", ts: new Date().toISOString() });
+});
+
+// -------------------------
+// Statische Frontend-Files
+// -------------------------
+// /test/* → test/ Ordner
+app.use("/test", express.static(join(__dirname, "..", "test")));
+
+// Root Files (index.html, impressum etc.)
+app.use(express.static(join(__dirname, "..")));
+
+// Fallback: alle unbekannten Routen → index.html
+app.get("*", (req, res) => {
+  res.sendFile(join(__dirname, "..", "index.html"));
 });
 
 // -------------------------

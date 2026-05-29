@@ -44,19 +44,30 @@ RUN apt-get update && apt-get install -y \
   --no-install-recommends \
   && rm -rf /var/lib/apt/lists/*
 
-# Puppeteer soll system-chromium nutzen, nicht eigenes herunterladen
+# Puppeteer: system-chromium nutzen
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 
 WORKDIR /app
 
-# Dependencies installieren
-COPY package.json ./
-RUN npm install --production
+# Backend Dependencies
+COPY backend/package.json ./backend/
+RUN cd backend && npm install --production
 
-# App-Code kopieren
-COPY . .
+# Backend Code
+COPY backend/ ./backend/
+
+# Frontend Files (statisch serviert durch Express)
+COPY test/ ./test/
+COPY index.html ./
+COPY datenschutz.html ./
+COPY disclaimer.html ./
+COPY impressum.html ./
+COPY wissen.html ./
+COPY styles/ ./styles/
+COPY images/ ./images/
+COPY wissen/ ./wissen/
 
 EXPOSE 3000
 
-CMD ["node", "server.js"]
+CMD ["node", "backend/server.js"]
