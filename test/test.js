@@ -6,7 +6,7 @@ import { renderTacho } from "./tacho.js";
 import { ITEM_TEXTS } from "./item_texts.js";
 import { interpretScale } from "./interpretation.js";
 import { renderTachoText } from "./tacho_text_render.js";
-import { renderProfilePage as renderProfileView } from "./profile.js";
+
 
 
 function labelFromPercent(p) {
