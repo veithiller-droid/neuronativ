@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Neurodiversitäts-Selbsttest</title>
+
+<style>
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #f5f6f7;
+  color: #222;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+h1 {
+  font-size: 1.6em;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+#progress {
+  font-size: 0.9em;
+  color: #666;
+  margin-bottom: 16px;
+}
+
+/* ===== Frage-Banner ===== */
+.question {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 10px;
+  font-size: 1.35em;
+  line-height: 1.4;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+/* ===== Antwortskala ===== */
+.scale {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.scale button {
+  flex: 1;
+  padding: 14px 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background: #fff;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: all 0.15s ease;
+}
+
+.scale button:hover {
+  background: #eef1f4;
+  border-color: #999;
+}
+
+/* ===== Ergebnis ===== */
+.result {
+  margin-top: 50px;
+}
+
+.bar {
+  background: #e2e5e9;
+  height: 28px;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 22px;
+}
+
+.fill {
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    #cfe3f1 0%,   /* niedrig */
+    #7aa2c7 50%,  /* mittel */
+    #3f5f85 100%  /* hoch */
+  );
+  transition: width 0.4s ease;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Ergebnis-Layout */
+.scale-result {
+  margin-bottom: 22px;
+}
+
+/* Accordion */
+.toggle-main,
+.toggle-topic {
+  background: none;
+  border: none;
+  font-size: 1em;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 8px 0;
+  text-align: left;
+}
+
+.topic {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.topic-details {
+  margin: 12px 0 20px 0;
+}
+
+/* Tacho */
+.tacho-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 8px 0 12px 0;
+  padding: 10px 14px;
+  background: #f8f9fb;
+  border: 1px solid #e3e6eb;
+  border-radius: 8px;
+  width: fit-content;
+}
+
+.tacho-inline svg {
+  width: 80px;
+  height: auto;
+}
+.topic-intro {
+  font-style: italic;
+  opacity: 0.85;
+  margin-bottom: 10px;
+}
+
+.toggle-tacho {
+  margin-top: 14px;
+  background: none;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.tacho-details {
+  margin: 16px 0 28px 0;
+}
+
+
+</style>
+</head>
+
+<body>
+
+<h1>Neurodiversitäts-Selbsttest</h1>
+
+<div id="progress"></div>
+<div class="question" id="questionText"></div>
+
+<div class="scale" id="scaleButtons"></div>
+
+
+
+<div id="results" class="result"></div>
+
+
+
+<script src="item_texts_attention.js"></script>
+<script src="item_texts_overload.js"></script>
+<script src="item_texts_social.js"></script>
+<script src="item_texts_masking.js"></script>
+<script src="item_texts_structure.js"></script>
+<script src="item_texts_sensory.js"></script>
+<script src="item_texts_alexithymia.js"></script>
+
+<script src="item_texts_all.js"></script>
+<script type="module" src="test.js"></script>
+
+
+</body>
+</html>

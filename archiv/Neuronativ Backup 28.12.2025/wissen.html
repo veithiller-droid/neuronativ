@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wissen & Aufklärung – Neuronativ</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            color: #2c2c2c;
+            background: #52575a;
+            line-height: 1.8;
+            font-size: 18px;
+            margin: 0;
+            padding: 0 60px;
+        }
+
+        .page-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: #fafafa;
+            box-shadow: 0 0 40px rgba(0,0,0,0.2);
+        }
+
+        /* Header */
+        header {
+            background: white;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 20px 0;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: #2c2c2c;
+            text-decoration: none;
+        }
+
+        nav {
+            display: flex;
+            gap: 40px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #666;
+            font-size: 13px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #2c2c2c;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: white;
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 20px;
+        }
+
+        .page-header p {
+            color: #666;
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Content Section */
+        .content-section {
+            padding: 80px 40px;
+            background: #f7f7f5;
+        }
+
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Category Grid */
+        .category-section {
+            margin-bottom: 80px;
+        }
+
+        .category-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .category-section h2 {
+            font-size: 2rem;
+            font-weight: 300;
+            margin-bottom: 40px;
+            color: #2c2c2c;
+            border-bottom: 2px solid #3f6475;
+            padding-bottom: 15px;
+        }
+
+        .topic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .topic-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .topic-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+            border-color: #3f6475;
+        }
+
+        .topic-card h3 {
+            font-size: 1.3rem;
+            font-weight: 400;
+            margin-bottom: 15px;
+            color: #2c2c2c;
+        }
+
+        .topic-card p {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .topic-tag {
+            display: inline-block;
+            background: #e6eef2;
+            color: #3f6475;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-top: 15px;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        .footer {
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .footer p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .footer a {
+            color: #3f6475;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 0 20px;
+            }
+
+            .topic-grid {
+                grid-template-columns: 1fr;
+            }
+
+            nav {
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <a href="index.html" class="logo-text">neuronativ</a>
+            <nav>
+                <a href="wissen.html">Wissen</a>
+                <a href="test/index.html">Selbsttest</a>
+                <a href="index.html#kontakt">Kontakt</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <h1>Wissen & Aufklärung</h1>
+        <p>
+            Fundierte Informationen zu allen Aspekten der Neurodivergenz – 
+            von Grundlagen über Alltagsstrategien bis zur aktuellen Forschung.
+        </p>
+    </section>
+
+    <!-- Content -->
+    <section class="content-section">
+        <div class="content-wrapper">
+
+            <!-- Grundlagen -->
+            <div class="category-section">
+                <h2>Grundlagen</h2>
+                <div class="topic-grid">
+                    <div class="topic-card" onclick="location.href='wissen/was-ist-neurodivergenz.html'" style="cursor: pointer;">
+                        <h3>Was ist Neurodivergenz?</h3>
+                        <p>Einführung in das Konzept der Neurodivergenz und warum es wichtig ist, neurologische Unterschiede zu verstehen.</p>
+                        <span class="topic-tag">Einsteiger</span>
+                    </div>
+                    <div class="topic-card" onclick="location.href='wissen/adhs-symptome-diagnose-alltag.html'" style="cursor: pointer;">
+                        <h3>ADHS: Symptome, Diagnose, Alltag</h3>
+                        <p>Umfassender Überblick über ADHS – von typischen Merkmalen bis zu Bewältigungsstrategien.</p>
+                        <span class="topic-tag">Grundlagen</span>
+                    </div>
+                    <div class="topic-card" onclick="location.href='wissen/autismus-spektrum-vielfalt.html'" style="cursor: pointer;">
+                        <h3>Autismus-Spektrum: Vielfalt verstehen</h3>
+                        <p>Die Vielfalt des Autismus-Spektrums und warum "eine Größe" nicht allen passt.</p>
+                        <span class="topic-tag">Grundlagen</span>
+                    </div>
+                    <div class="topic-card" onclick="location.href='wissen/hochsensibilitaet.html'" style="cursor: pointer;">
+                        <h3>Hochsensibilität (HSP)</h3>
+                        <p>Was Hochsensibilität bedeutet und wie sie sich von anderen Formen der Neurodivergenz unterscheidet.</p>
+                        <span class="topic-tag">Grundlagen</span>
+                    </div>
+                    <div class="topic-card" onclick="location.href='wissen/synaesthesie.html'" style="cursor: pointer;">
+                        <h3>Synästhesie</h3>
+                        <p>Wenn Sinne verschmelzen: Einblick in die faszinierende Welt der Synästhesie.</p>
+                        <span class="topic-tag">Grundlagen</span>
+                    </div>
+                    <div class="topic-card" onclick="location.href='wissen/dyslexie.html'" style="cursor: pointer;">
+                        <h3>Dyslexie/Legasthenie</h3>
+                        <p>Lese-Rechtschreib-Schwäche verstehen und Stärken erkennen.</p>
+                        <span class="topic-tag">Grundlagen</span>
+                    </div>
+                    <div class="topic-card" onclick="location.href='wissen/dyspraxie.html'" style="cursor: pointer;">
+                        <h3>Dyspraxie</h3>
+                        <p>Motorische und koordinative Besonderheiten im Alltag.</p>
+                        <span class="topic-tag">Grundlagen</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Alltag & Bewältigung -->
+            <div class="category-section">
+                <h2>Alltag & Bewältigung</h2>
+                <div class="topic-grid">
+                    <div class="topic-card" onclick="location.href='wissen/arbeitsalltag-strategien.html'" style="cursor: pointer;">
+                        <h3>Strategien für den Arbeitsalltag</h3>
+                        <p>Praktische Tipps für produktives und gesundes Arbeiten als neurodivergente Person.</p>
+                        <span class="topic-tag">Praxis</span>
+                    </div>
+                    <div class="topic-card" onclick="location.href='wissen/beziehungen-kommunikation.html'" style="cursor: pointer;">
+                        <h3>Beziehungen & Kommunikation</h3>
+                        <p>Wie Neurodivergenz Beziehungen beeinflusst und wie man konstruktiv kommuniziert.</p>
+                        <span class="topic-tag">Praxis</span>
+                    </div>
+                    <div class="topic-card" onclick="location.href='wissen/sensory-overload.html'" style="cursor: pointer;">
+                        <h3>Sensory Overload managen</h3>
+                        <p>Reizüberflutung erkennen, vermeiden und bewältigen.</p>
+                        <span class="topic-tag">Praxis</span>
+                    </div>
+                    <div class="topic-card" onclick="location.href='wissen/executive-dysfunction.html'" style="cursor: pointer;">
+                        <h3>Executive Dysfunction verstehen</h3>
+                        <p>Warum Planung und Organisation schwerfallen können – und was hilft.</p>
+                        <span class="topic-tag">Praxis</span>
+                    </div>
+                    <div class="topic-card" onclick="location.href='wissen/masking-burnout.html'" style="cursor: pointer;">
+                        <h3>Masking & Burnout</h3>
+                        <p>Die Kosten des "sich-Anpassens" und wie man sich schützt.</p>
+                        <span class="topic-tag">Wichtig</span>
+                    </div>
+                    <div class="topic-card" onclick="location.href='wissen/schlaf-routinen.html'" style="cursor: pointer;">
+                        <h3>Schlaf & Routinen</h3>
+                        <p>Warum Schlaf und Struktur bei Neurodivergenz besonders wichtig sind.</p>
+                        <span class="topic-tag">Praxis</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Diagnose & Therapie -->
+            <div class="category-section">
+                <h2>Diagnose & Therapie</h2>
+                <div class="topic-grid">
+                    <div class="topic-card" onclick="location.href='wissen/diagnostikprozess.html'" style="cursor: pointer;">
+                        <h3>Diagnostikprozess</h3>
+                        <p>Wie läuft eine Diagnose ab und was kann man erwarten?</p>
+                        <span class="topic-tag">Information</span>
+                    </div>
+                    <div class="topic-card" onclick="location.href='wissen/frauen-afab-unterschiede.html'" style="cursor: pointer;">
+                        <h3>Unterschiede bei Frauen/AFAB</h3>
+                        <p>Warum Neurodivergenz bei Frauen oft übersehen wird.</p>
+                        <span class="topic-tag">Wichtig</span>
+                    </div>
+                    <div class="topic-card" onclick="location.href='wissen/spaetdiagnose.html'" style="cursor: pointer;">
+                        <h3>Spätdiagnose im Erwachsenenalter</h3>
+                        <p>Wenn die Diagnose erst im Erwachsenenalter kommt – Chancen und Herausforderungen.</p>
+                        <span class="topic-tag">Information</span>
+                    </div>
+                    <div class="topic-card" onclick="location.href='wissen/therapieansaetze.html'" style="cursor: pointer;">
+                        <h3>Therapieansätze</h3>
+                        <p>Überblick über verschiedene therapeutische Ansätze und ihre Wirksamkeit.</p>
+                        <span class="topic-tag">Information</span>
+                    </div>
+                    <div class="topic-card" onclick="location.href='wissen/medikation.html'" style="cursor: pointer;">
+                        <h3>Medikation: Pro & Contra</h3>
+                        <p>Faktenbasierte Information über medikamentöse Behandlungsoptionen.</p>
+                        <span class="topic-tag">Information</span>
+                    </div>
+                    <div class="topic-card" onclick="location.href='wissen/selbsthilfestrategien.html'" style="cursor: pointer;">
+                        <h3>Selbsthilfestrategien</h3>
+                        <p>Was man selbst tun kann – evidenzbasierte Selbsthilfe-Methoden.</p>
+                        <span class="topic-tag">Praxis</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gesellschaft & Perspektiven -->
+            <div class="category-section">
+                <h2>Gesellschaft & Perspektiven</h2>
+                <div class="topic-grid">
+                    <div class="topic-card" onclick="location.href='wissen/neurodiversitaet-konzept.html'" style="cursor: pointer;">
+                        <h3>Neurodiversität als Konzept</h3>
+                        <p>Geschichte und Bedeutung der Neurodiversitätsbewegung.</p>
+                        <span class="topic-tag">Hintergrund</span>
+                    </div>
+                    <div class="topic-card" onclick="location.href='wissen/ableismus-erkennen.html'" style="cursor: pointer;">
+                        <h3>Ableismus erkennen</h3>
+                        <p>Diskriminierung verstehen und entgegenwirken.</p>
+                        <span class="topic-tag">Wichtig</span>
+                    </div>
+                    <div class="topic-card" onclick="location.href='wissen/staerken-neurodivergenter-menschen.html'" style="cursor: pointer;">
+                        <h3>Stärken neurodivergenter Menschen</h3>
+                        <p>Besondere Fähigkeiten und Perspektiven, die Neurodivergenz mit sich bringen kann.</p>
+                        <span class="topic-tag">Perspektive</span>
+                    </div>
+                    <div class="topic-card" onclick="location.href='wissen/workplace-accommodations.html'" style="cursor: pointer;">
+                        <h3>Workplace Accommodations</h3>
+                        <p>Anpassungen am Arbeitsplatz und wie man sie einfordert.</p>
+                        <span class="topic-tag">Praxis</span>
+                    </div>
+                    <div class="topic-card" onclick="location.href='wissen/rechtliche-aspekte.html'" style="cursor: pointer;">
+                        <h3>Rechtliche Aspekte</h3>
+                        <p>Schwerbehinderung, Nachteilsausgleich und andere rechtliche Möglichkeiten.</p>
+                        <span class="topic-tag">Information</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Wissenschaft -->
+            <div class="category-section">
+                <h2>Wissenschaft</h2>
+                <div class="topic-grid">
+                    <div class="topic-card" onclick="location.href='wissen/aktuelle-forschung.html'" style="cursor: pointer;">
+                        <h3>Aktuelle Forschung</h3>
+                        <p>Neueste Erkenntnisse aus der Neurodivergenz-Forschung.</p>
+                        <span class="topic-tag">Wissenschaft</span>
+                    </div>
+                    <div class="topic-card" onclick="location.href='wissen/genetik-neurobiologie.html'" style="cursor: pointer;">
+                        <h3>Genetik & Neurobiologie</h3>
+                        <p>Was wissen wir über die biologischen Grundlagen von Neurodivergenz?</p>
+                        <span class="topic-tag">Wissenschaft</span>
+                    </div>
+                    <div class="topic-card" onclick="location.href='wissen/komorbiditaeten.html'" style="cursor: pointer;">
+                        <h3>Komorbiditäten</h3>
+                        <p>Häufiges gemeinsames Auftreten verschiedener neurodivergenter Merkmale.</p>
+                        <span class="topic-tag">Wissenschaft</span>
+                    </div>
+                    <div class="topic-card" onclick="location.href='wissen/gender-neurodivergenz.html'" style="cursor: pointer;">
+                        <h3>Gender & Neurodivergenz</h3>
+                        <p>Wie Geschlecht die Erscheinungsformen und Diagnose beeinflusst.</p>
+                        <span class="topic-tag">Wissenschaft</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 Neuronativ</p>
+        <p>
+            <a href="impressum.html">Impressum</a> ·
+            <a href="datenschutz.html">Datenschutz</a> ·
+            <a href="kontakt.html">Kontakt</a>
+        </p>
+    </footer>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Neurodivergenz – Simulation (Deep Test)</title>
+  <style>
+    body{
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      padding: 20px;
+      max-width: 820px;
+      margin: auto;
+      line-height: 1.55;
+      background: #f8fafc;
+      color:#0f172a;
+    }
+    h1{ margin: 6px 0 12px; font-size: 1.6em; }
+    h2{ margin: 26px 0 12px; font-size: 1.22em; font-weight: 800; }
+    p{ color:#334155; font-size: 0.95em; margin: 8px 0; }
+    .row{ display:flex; gap:10px; flex-wrap:wrap; margin:10px 0; align-items: center; }
+    button{
+      padding: 9px 13px;
+      border:0;
+      border-radius: 9px;
+      cursor:pointer;
+      font-weight: 800;
+      font-size: 0.88em;
+      transition: all .12s ease;
+    }
+    button:hover{ transform: translateY(-1px); filter: brightness(0.98); }
+    .primary{ background:#eab308; color:#0b1220; }
+    .secondary{ background:#e2e8f0; color:#0f172a; }
+    .danger{ background:#ef4444; color:#fff; }
+    .success{ background:#10b981; color:#052e22; }
+    .info{ background:#3b82f6; color:#fff; }
+    .warning{ background:#f59e0b; color:#0b1220; }
+    .neutral{ background:#94a3b8; color:#fff; }
+    .card{
+      background:#fff;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 14px;
+      margin: 10px 0;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+    .muted{ color:#64748b; font-size: 0.88em; }
+    .status{
+      margin-top: 14px;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid #cbd5e1;
+      background:#fff;
+      font-weight: 650;
+      white-space: pre-wrap;
+      font-size: 0.95em;
+    }
+    .pill{
+      display:inline-block;
+      padding: 2px 10px;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: 0.78em;
+      background:#dcfce7;
+      color:#14532d;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 12px;
+    }
+    textarea{
+      width:100%;
+      min-height: 110px;
+      border: 2px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 10px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 12px;
+      background:#fff;
+    }
+    input[type="number"]{
+      width: 82px;
+      padding: 8px 10px;
+      border: 2px solid #e2e8f0;
+      border-radius: 10px;
+      font-weight: 800;
+    }
+    input[type="checkbox"]{ transform: translateY(1px); }
+    .tiny{ font-size: 0.85em; color:#475569; }
+    .mono{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    .kv{ display:flex; gap:10px; flex-wrap:wrap; margin-top:8px; }
+    .kv > div{ background:#f1f5f9; border:1px solid #e2e8f0; padding:8px 10px; border-radius:10px; }
+    .kv b{ display:block; font-size: 0.82em; color:#0f172a; }
+    .kv span{ font-size: 0.84em; color:#334155; }
+  </style>
+</head>
+<body>
+  <h1>🧪 Neurodivergenz – Simulation (Deep Test)</h1>
+  <p>Kompakte Testumgebung · 115 simulierte IDs · schreibt nur <span class="mono">neurodivergenz_raw</span> (Report/Profile werden im echten Flow erzeugt)</p>
+
+  <div class="row">
+    <button class="primary" id="goProfileBtn">📊 Profil öffnen</button>
+    <button class="secondary" id="goProfileNewTabBtn">🪟 Profil (neuer Tab)</button>
+    <button class="secondary" id="clearBtn">🗑️ LocalStorage löschen</button>
+    <button class="secondary" id="dumpBtn">🧾 Dump (Console)</button>
+    <button class="secondary" id="checkBtn">✅ Check IDs</button>
+  </div>
+
+  <div class="card">
+    <b>Status</b> <span class="pill">bereit – 115 IDs</span>
+    <p class="muted">Deterministisch pro Button (seeded). High jitter ist reproduzierbar. Report/Profile werden von <span class="mono">profile.html</span> erzeugt.</p>
+
+    <div class="row" style="margin-top:10px;">
+      <label class="tiny"><input type="checkbox" id="autoWatch"/> Auto-Watch (Report/ProfileResult)</label>
+      <button class="secondary" id="refreshBtn">🔄 Refresh Watch</button>
+      <button class="secondary" id="snapshotBtn">📌 Snapshot speichern (Expected)</button>
+      <button class="secondary" id="validateBtn">🧪 Validate vs Expected</button>
+      <button class="secondary" id="clearExpectedBtn">🧹 Expected löschen</button>
+    </div>
+
+    <div class="kv" id="watchKv">
+      <div><b>Last simCaseId</b><span id="kvCase">—</span></div>
+      <div><b>report vorhanden</b><span id="kvReport">—</span></div>
+      <div><b>profile_result vorhanden</b><span id="kvProfile">—</span></div>
+      <div><b>patterns (types)</b><span id="kvPatterns">—</span></div>
+      <div><b>badge timing</b><span id="kvBadge">—</span></div>
+      <div><b>disqualify keys</b><span id="kvDisq">—</span></div>
+    </div>
+  </div>
+
+  <h2>🔴 ADHS Tests</h2>
+  <div class="grid">
+    <div class="card">
+      <b>ADHS hoch + Adult onset</b>
+      <div class="row">
+        <button class="danger" id="t_adhd_adult">Generieren</button>
+        <button class="secondary" id="t_adhd_adult_go">+ Profil</button>
+      </div>
+      <div class="tiny">Onset: adult (Attention/Executive/Hyperfocus)</div>
+    </div>
+
+    <div class="card">
+      <b>ADHS hoch + Teen onset (nach 12)</b>
+      <div class="row">
+        <button class="warning" id="t_adhd_teen">Generieren</button>
+        <button class="secondary" id="t_adhd_teen_go">+ Profil</button>
+      </div>
+      <div class="tiny">Onset: teen (für “Auftreten nach 12”)</div>
+    </div>
+
+    <div class="card">
+      <b>ADHS hoch + Early onset</b>
+      <div class="row">
+        <button class="success" id="t_adhd_early">Generieren</button>
+        <button class="secondary" id="t_adhd_early_go">+ Profil</button>
+      </div>
+      <div class="tiny">Onset: school/early (Baseline)</div>
+    </div>
+
+    <div class="card">
+      <b>Adult-onset ADHS-ähnlich (Traits)</b>
+      <div class="row">
+        <button class="neutral" id="t_adhd_late_traits">Generieren</button>
+        <button class="secondary" id="t_adhd_late_traits_go">+ Profil</button>
+      </div>
+      <div class="tiny">ADHS hoch + Overload mid + Onset adult</div>
+    </div>
+  </div>
+
+  <h2>🔵 Autismus Tests</h2>
+  <div class="grid">
+    <div class="card">
+      <b>Autismus hoch + A fehlt</b>
+      <div class="row">
+        <button class="danger" id="t_autism_a_fail">Generieren</button>
+        <button class="secondary" id="t_autism_a_fail_go">+ Profil</button>
+      </div>
+      <div class="tiny">ASD-A: reciprocity = na</div>
+    </div>
+
+    <div class="card">
+      <b>Autismus hoch + B fehlt (hart)</b>
+      <div class="row">
+        <button class="danger" id="t_autism_b_fail">Generieren</button>
+        <button class="secondary" id="t_autism_b_fail_go">+ Profil</button>
+      </div>
+      <div class="tiny">ASD-B: mehrere RRB = na</div>
+    </div>
+
+    <div class="card">
+      <b>Autismus hoch + B fail (knapp: 1/4)</b>
+      <div class="row">
+        <button class="warning" id="t_autism_b_fail_1of4">Generieren</button>
+        <button class="secondary" id="t_autism_b_fail_1of4_go">+ Profil</button>
+      </div>
+      <div class="tiny">ASD-B: exakt 1 RRB aktiv, Rest na</div>
+    </div>
+
+    <div class="card">
+      <b>Autismus hoch + valide</b>
+      <div class="row">
+        <button class="success" id="t_autism_valid">Generieren</button>
+        <button class="secondary" id="t_autism_valid_go">+ Profil</button>
+      </div>
+      <div class="tiny">ASD-A/B vollständig “early/school”</div>
+    </div>
+
+    <div class="card">
+      <b>Struktur-dominant (single dominant)</b>
+      <div class="row">
+        <button class="info" id="t_structure_dom">Generieren</button>
+        <button class="secondary" id="t_structure_dom_go">+ Profil</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <b>Sensory-dominant (single dominant)</b>
+      <div class="row">
+        <button class="info" id="t_sensory_dom">Generieren</button>
+        <button class="secondary" id="t_sensory_dom_go">+ Profil</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <b>Social-dominant (single dominant)</b>
+      <div class="row">
+        <button class="info" id="t_social_dom">Generieren</button>
+        <button class="secondary" id="t_social_dom_go">+ Profil</button>
+      </div>
+    </div>
+  </div>
+
+  <h2>🟣 AuDHD Tests</h2>
+  <div class="grid">
+    <div class="card">
+      <b>AuDHD + ADHS adult</b>
+      <div class="row">
+        <button class="danger" id="t_audhd_adhd_adult">Generieren</button>
+        <button class="secondary" id="t_audhd_adhd_adult_go">+ Profil</button>
+      </div>
+      <div class="tiny">ADHS hoch + Autismus hoch; ADHS onset adult</div>
+    </div>
+
+    <div class="card">
+      <b>AuDHD + Autismus A fehlt</b>
+      <div class="row">
+        <button class="danger" id="t_audhd_autism_a_fail">Generieren</button>
+        <button class="secondary" id="t_audhd_autism_a_fail_go">+ Profil</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <b>AuDHD + Autismus B fail (1/4)</b>
+      <div class="row">
+        <button class="warning" id="t_audhd_autism_b_fail_1of4">Generieren</button>
+        <button class="secondary" id="t_audhd_autism_b_fail_1of4_go">+ Profil</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <b>AuDHD + beide valide</b>
+      <div class="row">
+        <button class="success" id="t_audhd_valid">Generieren</button>
+        <button class="secondary" id="t_audhd_valid_go">+ Profil</button>
+      </div>
+    </div>
+  </div>
+
+  <h2>🟡 Zusatz- & Overlay-Profile</h2>
+  <div class="grid">
+    <div class="card">
+      <b>Hyperfokus-dominant</b>
+      <div class="row">
+        <button class="warning" id="t_hyperfocus_dom">Generieren</button>
+        <button class="secondary" id="t_hyperfocus_dom_go">+ Profil</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <b>Hochmaskierung (School onset)</b>
+      <div class="row">
+        <button class="warning" id="t_masking_pure">Generieren</button>
+        <button class="secondary" id="t_masking_pure_go">+ Profil</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <b>Hochmaskierung (Adult-onset Overlay)</b>
+      <div class="row">
+        <button class="neutral" id="t_masking_adult_overlay">Generieren</button>
+        <button class="secondary" id="t_masking_adult_overlay_go">+ Profil</button>
+      </div>
+      <div class="tiny">Onset: masking = adult</div>
+    </div>
+
+    <div class="card">
+      <b>Starke Überlastung</b>
+      <div class="row">
+        <button class="warning" id="t_overload_high">Generieren</button>
+        <button class="secondary" id="t_overload_high_go">+ Profil</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <b>Überlastung (Adult-onset Overlay)</b>
+      <div class="row">
+        <button class="neutral" id="t_overload_adult_overlay">Generieren</button>
+        <button class="secondary" id="t_overload_adult_overlay_go">+ Profil</button>
+      </div>
+      <div class="tiny">Onset: overload = adult</div>
+    </div>
+
+    <div class="card">
+      <b>Emotionale Dysregulation (Emotreg + Alexithymia)</b>
+      <div class="row">
+        <button class="info" id="t_emotional_high">Generieren</button>
+        <button class="secondary" id="t_emotional_high_go">+ Profil</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <b>Emotion (Adult-onset Overlay)</b>
+      <div class="row">
+        <button class="neutral" id="t_emotional_adult_overlay">Generieren</button>
+        <button class="secondary" id="t_emotional_adult_overlay_go">+ Profil</button>
+      </div>
+      <div class="tiny">Onset: emotreg = adult</div>
+    </div>
+
+    <div class="card">
+      <b>Alexithymia-only</b>
+      <div class="row">
+        <button class="info" id="t_alexithymia_only">Generieren</button>
+        <button class="secondary" id="t_alexithymia_only_go">+ Profil</button>
+      </div>
+      <div class="tiny">alexithymia hoch, emotreg niedrig/mid</div>
+    </div>
+
+    <div class="card">
+      <b>Emotreg-only</b>
+      <div class="row">
+        <button class="info" id="t_emotreg_only">Generieren</button>
+        <button class="secondary" id="t_emotreg_only_go">+ Profil</button>
+      </div>
+      <div class="tiny">emotreg hoch, alexithymia niedrig/mid</div>
+    </div>
+
+    <div class="card">
+      <b>Compensation-only (Masking + Overload)</b>
+      <div class="row">
+        <button class="warning" id="t_compensation_only">Generieren</button>
+        <button class="secondary" id="t_compensation_only_go">+ Profil</button>
+      </div>
+      <div class="tiny">masking & overload hoch; Rest niedrig</div>
+    </div>
+
+    <div class="card">
+      <b>Subklinische Traits (mittel)</b>
+      <div class="row">
+        <button class="neutral" id="t_traits_mid">Generieren</button>
+        <button class="secondary" id="t_traits_mid_go">+ Profil</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <b>Mixed mittel (~60%)</b>
+      <div class="row">
+        <button class="neutral" id="t_mixed_mid">Generieren</button>
+        <button class="secondary" id="t_mixed_mid_go">+ Profil</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <b>Unauffällig (niedrig)</b>
+      <div class="row">
+        <button class="secondary" id="t_unremarkable">Generieren</button>
+        <button class="secondary" id="t_unremarkable_go">+ Profil</button>
+      </div>
+    </div>
+  </div>
+
+  <h2>⚙️ Custom</h2>
+  <div class="card">
+    <div class="row" style="align-items:center;">
+      <label><b>Low</b> <input type="number" id="lowV" min="1" max="6" value="2"/></label>
+      <label><b>Mid</b> <input type="number" id="midV" min="1" max="6" value="3"/></label>
+      <label><b>High</b> <input type="number" id="highV" min="1" max="6" value="6"/></label>
+      <button class="secondary" id="customGo">Generieren</button>
+      <button class="secondary" id="customGoProfile">+ Profil</button>
+    </div>
+    <textarea id="customJson">
+{
+  "high": ["attention","executive","hyperfocus"],
+  "mid": ["sensory","social","structure"],
+  "low": ["masking","overload"],
+  "onset": {}
+}
+    </textarea>
+    <p class="muted">Hinweis: Custom ist deterministisch per JSON-Seed (gleiche Inputs → gleiche Answers).</p>
+  </div>
+
+  <div class="status" id="status">bereit – wähle ein Profil</div>
+
+  <script type="module">
+    const STATUS = document.getElementById("status");
+    const kvCase = document.getElementById("kvCase");
+    const kvReport = document.getElementById("kvReport");
+    const kvProfile = document.getElementById("kvProfile");
+    const kvPatterns = document.getElementById("kvPatterns");
+    const kvBadge = document.getElementById("kvBadge");
+    const kvDisq = document.getElementById("kvDisq");
+
+    function setStatus(msg) { STATUS.textContent = msg; }
+
+    const LS_KEYS = {
+      raw: "neurodivergenz_raw",
+      report: "neurodivergenz_report",
+      profileResult: "neurodivergenz_profile_result",
+      expected: "neurodivergenz_sim_expected"
+    };
+
+    // --- deterministic RNG helpers ---
+    function cyrb53(str, seed = 0) {
+      let h1 = 0xdeadbeef ^ seed, h2 = 0x41c6ce57 ^ seed;
+      for (let i = 0, ch; i < str.length; i++) {
+        ch = str.charCodeAt(i);
+        h1 = Math.imul(h1 ^ ch, 2654435761);
+        h2 = Math.imul(h2 ^ ch, 1597334677);
+      }
+      h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+      h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+      return (4294967296 * (2097151 & h2) + (h1 >>> 0)) >>> 0;
+    }
+    function mulberry32(a) {
+      return function() {
+        let t = a += 0x6D2B79F5;
+        t = Math.imul(t ^ (t >>> 15), t | 1);
+        t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+      }
+    }
+
+    const SIMULATED_IDS = Array.from({length: 115}, (_, i) => `q${String(i+1).padStart(3, '0')}`);
+
+    // SUM = 115 (vorher 105) -> echte 115 Items ohne "other"
+    const SCALE_DISTRIBUTION = {
+      attention: 13, executive: 13, hyperfocus: 9,
+      sensory: 13, social: 13, structure: 11,
+      alexithymia: 9, emotreg: 11, masking: 11, overload: 12
+    }; // 13+13+9+13+13+11+9+11+11+12 = 115
+
+    function buildFakeItemsByScale() {
+      const itemsByScale = {};
+      let index = 0;
+      for (const [scale, count] of Object.entries(SCALE_DISTRIBUTION)) {
+        itemsByScale[scale] = SIMULATED_IDS.slice(index, index + count);
+        index += count;
+      }
+      return itemsByScale;
+    }
+    const ITEMS_BY_SCALE = buildFakeItemsByScale();
+
+    function clampLikert(x) {
+      const n = Math.round(Number(x));
+      if (!Number.isFinite(n)) return 2;
+      return Math.max(1, Math.min(6, n));
+    }
+
+    function jitterHi(level, rand) {
+      const a = clampLikert(level);
+      const b = clampLikert(level - 1);
+      return rand() < 0.5 ? a : b;
+    }
+
+    function generateAnswers({
+      base = 2,
+      highScales = [],
+      midScales = [],
+      lowScales = [],
+      highV = 6,
+      midV = 4,
+      lowV = 2,
+      seedStr = "default",
+      jitterHigh = true
+    } = {}) {
+      const seed = cyrb53(seedStr, 1337);
+      const rand = mulberry32(seed);
+
+      const answers = {};
+      for (const id of SIMULATED_IDS) answers[id] = clampLikert(base);
+
+      const setScale = (scale, level) => {
+        const ids = ITEMS_BY_SCALE[scale] || [];
+        const useJitter = jitterHigh && level >= 5;
+        for (const id of ids) {
+          answers[id] = useJitter ? jitterHi(level, rand) : clampLikert(level);
+        }
+      };
+
+      // order: low -> mid -> high (high wins)
+      lowScales.forEach(s => setScale(s, lowV));
+      midScales.forEach(s => setScale(s, midV));
+      highScales.forEach(s => setScale(s, highV));
+
+      return answers;
+    }
+
+    // Onset default (Post-Onset simulation)
+    const baseOnset = {
+      onset_attention: "school", onset_executive: "school", onset_hyperfocus: "school",
+      onset_sensory: "early", onset_social: "early", onset_structure: "early",
+      onset_asdA_reciprocity: "early", onset_asdA_nonverbal: "early", onset_asdA_relationships: "early",
+      onset_rrb_b1: "early", onset_rrb_b2: "early", onset_rrb_b3: "early", onset_rrb_b4: "na",
+      onset_alexithymia: "teen", onset_emotreg: "teen",
+      onset_masking: "school", onset_overload: "school"
+    };
+
+    function writeRaw({ answers, onset, label, simCaseId }) {
+      // Wichtig: nur raw ist Input; report/profile_result werden im echten Flow erzeugt
+      localStorage.removeItem(LS_KEYS.report);
+      localStorage.removeItem(LS_KEYS.profileResult);
+
+      const raw = {
+        answers,
+        itemsByScale: ITEMS_BY_SCALE,
+        meta: {
+          age: 35,
+          gender: "diverse",
+          stress: "moderate",
+          // ctx_* bewusst NICHT in onset:
+          ctx_settings: "2plus",
+          ctx_impairment: "moderate"
+        },
+        onset: onset || {},
+        options: {
+          sim: true,
+          simCaseId: simCaseId || null,
+          simLabel: label || null,
+          simSeed: simCaseId || null
+        }
+      };
+
+      localStorage.setItem(LS_KEYS.raw, JSON.stringify(raw));
+      setStatus(`✅ ${label}\n→ ${Object.keys(answers).length} IDs generiert.\n→ simCaseId: ${simCaseId}`);
+      refreshWatch();
+    }
+
+    function goProfileSameTab() { window.location.href = "profile.html"; }
+    function goProfileNewTab() { window.open("profile.html", "_blank", "noopener,noreferrer"); }
+
+    // ---- Profile Specs (IDs müssen 1:1 zu Button-IDs passen) ----
+    const profiles = {
+      // ADHS
+      t_adhd_adult: {
+        high: ["attention","executive","hyperfocus"],
+        onset: { onset_attention: "adult", onset_executive: "adult", onset_hyperfocus: "adult" },
+        label: "ADHS hoch + Adult onset"
+      },
+      t_adhd_teen: {
+        high: ["attention","executive","hyperfocus"],
+        onset: { onset_attention: "teen", onset_executive: "teen", onset_hyperfocus: "teen" },
+        label: "ADHS hoch + Teen onset (nach 12)"
+      },
+      t_adhd_early: {
+        high: ["attention","executive","hyperfocus"],
+        onset: {},
+        label: "ADHS hoch + Early onset"
+      },
+      t_adhd_late_traits: {
+        high: ["attention","executive","hyperfocus"],
+        mid: ["overload"],
+        onset: { onset_attention: "adult", onset_executive: "adult", onset_hyperfocus: "adult" },
+        label: "Adult-onset ADHS-ähnlich (Traits)"
+      },
+
+      // Autismus
+      t_autism_a_fail: {
+        high: ["sensory","social","structure"],
+        onset: { onset_asdA_reciprocity: "na" },
+        label: "Autismus hoch + Kriterium A fehlt"
+      },
+      t_autism_b_fail: {
+        high: ["sensory","social","structure"],
+        onset: { onset_rrb_b2: "na", onset_rrb_b3: "na", onset_rrb_b4: "na" },
+        label: "Autismus hoch + Kriterium B fehlt (hart)"
+      },
+      t_autism_b_fail_1of4: {
+        high: ["sensory","social","structure"],
+        onset: { onset_rrb_b1: "early", onset_rrb_b2: "na", onset_rrb_b3: "na", onset_rrb_b4: "na" },
+        label: "Autismus hoch + Kriterium B fail (1/4)"
+      },
+      t_autism_valid: {
+        high: ["sensory","social","structure"],
+        onset: {},
+        label: "Autismus hoch + valide"
+      },
+      t_structure_dom: {
+        high: ["structure"],
+        mid: ["sensory","social"],
+        onset: {},
+        label: "Struktur-dominant"
+      },
+      t_sensory_dom: {
+        high: ["sensory"],
+        mid: ["structure","social"],
+        onset: {},
+        label: "Sensory-dominant"
+      },
+      t_social_dom: {
+        high: ["social"],
+        mid: ["sensory","structure"],
+        onset: {},
+        label: "Social-dominant"
+      },
+
+      // AuDHD
+      t_audhd_adhd_adult: {
+        high: ["attention","executive","hyperfocus","sensory","social","structure"],
+        onset: { onset_attention: "adult", onset_executive: "adult", onset_hyperfocus: "adult" },
+        label: "AuDHD + ADHS adult"
+      },
+      t_audhd_autism_a_fail: {
+        high: ["attention","executive","hyperfocus","sensory","social","structure"],
+        onset: { onset_asdA_reciprocity: "na" },
+        label: "AuDHD + Autismus A fehlt"
+      },
+      t_audhd_autism_b_fail_1of4: {
+        high: ["attention","executive","hyperfocus","sensory","social","structure"],
+        onset: { onset_rrb_b1: "early", onset_rrb_b2: "na", onset_rrb_b3: "na", onset_rrb_b4: "na" },
+        label: "AuDHD + Autismus B fail (1/4)"
+      },
+      t_audhd_valid: {
+        high: ["attention","executive","hyperfocus","sensory","social","structure"],
+        onset: {},
+        label: "AuDHD + beide valide"
+      },
+
+      // Overlays / Zusatz
+      t_hyperfocus_dom: {
+        high: ["hyperfocus"],
+        mid: ["attention"],
+        onset: {},
+        label: "Hyperfokus-dominant"
+      },
+      t_masking_pure: {
+        high: ["masking"],
+        mid: ["sensory","social"],
+        onset: { onset_masking: "school" },
+        label: "Hochmaskierung (School onset)"
+      },
+      t_masking_adult_overlay: {
+        high: ["masking"],
+        mid: ["sensory","social"],
+        onset: { onset_masking: "adult" },
+        label: "Hochmaskierung (Adult-onset Overlay)"
+      },
+      t_overload_high: {
+        high: ["overload","executive","emotreg"],
+        onset: {},
+        label: "Starke Überlastung"
+      },
+      t_overload_adult_overlay: {
+        high: ["overload","executive"],
+        mid: ["emotreg"],
+        onset: { onset_overload: "adult" },
+        label: "Überlastung (Adult-onset Overlay)"
+      },
+      t_emotional_high: {
+        high: ["emotreg","alexithymia"],
+        mid: ["sensory"],
+        onset: {},
+        label: "Emotionale Dysregulation"
+      },
+      t_emotional_adult_overlay: {
+        high: ["emotreg"],
+        mid: ["alexithymia"],
+        onset: { onset_emotreg: "adult" },
+        label: "Emotion (Adult-onset Overlay)"
+      },
+      t_alexithymia_only: {
+        high: ["alexithymia"],
+        low: ["emotreg"],
+        onset: {},
+        label: "Alexithymia-only"
+      },
+      t_emotreg_only: {
+        high: ["emotreg"],
+        low: ["alexithymia"],
+        onset: {},
+        label: "Emotreg-only"
+      },
+      t_compensation_only: {
+        high: ["masking","overload"],
+        low: ["attention","executive","hyperfocus","sensory","social","structure","alexithymia","emotreg"],
+        onset: {},
+        label: "Compensation-only (Masking + Overload)"
+      },
+
+      // Traits/Mixed/Low
+      t_traits_mid: {
+        mid: ["attention","executive","hyperfocus","sensory","social","structure"],
+        onset: {},
+        label: "Subklinische Traits (mittel)"
+      },
+      t_mixed_mid: {
+        mid: ["attention","executive","sensory","social","structure","masking","overload"],
+        onset: {},
+        label: "Mixed mittel (~60%)"
+      },
+      t_unremarkable: {
+        low: ["attention","executive","hyperfocus","sensory","social","structure","masking","overload","alexithymia","emotreg"],
+        onset: {},
+        label: "Unauffällig (niedrig)"
+      }
+    };
+
+    function runProfileSpec(profileId, openProfile = false, newTab = false) {
+      const p = profiles[profileId];
+      if (!p) { setStatus(`❌ Unbekanntes Profil: ${profileId}`); return; }
+
+      const answers = generateAnswers({
+        base: 2,
+        highScales: p.high || [],
+        midScales: p.mid || [],
+        lowScales: p.low || [],
+        highV: 6,
+        midV: 4,
+        lowV: 2,
+        seedStr: `SIM:${profileId}`,
+        jitterHigh: true
+      });
+
+      const onset = { ...baseOnset, ...(p.onset || {}) };
+
+      writeRaw({
+        answers,
+        onset,
+        label: p.label,
+        simCaseId: profileId
+      });
+
+      if (openProfile) {
+        setTimeout(() => (newTab ? goProfileNewTab() : goProfileSameTab()), 120);
+      }
+    }
+
+    // Robust binder (Specs -> Buttons)
+    Object.keys(profiles).forEach(id => {
+      const btn = document.getElementById(id);
+      if (!btn) {
+        console.warn("[SIM] Missing button id:", id);
+        return;
+      }
+      btn.onclick = () => runProfileSpec(id, false, false);
+
+      const goBtn = document.getElementById(id + "_go");
+      if (goBtn) goBtn.onclick = () => runProfileSpec(id, true, false);
+    });
+
+    // Custom
+    function runCustom(openProfile = false, newTab = false) {
+      const lowV = clampLikert(document.getElementById("lowV").value);
+      const midV = clampLikert(document.getElementById("midV").value);
+      const highV = clampLikert(document.getElementById("highV").value);
+
+      let spec = {};
+      try { spec = JSON.parse(document.getElementById("customJson").value || "{}"); }
+      catch { setStatus("❌ JSON ungültig"); return; }
+
+      const seedStr = `CUSTOM:${JSON.stringify(spec)}:${lowV}:${midV}:${highV}`;
+
+      const answers = generateAnswers({
+        base: lowV,
+        highScales: spec.high || [],
+        midScales: spec.mid || [],
+        lowScales: spec.low || [],
+        highV, midV, lowV,
+        seedStr,
+        jitterHigh: true
+      });
+
+      writeRaw({
+        answers,
+        onset: { ...baseOnset, ...(spec.onset || {}) },
+        label: "Custom Profil",
+        simCaseId: "custom"
+      });
+
+      if (openProfile) setTimeout(() => (newTab ? goProfileNewTab() : goProfileSameTab()), 120);
+    }
+    document.getElementById("customGo").onclick = () => runCustom(false, false);
+    document.getElementById("customGoProfile").onclick = () => runCustom(true, false);
+
+    // ---- Watch / Snapshot / Validate ----
+    function getRaw() {
+      try { return JSON.parse(localStorage.getItem(LS_KEYS.raw) || "null"); } catch { return null; }
+    }
+    function getReport() {
+      try { return JSON.parse(localStorage.getItem(LS_KEYS.report) || "null"); } catch { return null; }
+    }
+    function getProfileResult() {
+      try { return JSON.parse(localStorage.getItem(LS_KEYS.profileResult) || "null"); } catch { return null; }
+    }
+    function getExpected() {
+      try { return JSON.parse(localStorage.getItem(LS_KEYS.expected) || "{}"); } catch { return {}; }
+    }
+    function setExpected(obj) {
+      localStorage.setItem(LS_KEYS.expected, JSON.stringify(obj));
+    }
+
+    function pickKeyOutputs(profileResult) {
+      if (!profileResult || typeof profileResult !== "object") return null;
+
+      const patterns = Array.isArray(profileResult.patterns) ? profileResult.patterns : [];
+      const patternTypes = patterns.map(p => p?.type).filter(Boolean);
+
+      // onset badge timing: je nach eurer Struktur (robust versuchen)
+      const badgeTiming =
+        profileResult?.onset?.timing ||
+        profileResult?.onsetBadge?.timing ||
+        profileResult?.badges?.onset?.timing ||
+        null;
+
+      // disqualifications: robust keys
+      const disqObj =
+        profileResult?.disqualifications ||
+        profileResult?.disqualification ||
+        profileResult?.diagnostics?.disqualifications ||
+        null;
+
+      const disqKeys = disqObj && typeof disqObj === "object"
+        ? Object.keys(disqObj).filter(k => !!disqObj[k])
+        : [];
+
+      const mainKey =
+        profileResult?.mainProfileKey ||
+        profileResult?.hero?.mainKey ||
+        profileResult?.main?.key ||
+        null;
+
+      const focusKey =
+        profileResult?.focusKey ||
+        profileResult?.hero?.focusKey ||
+        profileResult?.focus?.key ||
+        null;
+
+      return {
+        mainKey,
+        focusKey,
+        badgeTiming,
+        patternTypes,
+        disqKeys
+      };
+    }
+
+    function refreshWatch() {
+      const raw = getRaw();
+      const report = getReport();
+      const profile = getProfileResult();
+
+      kvCase.textContent = raw?.options?.simCaseId || "—";
+      kvReport.textContent = report ? "ja" : "nein";
+      kvProfile.textContent = profile ? "ja" : "nein";
+
+      const out = pickKeyOutputs(profile);
+      kvPatterns.textContent = out ? (out.patternTypes.join(", ") || "—") : "—";
+      kvBadge.textContent = out?.badgeTiming || "—";
+      kvDisq.textContent = out ? (out.disqKeys.join(", ") || "—") : "—";
+    }
+
+    function snapshotExpected() {
+      const raw = getRaw();
+      const profile = getProfileResult();
+      if (!raw?.options?.simCaseId) { setStatus("❌ Kein simCaseId in raw. Erst ein Profil generieren."); return; }
+      if (!profile) { setStatus("❌ Kein profile_result vorhanden. Erst profile.html öffnen (Flow laufen lassen)."); return; }
+
+      const simCaseId = raw.options.simCaseId;
+      const out = pickKeyOutputs(profile);
+      if (!out) { setStatus("❌ Konnte Key-Outputs nicht extrahieren."); return; }
+
+      const expected = getExpected();
+      expected[simCaseId] = out;
+      setExpected(expected);
+
+      setStatus(`📌 Expected gespeichert für ${simCaseId}\n(mainKey/focusKey/badgeTiming/patternTypes/disqKeys)`);
+    }
+
+    function validateExpected() {
+      const raw = getRaw();
+      const profile = getProfileResult();
+      if (!raw?.options?.simCaseId) { setStatus("❌ Kein simCaseId in raw."); return; }
+      if (!profile) { setStatus("❌ Kein profile_result vorhanden. Erst profile.html öffnen."); return; }
+
+      const simCaseId = raw.options.simCaseId;
+      const expected = getExpected()[simCaseId];
+      if (!expected) { setStatus(`ℹ️ Kein Expected für ${simCaseId} gespeichert.`); return; }
+
+      const actual = pickKeyOutputs(profile);
+      const diffs = [];
+
+      const eqArr = (a, b) => JSON.stringify(a || []) === JSON.stringify(b || []);
+      const pushDiff = (k, a, e) => diffs.push(`• ${k}: expected=${JSON.stringify(e)} actual=${JSON.stringify(a)}`);
+
+      if ((actual?.mainKey || null) !== (expected?.mainKey || null)) pushDiff("mainKey", actual?.mainKey, expected?.mainKey);
+      if ((actual?.focusKey || null) !== (expected?.focusKey || null)) pushDiff("focusKey", actual?.focusKey, expected?.focusKey);
+      if ((actual?.badgeTiming || null) !== (expected?.badgeTiming || null)) pushDiff("badgeTiming", actual?.badgeTiming, expected?.badgeTiming);
+      if (!eqArr(actual?.patternTypes, expected?.patternTypes)) pushDiff("patternTypes", actual?.patternTypes, expected?.patternTypes);
+      if (!eqArr(actual?.disqKeys, expected?.disqKeys)) pushDiff("disqKeys", actual?.disqKeys, expected?.disqKeys);
+
+      setStatus(diffs.length ? `❌ Validate FAIL (${simCaseId})\n` + diffs.join("\n") : `✅ Validate OK (${simCaseId})`);
+    }
+
+    let watchTimer = null;
+    function startWatch() {
+      if (watchTimer) return;
+      watchTimer = setInterval(refreshWatch, 500);
+    }
+    function stopWatch() {
+      if (watchTimer) clearInterval(watchTimer);
+      watchTimer = null;
+    }
+
+    // Allgemein
+    document.getElementById("goProfileBtn").onclick = goProfileSameTab;
+    document.getElementById("goProfileNewTabBtn").onclick = goProfileNewTab;
+
+    document.getElementById("clearBtn").onclick = () => {
+      localStorage.clear();
+      setStatus("LocalStorage gelöscht");
+      refreshWatch();
+    };
+
+    document.getElementById("dumpBtn").onclick = () => {
+      console.log("raw", getRaw());
+      console.log("report", getReport());
+      console.log("profile", getProfileResult());
+      console.log("expected", getExpected());
+      setStatus("Dump in Konsole");
+      refreshWatch();
+    };
+
+    document.getElementById("checkBtn").onclick = () => {
+      const missingButtons = [];
+      const missingSpecs = [];
+
+      // Spec -> Button
+      for (const id of Object.keys(profiles)) {
+        if (!document.getElementById(id)) missingButtons.push(id);
+      }
+
+      // Button -> Spec (nur t_* Buttons)
+      const btnIds = Array.from(document.querySelectorAll("button"))
+        .map(b => b.id)
+        .filter(id => id && id.startsWith("t_") && !id.endsWith("_go"));
+      for (const id of btnIds) {
+        if (!profiles[id]) missingSpecs.push(id);
+      }
+
+      const msg =
+        `Check IDs:\n` +
+        `• Missing Buttons for Specs: ${missingButtons.length ? missingButtons.join(", ") : "—"}\n` +
+        `• Missing Specs for Buttons: ${missingSpecs.length ? missingSpecs.join(", ") : "—"}`;
+      setStatus(msg);
+      console.log("[SIM] missingButtonsForSpecs", missingButtons);
+      console.log("[SIM] missingSpecsForButtons", missingSpecs);
+    };
+
+    document.getElementById("refreshBtn").onclick = () => { refreshWatch(); setStatus("Watch refreshed"); };
+    document.getElementById("snapshotBtn").onclick = snapshotExpected;
+    document.getElementById("validateBtn").onclick = validateExpected;
+    document.getElementById("clearExpectedBtn").onclick = () => { localStorage.removeItem(LS_KEYS.expected); setStatus("Expected gelöscht"); };
+
+    document.getElementById("autoWatch").onchange = (e) => {
+      if (e.target.checked) startWatch(); else stopWatch();
+    };
+
+    // initial
+    refreshWatch();
+  </script>
+</body>
+</html>

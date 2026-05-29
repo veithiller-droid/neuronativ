@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Neurodiversitäts-Selbsttest</title>
+
+<style>
+
+/* =========================
+   FARBKONZEPT - NEU
+========================= */
+:root{
+  --bg-page: #D4F5F3;        /* Helles Türkis */
+  --bg-box: #FFFFFF;         /* Weiß für Fragebox */
+  --bg-box-alt: #EEEAF3;
+  --bg-box-soft: #F2F5F7;
+  --border-light: #D8DEE4;   /* Hellgrau für Borders */
+  --accent-main: #EAB308;    /* Senf */
+  --accent-soft: #FACC15;    /* Heller Senf */
+  --text-main: #2F3A40;
+  --text-secondary: #5F6C73; /* Grau für Texte */
+  --bg-tacho: #F6E1C8;
+  --border-tacho: #E6B980;
+  
+  /* Senf-Gradient für Kreise 0-5 */
+  --senf-0: #FEFCE8;
+  --senf-1: #FEF9C3;
+  --senf-2: #FEF08A;
+  --senf-3: #FDE047;
+  --senf-4: #FACC15;
+  --senf-5: #EAB308;
+}
+
+/* =========================
+   BASIS
+========================= */
+body{
+  font-family: system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background: var(--bg-page);
+  color: var(--text-main);
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.header-banner{
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  width: 100vw;
+  
+  background: #F5F5F5;  /* Hellgrau */
+  border-top: 2px solid var(--accent-main);
+  border-bottom: 2px solid var(--accent-main);
+  padding: 20px 0;
+  margin-bottom: 64px;
+  text-align: center;
+}
+
+h1{
+  font-size: 2.2em;  /* Größer: war 1.8em */
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: var(--accent-main);
+}
+
+.subline{
+  font-size: 1.15em;  /* Größer: war 1em */
+  color: var(--text-secondary);
+  margin-bottom: 0;
+  font-weight: 400;
+}
+
+#progress{
+  font-size: 0.9em;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+}
+
+/* =========================
+   LEGENDE (über Fragebox)
+========================= */
+.scale-legend{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 20px;
+  padding: 0 20px;
+}
+
+.legend-item{
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legend-dot{
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.legend-dot:nth-child(1){ background: var(--senf-0); border: 1px solid #E5E7EB; }
+
+.legend-text{
+  font-size: 0.8em;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+/* =========================
+   MODAL – LAYOUT & TYPO
+========================= */
+.modal-backdrop{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.modal{
+  background: var(--bg-page);
+  padding: 28px 30px 30px;
+  max-width: 460px;
+  width: 90%;
+  border-radius: 18px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+}
+
+.modal h2{
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-size: 1.3em;
+}
+
+/* =========================
+   FORM – ZEILENWEISE
+========================= */
+.meta-row{
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+
+.meta-row label{
+  font-size: 0.9em;
+  color: var(--text-secondary);
+}
+
+.meta-row select{
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border-light);
+  background: #fff;
+  font-size: 0.95em;
+}
+
+/* =========================
+   BUTTONS – RUHIG
+========================= */
+.modal-actions{
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.btn-primary{
+  flex: 1;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: none;
+  background: var(--accent-main);
+  color: #fff;
+  font-size: 0.95em;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-primary:hover{
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.btn-secondary{
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border-light);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 0.9em;
+  cursor: pointer;
+}
+
+/* =========================
+   FRAGE
+========================= */
+.question{
+  background: var(--bg-box);
+  padding: 32px;
+  border-radius: 12px;
+  border: 1px solid var(--border-light);
+  font-size: 1.3em;
+  line-height: 1.5;
+  margin-bottom: 30px;
+  color: var(--text-secondary);
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+/* =========================
+   SKALA - NEU: 6 Kreise
+========================= */
+.scale{
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+}
+
+.scale button{
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  font-size: 18px;
+  font-weight: 600;
+  color: #6B7280; /* Mitteldunkles Grau */
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.scale button:nth-child(1){ background: var(--senf-0); border-color: #E5E7EB; }
+.scale button:nth-child(2){ background: var(--senf-1); }
+.scale button:nth-child(3){ background: var(--senf-2); }
+.scale button:nth-child(4){ background: var(--senf-3); }
+.scale button:nth-child(5){ background: var(--senf-4); }
+.scale button:nth-child(6){ background: var(--senf-5); color: #fff; }
+
+.scale button:hover{
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.scale button:active,
+.scale button.selected{
+  transform: scale(1.05);
+  border-width: 3px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+}
+
+/* =========================
+   ERGEBNIS
+========================= */
+.hidden{display: none;}
+.scale-result{margin-bottom: 22px;}
+
+.toggle-main,
+.toggle-topic,
+.toggle-tacho{
+  background: none;
+  border: none;
+  font-size: 1em;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 8px 0;
+}
+
+/* =========================
+   SUBTITEL / ERKLÄRENDE TEXTE
+========================= */
+.topic-intro{
+  color: #6B7280;
+  font-style: italic;
+  font-size: 0.95em;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+/* =========================
+   TACHO
+========================= */
+.tacho-box {
+  display: flex;
+  gap: 16px;
+  margin: 8px 0 12px;
+  padding: 14px 16px;
+  background: var(--bg-box);        /* GEÄNDERT: jetzt wie andere Boxen */
+  border: 1px solid var(--border);  /* GEÄNDERT: jetzt wie andere Boxen */
+  border-radius: 8px;
+}
+
+.tacho-inline svg {
+  width: 80px;
+}
+
+.tacho-text {
+  max-width: 560px;  /* GEÄNDERT: war 420px, jetzt breiter */
+  line-height: 1.7;
+}
+
+.tacho-details {
+  margin: 16px 0 28px -80px;
+  width: 100%;
+  max-width: 620px;               /* GEÄNDERT: war 480px, proportional breiter */
+  background: var(--bg-box);
+  border: 1px solid var(--border); /* HINZUGEFÜGT: Border wie andere Boxen */
+  border-radius: 14px;
+  padding: 20px 22px;
+}
+/* =========================
+   BALKEN
+========================= */
+.bar{
+  position: relative;
+  background: #E3E8EC;
+  height: 28px;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.fill{
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 8px;
+  box-sizing: border-box;
+  color: #fff;
+  font-size: 0.85em;
+  font-weight: 600;
+  background: linear-gradient(
+    90deg,
+    #C7D6E2 0%,
+    var(--accent-main) 60%,
+    #CA8A04 100%
+  );
+}
+
+.bar-value{
+  white-space: nowrap;
+}
+
+.bar-label{
+  margin-top: 6px;
+  font-size: 0.9em;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+/* =========================
+   TEXT-AUSWERTUNG CONTAINER
+========================= */
+.text-box{
+  margin: 16px 0 28px 0;
+  padding: 20px 22px;
+  background: var(--bg-box-alt);
+  border: 1px solid var(--border-light);
+  border-radius: 14px;
+  line-height: 1.7;
+}
+
+/* =========================
+   PRINT / PDF
+========================= */
+@media print{
+  .question, .scale, #progress, .pdf-export{display: none!important;}
+  body{max-width: none; margin: 0; padding: 0; background: #fff;}
+  .scale-result, .tacho-details{break-inside: avoid;}
+}
+
+/* =============================================
+   ONSET-SEITE
+============================================= */
+.onset-container{
+  max-width: 700px;
+  margin: 60px auto;
+  padding: 40px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+.onset-container h2{
+  margin-bottom: 16px;
+  font-size: 28px;
+  color: #2c3e50;
+}
+
+.onset-intro{
+  margin-bottom: 32px;
+  color: #555;
+  line-height: 1.6;
+  font-size: 16px;
+}
+
+.onset-question-box{
+  margin-bottom: 32px;
+}
+
+.onset-question{
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 24px;
+  color: #2c3e50;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #3498db;
+}
+
+.onset-question strong{
+  display: block;
+  margin-bottom: 8px;
+  font-size: 16px;
+  color: #3498db;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.onset-options{
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.onset-button{
+  padding: 16px 24px;
+  background: white;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+  color: #2c3e50;
+}
+
+.onset-button:hover{
+  background: #f8f9fa;
+  border-color: var(--accent-main);
+  transform: translateX(4px);
+}
+
+.onset-button:active{
+  transform: translateX(2px);
+}
+
+.onset-progress{
+  text-align: center;
+  color: #7f8c8d;
+  font-size: 14px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+}
+
+@media (max-width: 600px){
+  .onset-question{
+    font-size: 16px;
+    padding: 16px;
+  }
+  
+  .onset-button{
+    padding: 14px 18px;
+    font-size: 15px;
+  }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- =========================
+     META-MODAL (VORSCHALTUNG)
+========================= -->
+<div id="meta-modal" class="modal-backdrop">
+  <div class="modal">
+
+    <h2>Kurze Einordnung</h2>
+
+    <p class="topic-intro">
+      Ein paar Angaben helfen, die Auswertung besser einzuordnen.
+    </p>
+
+    <!-- Alter -->
+    <div class="meta-row">
+      <label for="meta-age">Alter</label>
+      <select id="meta-age" required>
+        <option value="">– bitte wählen –</option>
+        <option value="u18">unter 18</option>
+        <option value="18-24">18–24</option>
+        <option value="25-34">25–34</option>
+        <option value="35-44">35–44</option>
+        <option value="45-54">45–54</option>
+        <option value="55-64">55–64</option>
+        <option value="65+">65+</option>
+      </select>
+    </div>
+
+    <!-- Geschlecht -->
+    <div class="meta-row">
+      <label for="meta-gender">Geschlecht</label>
+      <select id="meta-gender" required>
+        <option value="">– bitte wählen –</option>
+        <option value="female">weiblich</option>
+        <option value="male">männlich</option>
+        <option value="diverse">divers / nicht-binär</option>
+        <option value="na">möchte ich nicht angeben</option>
+      </select>
+    </div>
+
+    <!-- Diagnosen (Mehrfach) -->
+    <div class="meta-row">
+      <label for="meta-diagnosis">Diagnostischer Status (optional)</label>
+      <select id="meta-diagnosis" required>
+        <option value="">– bitte wählen –</option>
+        <option value="adhd">ADHS / ADS</option>
+        <option value="autism">Autismus</option>
+        <option value="audhd">ADHS + Autismus</option>
+        <option value="anxiety">Angststörung</option>
+        <option value="depression">Depression</option>
+        <option value="trauma">Trauma / PTBS</option>
+        <option value="none">keine formale Diagnose</option>
+      </select>
+    </div>
+
+    <!-- Beginn -->
+    <div class="meta-row">
+      <label for="meta-onset">Seit wann bestehen diese Merkmale?</label>
+      <select id="meta-onset">
+        <option value="">– bitte wählen –</option>
+        <option value="childhood">seit der Kindheit</option>
+        <option value="youth">seit Jugendalter</option>
+        <option value="adult">seit dem Erwachsenenalter</option>
+        <option value="recent">erst in den letzten Jahren</option>
+        <option value="unsure">unsicher</option>
+      </select>
+    </div>
+
+    <!-- Belastung -->
+    <div class="meta-row">
+      <label for="meta-stress">Aktuelle Belastung</label>
+      <select id="meta-stress">
+        <option value="">– bitte wählen –</option>
+        <option value="low">kaum</option>
+        <option value="mild">leicht</option>
+        <option value="medium">mittel</option>
+        <option value="high">stark</option>
+        <option value="very-high">sehr stark</option>
+      </select>
+    </div>
+
+    <!-- Kontext -->
+    <div class="meta-row">
+      <label for="meta-context">Aktueller Hauptkontext</label>
+      <select id="meta-context">
+        <option value="">– bitte wählen –</option>
+        <option value="school">Schule / Studium</option>
+        <option value="employed">angestellt</option>
+        <option value="self">selbstständig</option>
+        <option value="care">Care-Arbeit / Haushalt</option>
+        <option value="none">aktuell nicht berufstätig</option>
+        <option value="other">anderes</option>
+      </select>
+    </div>
+
+    <!-- Medikamente -->
+    <div class="meta-row">
+      <label for="meta-medication">Medikamentöse Unterstützung</label>
+      <select id="meta-medication">
+        <option value="">– bitte wählen –</option>
+        <option value="yes">ja</option>
+        <option value="no">nein</option>
+        <option value="na">möchte ich nicht angeben</option>
+      </select>
+    </div>
+
+    <!-- Selbsteinschätzung -->
+    <div class="meta-row">
+      <label for="meta-selfview">Eigene Einschätzung neurodivergent?</label>
+      <select id="meta-selfview">
+        <option value="">– bitte wählen –</option>
+        <option value="no">nein</option>
+        <option value="rather-no">eher nein</option>
+        <option value="unsure">unsicher</option>
+        <option value="rather-yes">eher ja</option>
+        <option value="yes">ja</option>
+      </select>
+    </div>
+
+    <!-- Aktionen -->
+    <div class="modal-actions">
+      <button id="start-test" class="btn-primary">
+        Weiter zum Test
+      </button>
+      <button id="skip-meta" class="btn-secondary">
+        Ohne Angaben fortfahren
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ========== ONSET-SEITE (NEU) ========== -->
+<div id="onset-page" style="display:none;">
+  <div class="onset-container">
+    <h2>Zeitlicher Verlauf</h2>
+    <p class="onset-intro">
+      Um Ihr Profil besser einordnen zu können, benötigen wir noch einige Informationen 
+      zum zeitlichen Verlauf der beschriebenen Merkmale.
+    </p>
+
+    <div class="onset-question-box">
+      <div id="onset-question-text" class="onset-question"></div>
+      
+      <div id="onset-options" class="onset-options">
+        <!-- Buttons werden dynamisch eingefügt -->
+      </div>
+    </div>
+
+    <div id="onset-progress" class="onset-progress"></div>
+  </div>
+</div>
+
+<!-- =========================
+     HAUPTTEST
+========================= -->
+
+<div class="header-banner">
+  <h1>Neurodiversitäts-Selbsttest</h1>
+  <p class="subline">Erstelle dein neurologisches Profil</p>
+</div>
+
+<div id="progress"></div>
+
+<!-- Legende über Fragebox -->
+<div class="scale-legend">
+  <div class="legend-item">
+    <span class="legend-dot" style="background: var(--senf-0); border: 1px solid #E5E7EB;"></span>
+    <span class="legend-text">trifft überhaupt nicht zu</span>
+  </div>
+  <div class="legend-item">
+    <span class="legend-dot" style="background: var(--senf-1);"></span>
+    <span class="legend-text">trifft nicht zu</span>
+  </div>
+  <div class="legend-item">
+    <span class="legend-dot" style="background: var(--senf-2);"></span>
+    <span class="legend-text">trifft eher nicht zu</span>
+  </div>
+  <div class="legend-item">
+    <span class="legend-dot" style="background: var(--senf-3);"></span>
+    <span class="legend-text">trifft eher zu</span>
+  </div>
+  <div class="legend-item">
+    <span class="legend-dot" style="background: var(--senf-4);"></span>
+    <span class="legend-text">trifft zu</span>
+  </div>
+  <div class="legend-item">
+    <span class="legend-dot" style="background: var(--senf-5);"></span>
+    <span class="legend-text">trifft völlig zu</span>
+  </div>
+</div>
+
+
+<div class="question" id="questionText"></div>
+<div class="scale" id="scaleButtons"></div>
+<div id="results"></div>
+
+<script type="module" src="item_texts.js"></script>
+<script type="module" src="test.js"></script>
+
+
+<!-- AUTO-PDF + BUTTON -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  const btn = document.getElementById("pdfBtn");
+  if (btn) {
+    btn.addEventListener("click", () => window.print());
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("pdf") === "1") {
+    setTimeout(() => window.print(), 800);
+  }
+
+});
+</script>
+
+</body>
+</html>

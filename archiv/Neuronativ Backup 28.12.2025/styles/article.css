@@ -1,0 +1,296 @@
+/* ============================================
+   NEURONATIV - ARTIKEL STYLES
+   ============================================ */
+
+/* Reset & Base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    color: #2c2c2c;
+    background: #52575a;
+    line-height: 1.7;
+    font-size: 16px;
+    margin: 0;
+    padding: 0 60px;
+}
+
+.page-wrapper {
+    max-width: 1400px;
+    margin: 0 auto;
+    background: #fafafa;
+    box-shadow: 0 0 40px rgba(0,0,0,0.2);
+    min-height: 100vh;
+}
+
+/* ============================================
+   HEADER
+   ============================================ */
+
+header {
+    background: white;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 20px 0;
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-text {
+    font-size: 24px;
+    font-weight: 300;
+    letter-spacing: 2px;
+    color: #2c2c2c;
+    text-decoration: none;
+}
+
+nav {
+    display: flex;
+    gap: 40px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #666;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: #2c2c2c;
+}
+
+/* ============================================
+   ARTICLE CONTAINER (Popup-Style)
+   ============================================ */
+
+.article-outer {
+    padding: 60px 40px;
+    background: rgba(0,0,0,0.02);
+    min-height: calc(100vh - 80px);
+}
+
+.article-container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+    overflow: hidden;
+}
+
+/* ============================================
+   BREADCRUMB
+   ============================================ */
+
+.breadcrumb {
+    background: #f7f7f5;
+    padding: 20px 40px;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 0.9rem;
+}
+
+.breadcrumb a {
+    color: #3f6475;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.breadcrumb a:hover {
+    color: #2c2c2c;
+    text-decoration: underline;
+}
+
+.breadcrumb span {
+    color: #999;
+    margin: 0 8px;
+}
+
+/* ============================================
+   ARTICLE HEADER
+   ============================================ */
+
+.article-header {
+    padding: 40px 50px 25px 50px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.article-tag {
+    display: inline-block;
+    background: #e6eef2;
+    color: #3f6475;
+    padding: 5px 14px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 18px;
+}
+
+.article-header h1 {
+    font-size: 2rem;
+    font-weight: 300;
+    margin-bottom: 15px;
+    line-height: 1.3;
+}
+
+.article-meta {
+    color: #666;
+    font-size: 0.85rem;
+}
+
+/* ============================================
+   ARTICLE CONTENT
+   ============================================ */
+
+.article-content {
+    padding: 40px 50px;
+}
+
+.article-content h2 {
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    color: #2c2c2c;
+}
+
+.article-content h2:first-child {
+    margin-top: 0;
+}
+
+.article-content h3 {
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    color: #2c2c2c;
+}
+
+.article-content p {
+    margin-bottom: 18px;
+    line-height: 1.7;
+    text-align: justify;
+}
+
+.article-content ul, 
+.article-content ol {
+    margin-bottom: 20px;
+    padding-left: 28px;
+}
+
+.article-content li {
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+.highlight-box {
+    background: #e6eef2;
+    border-left: 4px solid #3f6475;
+    padding: 20px 25px;
+    margin: 30px 0;
+    font-style: italic;
+}
+
+.highlight-box p {
+    margin: 0;
+    color: #2c2c2c;
+    font-size: 0.95rem;
+}
+
+/* ============================================
+   BACK BUTTON
+   ============================================ */
+
+.back-button-container {
+    padding: 35px 50px;
+    border-top: 1px solid #e0e0e0;
+    background: #f7f7f5;
+}
+
+.back-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #3f6475;
+    color: white;
+    padding: 12px 28px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s;
+}
+
+.back-button:hover {
+    background: #335563;
+    transform: translateX(-4px);
+}
+
+.back-button::before {
+    content: "←";
+    font-size: 1.2rem;
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+
+.footer {
+    background: white;
+    border-top: 1px solid #e0e0e0;
+    padding: 40px;
+    text-align: center;
+}
+
+.footer p {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+
+.footer a {
+    color: #3f6475;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 768px) {
+    body {
+        padding: 0 20px;
+    }
+
+    .article-header,
+    .article-content,
+    .back-button-container {
+        padding-left: 25px;
+        padding-right: 25px;
+    }
+
+    .article-header h1 {
+        font-size: 1.6rem;
+    }
+
+    nav {
+        gap: 20px;
+    }
+}

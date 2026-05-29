@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Was ist Neurodivergenz? – Neuronativ</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            color: #2c2c2c;
+            background: #52575a;
+            line-height: 1.7;
+            font-size: 16px;
+            margin: 0;
+            padding: 0 60px;
+        }
+
+        .page-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: #fafafa;
+            box-shadow: 0 0 40px rgba(0,0,0,0.2);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 20px 0;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: #2c2c2c;
+            text-decoration: none;
+        }
+
+        nav {
+            display: flex;
+            gap: 40px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #666;
+            font-size: 13px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #2c2c2c;
+        }
+
+        /* Article Container (Popup-Style) */
+        .article-outer {
+            padding: 60px 40px;
+            background: rgba(0,0,0,0.02);
+            min-height: calc(100vh - 80px);
+        }
+
+        .article-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+            overflow: hidden;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            background: #f7f7f5;
+            padding: 20px 40px;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 0.9rem;
+        }
+
+        .breadcrumb a {
+            color: #3f6475;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .breadcrumb a:hover {
+            color: #2c2c2c;
+            text-decoration: underline;
+        }
+
+        .breadcrumb span {
+            color: #999;
+            margin: 0 8px;
+        }
+
+        /* Article Header */
+        .article-header {
+            padding: 40px 50px 25px 50px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .article-tag {
+            display: inline-block;
+            background: #e6eef2;
+            color: #3f6475;
+            padding: 5px 14px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 18px;
+        }
+
+        .article-header h1 {
+            font-size: 2rem;
+            font-weight: 300;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        .article-meta {
+            color: #666;
+            font-size: 0.85rem;
+        }
+
+        /* Article Content */
+        .article-content {
+            padding: 40px 50px;
+        }
+
+        .article-content h2 {
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            color: #2c2c2c;
+        }
+
+        .article-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .article-content h3 {
+            font-size: 1.2rem;
+            font-weight: 400;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            color: #2c2c2c;
+        }
+
+        .article-content p {
+            margin-bottom: 18px;
+            line-height: 1.7;
+            text-align: justify;
+        }
+
+        .article-content ul, 
+        .article-content ol {
+            margin-bottom: 20px;
+            padding-left: 28px;
+        }
+
+        .article-content li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .highlight-box {
+            background: #e6eef2;
+            border-left: 4px solid #3f6475;
+            padding: 20px 25px;
+            margin: 30px 0;
+            font-style: italic;
+        }
+
+        .highlight-box p {
+            margin: 0;
+            color: #2c2c2c;
+            font-size: 0.95rem;
+        }
+
+        /* Back Button */
+        .back-button-container {
+            padding: 35px 50px;
+            border-top: 1px solid #e0e0e0;
+            background: #f7f7f5;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #3f6475;
+            color: white;
+            padding: 12px 28px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+        }
+
+        .back-button:hover {
+            background: #335563;
+            transform: translateX(-4px);
+        }
+
+        .back-button::before {
+            content: "←";
+            font-size: 1.2rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .footer p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .footer a {
+            color: #3f6475;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 0 20px;
+            }
+
+            .article-header,
+            .article-content,
+            .back-button-container {
+                padding-left: 25px;
+                padding-right: 25px;
+            }
+
+            .article-header h1 {
+                font-size: 1.6rem;
+            }
+
+            nav {
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <a href="../index.html" class="logo-text">neuronativ</a>
+            <nav>
+                <a href="../wissen.html">Wissen</a>
+                <a href="../test/index.html">Selbsttest</a>
+                <a href="../index.html#kontakt">Kontakt</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Article Outer Container -->
+    <div class="article-outer">
+        <article class="article-container">
+            
+            <!-- Breadcrumb -->
+            <div class="breadcrumb">
+                <a href="../index.html">Neuronativ</a>
+                <span>›</span>
+                <a href="../wissen.html">Wissen & Aufklärung</a>
+                <span>›</span>
+                <strong>Was ist Neurodivergenz?</strong>
+            </div>
+
+            <!-- Article Header -->
+            <header class="article-header">
+                <span class="article-tag">Einsteiger</span>
+                <h1>Was ist Neurodivergenz?</h1>
+                <div class="article-meta">
+                    Lesezeit: ca. 8 Minuten
+                </div>
+            </header>
+
+            <!-- Article Content -->
+            <div class="article-content">
+                
+                <p>
+                    Der Begriff "Neurodivergenz" beschreibt neurologische Unterschiede in der Art und Weise, 
+                    wie Menschen denken, lernen, Informationen verarbeiten und die Welt wahrnehmen. 
+                    Neurodivergente Menschen haben ein Gehirn, das anders "verdrahtet" ist – nicht falsch, 
+                    sondern einfach anders als bei der neurotypischen Mehrheit.
+                </p>
+
+                <h2>Geschichte des Begriffs</h2>
+                
+                <p>
+                    Der Begriff "Neurodiversität" wurde 1998 von der australischen Soziologin Judy Singer 
+                    geprägt. Singer, selbst autistisch, entwickelte das Konzept als Alternative zum 
+                    medizinischen Modell, das neurologische Unterschiede primär als Defizite oder Störungen betrachtet.
+                </p>
+
+                <p>
+                    Die Neurodiversitätsbewegung argumentiert, dass neurologische Vielfalt ein natürlicher 
+                    und wertvoller Aspekt der menschlichen Diversität ist – ähnlich wie ethnische, kulturelle 
+                    oder geschlechtliche Vielfalt.
+                </p>
+
+                <div class="highlight-box">
+                    <p>
+                        "Neurodivergenz ist keine Krankheit, die geheilt werden muss, sondern eine natürliche 
+                        Variation des menschlichen Gehirns."
+                    </p>
+                </div>
+
+                <h2>Was umfasst Neurodivergenz?</h2>
+                
+                <p>
+                    Unter dem Begriff Neurodivergenz werden verschiedene neurologische Besonderheiten zusammengefasst:
+                </p>
+
+                <ul>
+                    <li><strong>ADHS (Aufmerksamkeitsdefizit-Hyperaktivitätsstörung)</strong> – 
+                    Unterschiede in Aufmerksamkeit, Impulskontrolle und Aktivitätsniveau</li>
+                    
+                    <li><strong>Autismus-Spektrum</strong> – 
+                    Besonderheiten in sozialer Interaktion, Kommunikation und Wahrnehmung</li>
+                    
+                    <li><strong>Dyslexie</strong> – 
+                    Spezifische Schwierigkeiten beim Lesen und Schreiben</li>
+                    
+                    <li><strong>Dyspraxie</strong> – 
+                    Koordinations- und Bewegungsbesonderheiten</li>
+                    
+                    <li><strong>Hochsensibilität (HSP)</strong> – 
+                    Erhöhte sensorische Empfindsamkeit und Verarbeitung</li>
+                    
+                    <li><strong>Tourette-Syndrom</strong> – 
+                    Neurologische Besonderheit mit motorischen und vokalen Tics</li>
+                    
+                    <li><strong>Synästhesie</strong> – 
+                    Verschmelzung von Sinneswahrnehmungen</li>
+                </ul>
+
+                <h2>Neurodivergent vs. Neurotypisch</h2>
+                
+                <p>
+                    <strong>Neurotypisch</strong> beschreibt Menschen, deren neurologische Entwicklung und 
+                    Funktionsweise den gesellschaftlichen Erwartungen und der statistischen Norm entspricht.
+                </p>
+
+                <p>
+                    <strong>Neurodivergent</strong> sind Menschen, deren neurologische Entwicklung in 
+                    signifikanter Weise von dieser Norm abweicht. Es handelt sich dabei nicht um eine 
+                    medizinische Diagnose, sondern um einen neutralen, beschreibenden Begriff.
+                </p>
+
+                <h2>Das medizinische vs. das soziale Modell</h2>
+
+                <h3>Medizinisches Modell</h3>
+                <p>
+                    Das traditionelle medizinische Modell betrachtet Neurodivergenz als "Störung" oder "Defizit", 
+                    das behandelt oder "korrigiert" werden sollte. ADHS wird als "Aufmerksamkeitsdefizit-Hyperaktivitätsstörung" 
+                    bezeichnet, Autismus als "Autismus-Spektrum-Störung".
+                </p>
+
+                <h3>Soziales Modell / Neurodiversitäts-Paradigma</h3>
+                <p>
+                    Das Neurodiversitäts-Paradigma sieht die Herausforderungen nicht primär in der Person selbst, 
+                    sondern in der mangelnden Anpassung der Umwelt an unterschiedliche neurologische Bedürfnisse. 
+                    Nicht die Person ist "gestört", sondern die Umgebung ist nicht inklusiv genug gestaltet.
+                </p>
+
+                <div class="highlight-box">
+                    <p>
+                        Beispiel: Eine autistische Person, die mit lauten Großraumbüros überfordert ist, 
+                        hat nicht ein "Defizit" – sondern die Arbeitsumgebung berücksichtigt nicht ihre 
+                        sensorischen Bedürfnisse.
+                    </p>
+                </div>
+
+                <h2>Warum ist das Konzept wichtig?</h2>
+
+                <p>
+                    Das Neurodiversitäts-Konzept bietet mehrere wichtige Perspektiven:
+                </p>
+
+                <ul>
+                    <li><strong>Reduktion von Stigma</strong> – 
+                    Weg von "defekt" hin zu "anders"</li>
+                    
+                    <li><strong>Selbstakzeptanz</strong> – 
+                    Neurodivergente Menschen können ihre Unterschiede als Teil ihrer Identität annehmen</li>
+                    
+                    <li><strong>Fokus auf Stärken</strong> – 
+                    Anerkennung, dass Neurodivergenz auch besondere Fähigkeiten mit sich bringen kann</li>
+                    
+                    <li><strong>Gesellschaftliche Veränderung</strong> – 
+                    Forderung nach inklusiveren Strukturen statt individueller "Anpassung"</li>
+                </ul>
+
+                <h2>Kritik und Differenzierung</h2>
+
+                <p>
+                    Das Neurodiversitäts-Konzept wird nicht von allen gleichermaßen akzeptiert. 
+                    Einige Kritikpunkte:
+                </p>
+
+                <ul>
+                    <li>Manche neurodivergente Menschen erleben erhebliches Leiden und benötigen Unterstützung 
+                    – das Konzept darf nicht dazu führen, notwendige Hilfe zu verweigern</li>
+                    
+                    <li>Der Begriff kann sehr unterschiedliche Erfahrungen zusammenfassen – die Lebensrealität 
+                    einer Person mit ADHS unterscheidet sich stark von der einer Person mit schwerem Autismus</li>
+                    
+                    <li>Die Bewegung wird manchmal als zu idealistisch kritisiert und unterschätze echte 
+                    Beeinträchtigungen</li>
+                </ul>
+
+                <p>
+                    Wichtig ist: Neurodiversität als Konzept schließt nicht aus, dass Menschen Unterstützung, 
+                    Therapie oder auch Medikation benötigen können. Es geht darum, diese aus einer Position 
+                    der Würde und Selbstbestimmung heraus zu wählen, nicht aus Scham oder dem Zwang zur "Normalisierung".
+                </p>
+
+                <h2>Fazit</h2>
+
+                <p>
+                    Neurodivergenz ist ein wichtiges Konzept, das hilft, neurologische Unterschiede nicht als 
+                    Fehler, sondern als natürliche menschliche Vielfalt zu verstehen. Es verschiebt den Fokus 
+                    von "Was ist falsch mit mir?" zu "Was brauche ich, um in dieser Welt gut zurechtzukommen?" 
+                    und "Wie muss sich die Welt anpassen, um inklusiver zu werden?".
+                </p>
+
+                <p>
+                    Für viele neurodivergente Menschen ist diese Perspektive befreiend und ermöglicht ein 
+                    positiveres Selbstbild und mehr Selbstakzeptanz.
+                </p>
+
+            </div>
+
+            <!-- Back Button -->
+            <div class="back-button-container">
+                <a href="../wissen.html" class="back-button">
+                    Zurück zu Wissen & Aufklärung
+                </a>
+            </div>
+
+        </article>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 Neuronativ</p>
+        <p>
+            <a href="../impressum.html">Impressum</a> ·
+            <a href="../datenschutz.html">Datenschutz</a> ·
+            <a href="../kontakt.html">Kontakt</a>
+        </p>
+    </footer>
+
+    </div>
+</body>
+</html>

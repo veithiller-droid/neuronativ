@@ -1,0 +1,251 @@
+/* ===== THEME VARIABLEN ===== */
+
+/* Default: SANFT */
+:root {
+  --bg-page: #F0F9FF;
+  --bg-box: #FFFFFF;
+  --bg-box-alt: #EEEAF3;
+  --bg-highlight: #FFFBEA;
+  --border-light: #D8DEE4;
+  --accent-main: #EAB308;
+  --accent-soft: #FACC15;
+  --accent-turquoise: #06B6D4;
+  --text-main: #2F3A40;
+  --text-secondary: #5F6C73;
+}
+
+/* Theme: KONTRAST */
+[data-theme="contrast"] {
+  --bg-page: #FFFFFF;
+  --bg-box: #F9FAFB;
+  --bg-box-alt: #F3F4F6;
+  --bg-highlight: #FEF3C7;
+  --border-light: #000000;
+  --accent-main: #1E3A8A;
+  --accent-soft: #3B82F6;
+  --accent-turquoise: #0284C7;
+  --text-main: #000000;
+  --text-secondary: #374151;
+}
+
+/* Theme: DUNKEL */
+[data-theme="dark"] {
+  --bg-page: #111827;
+  --bg-box: #1F2937;
+  --bg-box-alt: #374151;
+  --bg-highlight: #374151;
+  --border-light: #4B5563;
+  --accent-main: #22D3EE;
+  --accent-soft: #06B6D4;
+  --accent-turquoise: #0EA5E9;
+  --text-main: #F9FAFB;
+  --text-secondary: #D1D5DB;
+}
+
+/* Theme: WARM */
+[data-theme="warm"] {
+  --bg-page: #FAF8F3;
+  --bg-box: #FFFFFF;
+  --bg-box-alt: #FEF3E2;
+  --bg-highlight: #FED7AA;
+  --border-light: #E7E5E4;
+  --accent-main: #C2410C;
+  --accent-soft: #EA580C;
+  --accent-turquoise: #F97316;
+  --text-main: #292524;
+  --text-secondary: #57534E;
+}
+
+/* ===== THEME SELECTOR (nur für test.html) ===== */
+.theme-selector-container {
+  background: var(--bg-box);
+  border: 2px solid var(--border-light);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.theme-label {
+  font-size: 1.1em;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: var(--text-main);
+}
+
+.theme-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.theme-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px;
+  border: 2px solid var(--border-light);
+  border-radius: 12px;
+  background: var(--bg-box);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.theme-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.theme-btn.active {
+  border-color: var(--accent-main);
+  border-width: 3px;
+  background: var(--bg-highlight);
+}
+
+.theme-icon {
+  font-size: 2em;
+}
+
+.theme-name {
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.theme-hint {
+  font-size: 0.9em;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+/* ===== GLOBALE STYLES ===== */
+body {
+  background: var(--bg-page);
+  color: var(--text-main);
+  transition: background-color 0.3s, color 0.3s;
+}
+/* ========================
+   MAIN PROFILE HERO – Primär & Sekundär
+   ======================== */
+
+.primary-profile {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.profile-label {
+  display: block;
+  font-size: 1.3em;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+}
+
+.profile-label.secondary {
+  color: var(--accent-soft);  /* Gelb/orange für Sekundär – passt zu allen Themes */
+}
+
+.profile-type.primary {
+  font-size: 2.6em;           /* Groß und dominant */
+  font-weight: 700;
+  color: var(--accent-main);
+  margin: 0;
+  line-height: 1.2;
+}
+.profile-confidence-sub {
+  font-size: 1.1em;  /* größer: 1.1em statt 1em */
+  color: var(--accent-main);  /* Titelfarbe (gelb/blau je nach Theme) */
+  font-weight: 600;
+  margin-top: 8px;
+  margin-bottom: 20px;
+  margin-left: 4px;
+}
+
+.secondary-profile {
+  margin: 40px 0;
+  padding: 30px;
+  background: var(--bg-highlight);
+  border-left: 6px solid var(--accent-soft);
+  border-radius: 14px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.profile-type.secondary {
+  font-size: 1.9em;           /* Kleiner als Primär, aber auffällig */
+  font-weight: 600;
+  color: var(--accent-soft);
+  margin: 0 0 12px 0;
+  line-height: 1.2;
+}
+
+.secondary-note {
+  font-size: 1.1em;
+  color: var(--text-secondary);
+  margin: 0 auto;
+  max-width: 700px;
+  font-style: italic;
+  line-height: 1.6;
+}
+/* Top-6 Grid – bleibt wie bisher */
+.profile-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin-bottom: 60px;
+}
+
+/* Großer Container darunter – volle Breite, abgesetzt */
+.additional-factors {
+  margin: 60px 0;
+}
+
+.additional-factors h2 {
+  font-size: 1.8em;
+  text-align: center;
+  color: var(--accent-warm);
+  margin-bottom: 30px;
+  padding-bottom: 12px;
+  border-bottom: 3px solid var(--accent-soft);
+}
+
+.additional-container {
+  background: var(--bg-highlight);
+  border: 4px solid var(--accent-soft);
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+}
+
+#additional-content {
+  font-size: 1.1em;
+  line-height: 1.7;
+  color: var(--text-main);
+}
+
+#additional-content strong {
+  color: var(--accent-main);
+  font-size: 1.2em;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .additional-container {
+    padding: 30px;
+  }
+}
+
+/* Mobile-Anpassung */
+@media (max-width: 768px) {
+  .profile-type.primary {
+    font-size: 2.2em;
+  }
+  .profile-type.secondary {
+    font-size: 1.6em;
+  }
+  .secondary-profile {
+    padding: 20px;
+    margin: 30px 0;
+  }
+}
