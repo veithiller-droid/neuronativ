@@ -113,6 +113,9 @@ export function showResults() {
     </button>
   `;
   container.appendChild(profileBtn);
+  
+  setupResultButton(); // ← hier
+
 
   const toggleOverviewBtn = document.getElementById("toggle-overview");
   const overviewBox = document.getElementById("overview-details");
@@ -761,40 +764,154 @@ if (skipBtn) {
   };
 }
 
-document.addEventListener("click", e => {
-  if (e.target.id !== "goto-profiles") return;
+// -------------------------
+// ABSCHLUSS-FLOW (ersetzt den alten "goto-profiles" Event-Listener)
+// Einfügen am Ende von test.js — alten Event-Listener entfernen
+// -------------------------
 
-  const profileData = {
-    answers: state.answers,
-    meta: state.meta,
-    onset: state.onset,
+const BACKEND_URL = "https://neuronativ-production.up.railway.app";
 
-    // Engine braucht das:
-    itemsByScale: Object.fromEntries(
-      Object.entries(SCALES).map(([k, v]) => [k, v.items])
-    ),
+// Wird aufgerufen wenn showResults() fertig ist
+// Ersetzt den alten "goto-profiles" Button-Handler
+function setupResultButton() {
+  const btn = document.getElementById("goto-profiles");
+  if (!btn) return;
 
-    // optional/debug
-    scores: state.scoresRaw,
-    scoresRounded: state.scores,
-    interp: state.interp,
-    timestamp: new Date().toISOString()
-  };
+  btn.textContent = "Zur Auswertung";
+  btn.onclick = () => showConsentModal();
+}
 
-  try {
-    // wichtig: alte Caches weg, damit neue Onset-Struktur greift
-    localStorage.removeItem("neurodivergenz_report");
-    localStorage.removeItem("neurodivergenz_profile_result");
-
-    // wichtig: bootstrap bevorzugt raw/report; raw muss existieren
-    localStorage.setItem("neurodivergenz_raw", JSON.stringify(profileData));
-
-    // legacy/compat (kann bleiben)
-    localStorage.setItem("neurodivergenz_profile_data", JSON.stringify(profileData));
-  } catch (err) {
-    console.error("Konnte Daten nicht speichern:", err);
+// -------------------------
+// CONSENT MODAL
+// -------------------------
+function showConsentModal() {
+  // Modal falls noch nicht im DOM
+  let modal = document.getElementById("consent-modal");
+  if (!modal) {
+    modal = document.createElement("div");
+    modal.id = "consent-modal";
+    modal.style.cssText = `
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.5);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 9999;
+    `;
+    modal.innerHTML = `
+      <div style="
+        background: var(--bg-box);
+        padding: 36px;
+        max-width: 520px;
+        width: 90%;
+        border-radius: 12px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+      ">
+        <h2 style="font-size:1.3rem;font-weight:400;margin-bottom:16px;color:var(--text-main);">
+          Ihre Auswertung speichern
+        </h2>
+        <p style="color:var(--text-secondary);line-height:1.7;margin-bottom:20px;font-size:0.95rem;">
+          Für die Auswertung werden Ihre Antworten anonymisiert an unseren Server übertragen 
+          und dort gespeichert. Es werden keine persönlichen Daten wie Name oder E-Mail erhoben.
+        </p>
+        <ul style="color:var(--text-secondary);font-size:0.9rem;line-height:1.8;margin-bottom:24px;padding-left:20px;">
+          <li>Antworten werden anonymisiert gespeichert</li>
+          <li>Kein Name, keine E-Mail erforderlich</li>
+          <li>Daten werden nach 90 Tagen gelöscht</li>
+          <li>Keine Weitergabe an Dritte</li>
+        </ul>
+        <div style="display:flex;gap:12px;flex-direction:column;">
+          <button id="consent-accept" style="
+            background: var(--accent-main);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+          ">Einverstanden & Auswertung starten</button>
+          <button id="consent-decline" style="
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border-light);
+            padding: 12px 28px;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            cursor: pointer;
+          ">Ablehnen (nur lokale Ansicht)</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(modal);
   }
 
-  window.open("profile.html", "_blank", "noopener,width=1000,height=900");
-});
+  modal.style.display = "flex";
 
+  document.getElementById("consent-accept").onclick = async () => {
+    modal.style.display = "none";
+    await submitToBackend();
+  };
+
+  document.getElementById("consent-decline").onclick = () => {
+    modal.style.display = "none";
+    // Lokale Ansicht — direkt zur alten Profil-Seite
+    window.open("profile.html", "_blank", "noopener,width=1000,height=900");
+  };
+}
+
+// -------------------------
+// BACKEND SUBMIT
+// -------------------------
+async function submitToBackend() {
+  const btn = document.getElementById("goto-profiles");
+  if (btn) {
+    btn.textContent = "Wird übertragen…";
+    btn.disabled = true;
+  }
+
+  try {
+    const profileData = {
+      answers: state.answers,
+      meta: state.meta,
+      onset: state.onset,
+      itemsByScale: Object.fromEntries(
+        Object.entries(SCALES).map(([k, v]) => [k, v.items])
+      ),
+    };
+
+    const res = await fetch(`${BACKEND_URL}/api/submit`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(profileData),
+    });
+
+    if (!res.ok) {
+      throw new Error(`Server error: ${res.status}`);
+    }
+
+    const data = await res.json();
+    const code = data.code;
+
+    // Session-Code in localStorage für Fallback
+    localStorage.setItem("neuronativ_session_code", code);
+
+    // Zur Result-Seite
+    window.location.href = `result.html?code=${code}`;
+
+  } catch (err) {
+    console.error("submit error:", err);
+
+    if (btn) {
+      btn.textContent = "Zur Auswertung";
+      btn.disabled = false;
+    }
+
+    // Fallback: lokale Ansicht
+    const fallback = confirm(
+      "Verbindung zum Server fehlgeschlagen. " +
+      "Möchten Sie die lokale Ansicht öffnen?"
+    );
+    if (fallback) {
+      window.open("profile.html", "_blank", "noopener,width=1000,height=900");
+    }
+  }
+}
