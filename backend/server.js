@@ -1,23 +1,20 @@
 // server.js
-// Neuronativ Backend – Railway/Express/PostgreSQL
-// Liegt in: neuronativ/backend/server.js
+// neuronativ/backend/server.js
 // Im Container: /app/backend/server.js
-// __dirname = /app/backend
-// Frontend liegt in: /app/test/, /app/index.html etc.
+// Frontend liegt in: /app/
 
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import pg from "pg";
-import { fileURLToPath } from "url";
-import { dirname, join } from "path";
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const ROOT = join(__dirname, ".."); // /app
+
+// Hardcoded weil Railway Container immer /app als WORKDIR hat
+const ROOT = "/app";
 
 // -------------------------
 // DB Pool
@@ -75,17 +72,15 @@ app.get("/health", (req, res) => {
 // -------------------------
 // Statische Frontend-Files
 // -------------------------
-app.use("/test", express.static(join(ROOT, "test")));
-app.use("/styles", express.static(join(ROOT, "styles")));
-app.use("/images", express.static(join(ROOT, "images")));
-app.use("/wissen", express.static(join(ROOT, "wissen")));
-
-// Root-Files
+app.use("/test",    express.static(`${ROOT}/test`));
+app.use("/styles",  express.static(`${ROOT}/styles`));
+app.use("/images",  express.static(`${ROOT}/images`));
+app.use("/wissen",  express.static(`${ROOT}/wissen`));
 app.use(express.static(ROOT));
 
-// Fallback
+// Fallback → index.html
 app.get("*", (req, res) => {
-  res.sendFile(join(ROOT, "index.html"));
+  res.sendFile(`${ROOT}/index.html`);
 });
 
 // -------------------------
@@ -93,4 +88,5 @@ app.get("*", (req, res) => {
 // -------------------------
 app.listen(PORT, () => {
   console.log(`Neuronativ Backend läuft auf Port ${PORT}`);
+  console.log(`ROOT: ${ROOT}`);
 });
