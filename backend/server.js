@@ -1,16 +1,10 @@
 // server.js
 // neuronativ/backend/server.js
-// Im Container: /app/backend/server.js
-// __dirname = /app/backend
-// Frontend liegt in: /app/ (join(__dirname, '../'))
 
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import pg from "pg";
-import { createRequire } from "module";
-const require = createRequire(import.meta.url);
-const path = require("path");
 
 dotenv.config();
 
@@ -35,6 +29,7 @@ app.use(cors({
     "https://neuronativ.de",
     "https://www.neuronativ.de",
     "https://neuronativ-production.up.railway.app",
+    "https://neuronativ-production-244f.up.railway.app",
     "http://localhost:8000",
     "http://localhost:3000",
   ],
@@ -46,12 +41,6 @@ import webhookRouter from "./routes/webhook.js";
 app.use("/api/webhook", express.raw({ type: "application/json" }), webhookRouter);
 
 app.use(express.json({ limit: "2mb" }));
-
-// -------------------------
-// Statische Frontend-Files
-// -------------------------
-// __dirname = /app/backend → '../' = /app = Repo-Root
-app.use(express.static(path.join(__dirname, '../')));
 
 // -------------------------
 // API Routen
@@ -73,11 +62,6 @@ app.use("/api/admin",    adminRouter);
 // -------------------------
 app.get("/health", (req, res) => {
   res.json({ status: "ok", ts: new Date().toISOString() });
-});
-
-// Fallback
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../index.html"));
 });
 
 // -------------------------
