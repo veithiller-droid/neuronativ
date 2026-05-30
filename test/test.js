@@ -28,116 +28,96 @@ function onAnswer(scale, questionId, value) {
 }
 
 export function showResults() {
+  // Alles ausblenden
   document.getElementById("questionText").style.display = "none";
   document.getElementById("scaleButtons").style.display = "none";
   document.getElementById("progress").style.display = "none";
   document.getElementById("onset-page").style.display = "none";
 
+  // Header + Legende ausblenden
+  const header = document.querySelector(".header-banner");
+  if (header) header.style.display = "none";
+  const legend = document.querySelector(".scale-legend");
+  if (legend) legend.style.display = "none";
+
   window.scrollTo({ top: 0 });
 
-  const container = document.getElementById("results");
-  container.innerHTML = "<h2>Auswertung</h2>";
-
   const scores = calculateScaleResults();
+  const container = document.getElementById("results");
 
-  for (const k in scores) {
-    container.innerHTML += `
-      <div class="scale-result">
-        <div style="margin-bottom:6px;font-weight:500;">
-          ${SCALES[k].label}
-        </div>
+  container.innerHTML = `
+    <div class="results-page">
 
-        <div class="bar">
-          <div class="fill" style="width:${scores[k]}%">
-            <span class="bar-value">${scores[k]}%</span>
-          </div>
-        </div>
-
-        <div class="bar-label">
-          ${labelFromPercent(scores[k])}
-        </div>
+      <div class="results-header">
+        <h1>Ihre Skalen-Auswertung</h1>
+        <p class="results-intro">
+          Diese Übersicht zeigt Ihre Selbsteinschätzung in 10 Bereichen.
+          Klicken Sie auf eine Karte für mehr Details.
+        </p>
       </div>
-    `;
-  }
 
-  container.innerHTML += `
-    <button id="toggle-overview" class="toggle-main">
-      ▸ Gesamtauswertung anzeigen
-    </button>
-    <div id="overview-details" class="hidden"></div>
+      <div class="tacho-grid" id="tacho-grid"></div>
+
+      <div class="results-cta">
+        <button id="goto-profiles" class="btn-primary btn-large">
+          Vollständige Auswertung ansehen
+        </button>
+        <p class="results-cta-note">
+          Die vollständige Auswertung analysiert Muster, Zusammenhänge und nächste Schritte.
+        </p>
+      </div>
+
+    </div>
   `;
 
-  const overview = document.getElementById("overview-details");
-  
-  for (const k in scores) {
-    overview.innerHTML += `
-      <div class="topic">
-        <h3 class="topic-title">${SCALES[k].label}</h3>  
-        <div class="topic-intro">${SCALE_INTROS[k] || ""}</div>
-        <div class="topic-text" id="text-${k}"></div>
-
-        <button class="toggle-tacho" data-scale="${k}">
-          ▸ Tacho anzeigen
-        </button>
-
-        <div class="tacho-details hidden" id="tacho-box-${k}">
-          <div class="tacho-box">
-            <span class="tacho-inline" id="tacho-${k}"></span>
-            <div class="tacho-text" id="tacho-text-${k}"></div>
-          </div>
-        </div>
-      </div>
-    `;
-  }
+  // Tacho-Cards bauen
+  const grid = document.getElementById("tacho-grid");
 
   for (const k in scores) {
-    const el = document.getElementById(`tacho-${k}`);
-    if (!el) continue;
-
     const interp = state.interp[k];
-    renderTacho(el, interp, k);
+    const label = SCALES[k].label;
 
-    const textBox = document.getElementById("tacho-text-" + k);
-    if (textBox) {
-      renderTachoText(textBox, interp, k);
+    const card = document.createElement("div");
+    card.className = "tacho-card";
+    card.dataset.scale = k;
+
+    card.innerHTML = `
+      <div class="tacho-card-header">
+        <span class="tacho-card-label">${label}</span>
+        <span class="tacho-card-score">${scores[k]}%</span>
+      </div>
+      <div class="tacho-card-visual">
+        <span class="tacho-inline" id="tacho-${k}"></span>
+      </div>
+      <div class="tacho-card-toggle">▸ Details anzeigen</div>
+      <div class="tacho-card-text hidden" id="tacho-text-${k}"></div>
+    `;
+
+    card.querySelector(".tacho-card-toggle").onclick = () => {
+      const textBox = card.querySelector(".tacho-card-text");
+      const toggle = card.querySelector(".tacho-card-toggle");
+      const isHidden = textBox.classList.contains("hidden");
+
+      textBox.classList.toggle("hidden");
+      toggle.textContent = isHidden ? "▾ Details ausblenden" : "▸ Details anzeigen";
+
+      // Lazy render
+      if (isHidden && textBox.innerHTML === "") {
+        renderTachoText(textBox, interp, k);
+      }
+    };
+
+    grid.appendChild(card);
+
+    // Tacho rendern
+    const tachoEl = document.getElementById(`tacho-${k}`);
+    if (tachoEl && interp) {
+      renderTacho(tachoEl, interp);
     }
   }
 
-  renderDetailedText();
-
-  const profileBtn = document.createElement("div");
-  profileBtn.style.marginTop = "32px";
-  profileBtn.innerHTML = `
-  <button id="goto-profiles" class="btn-primary">
-      Profilübersicht anzeigen
-    </button>
-  `;
-  container.appendChild(profileBtn);
-  
-  setupResultButton(); // ← hier
-
-
-  const toggleOverviewBtn = document.getElementById("toggle-overview");
-  const overviewBox = document.getElementById("overview-details");
-
-  if (toggleOverviewBtn && overviewBox) {
-    toggleOverviewBtn.addEventListener("click", () => {
-      overviewBox.classList.toggle("hidden");
-      toggleOverviewBtn.textContent = overviewBox.classList.contains("hidden")
-        ? "▸ Gesamtauswertung anzeigen"
-        : "▾ Gesamtauswertung ausblenden";
-    });
-  }
-
-  document.querySelectorAll(".toggle-tacho").forEach(btn => {
-    btn.onclick = () => {
-      const box = document.getElementById("tacho-box-" + btn.dataset.scale);
-      box.classList.toggle("hidden");
-      btn.textContent = box.classList.contains("hidden")
-        ? "▸ Tacho anzeigen"
-        : "▾ Tacho ausblenden";
-    };
-  });
+  // CTA Button
+  setupResultButton();
 }
 // -------------------------
 // ONSET 2 (nach dem Test) – neutral, ohne Diagnosewörter
