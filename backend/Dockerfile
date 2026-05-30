@@ -29,13 +29,13 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
 
 WORKDIR /app
 
-# package.json ZUERST → npm install wird gecached
-COPY backend/package*.json ./backend/
-RUN cd backend && npm install --production
+# package.json zuerst → npm install wird gecached
+COPY package*.json ./
+RUN npm install --production
 
-# Erst dann den Rest kopieren
+# Dann den Rest
 COPY . .
 
 EXPOSE 8080
 
-CMD ["node", "/app/backend/server.js"]
+CMD ["node", "server.js"]
