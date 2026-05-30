@@ -1063,7 +1063,7 @@ body {
   <!-- ACTIONS -->
   <div class="action-buttons">
     <button class="btn btn-primary" onclick="window.print()">Als PDF speichern</button>
-    <a href="druckbericht.html" class="btn btn-primary">Bericht</a>
+<a id="bericht-link" href="druckbericht.html" class="btn btn-primary">Bericht</a>
     <a href="../test/index.html" class="btn btn-secondary">Zurück zum Test</a>
     <a href="methodology.html" class="btn btn-secondary">Zur Methodik</a>
   </div>
@@ -1071,6 +1071,14 @@ body {
 </div>
 
 <script type="module" src="./profile_bootstrap.js?v=20260103-onsetfix"></script>
+
+<script>
+  const code = new URLSearchParams(location.search).get("code");
+  if (code) {
+    const link = document.getElementById("bericht-link");
+    if (link) link.href = `druckbericht.html?code=${code}`;
+  }
+</script>
 
 </body>
 </html>
