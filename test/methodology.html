@@ -1087,57 +1087,212 @@ body {
 
 </div>
 
-<script type="module">
-// =====================================================
-// DATEN AUS LOCALSTORAGE LADEN
-// =====================================================
+<script>
+const BACKEND_URL = "https://neuronativ-production.up.railway.app";
+const params = new URLSearchParams(location.search);
+const code = params.get("code");
 
-let profileData = null;
+const genderMap = {male:"Männlich", female:"Weiblich", diverse:"Divers", na:"Keine Angabe"};
+const onsetMap = {early:"Kindheit", school:"Schulalter", teen:"Jugend", adult:"Erwachsenenalter", unknown:"Unbekannt"};
+const stressMap = {low:"Niedrig", mild:"Leicht", medium:"Mittel", high:"Hoch", "very-high":"Sehr hoch"};
 
-try {
-  const dataString = localStorage.getItem('neurodivergenz_profile_data');
-  if (!dataString) {
-    console.log('Keine Testdaten gefunden');
-  } else {
-    const data = JSON.parse(dataString);
-    profileData = data;
-    renderPersonalCalculation(data);
-    renderProfileExplanations(data);
+async function loadPersonalData() {
+  const container = document.getElementById("personal-calculation");
+  if (!container) return;
+
+  if (!code) {
+    container.innerHTML = `<p style="color:var(--text-secondary);text-align:center;">Kein Code gefunden. Bitte von der Profil-Seite aus öffnen.</p>`;
+    return;
   }
-} catch (error) {
-  console.error('Fehler beim Laden:', error);
+
+  container.innerHTML = `<p style="color:var(--text-secondary);text-align:center;">Wird geladen…</p>`;
+
+  try {
+    const res = await fetch(`${BACKEND_URL}/api/report/${code}`);
+    if (!res.ok) throw new Error();
+    const data = await res.json();
+
+    if (!data.paid) {
+      container.innerHTML = `<p style="color:var(--text-secondary);text-align:center;">Nur nach Freischaltung verfügbar.</p>`;
+      return;
+    }
+
+    const report = data.report;
+    const profileResult = data.profileResult;
+    const scales = report?.scales?.ui?.scores || {};
+    const clusters = report?.clusters?.ui?.scores || {};
+    const meta = report?.input?.meta || {};
+    const patterns = report?.patterns || [];
+
+    renderPersonalCalculation(container, scales, clusters, meta, patterns, report, profileResult);
+    renderProfileExplanations(scales, clusters);
+
+  } catch(err) {
+    console.error(err);
+    container.innerHTML = `<p style="color:var(--text-secondary);text-align:center;">Fehler beim Laden der Daten.</p>`;
+  }
+}
+
+// =====================================================
+// PERSÖNLICHE BERECHNUNG
+// =====================================================
+
+function renderPersonalCalculation(container, scales, clusters, meta, patterns, report, profileResult) {
+  const scores = scales; // Alias für Kompatibilität
+  const adhdCalc = Math.round(clusters.adhd || 0);
+  const autismCalc = Math.round(clusters.autism || 0);
+  const emotionalCalc = Math.round(clusters.emotional || 0);
+  const compensationCalc = Math.round(clusters.compensation || 0);
+  const allVals = Object.values(scores).map(Number);
+  const avgScore = allVals.reduce((a,b)=>a+b,0) / (allVals.length || 1);
+  const maxScore = Math.max(...allVals);
+  const sortedVals = [...allVals].sort((a,b)=>b-a);
+
+  let html = '';
+
+  // SCHRITT 1: Rohwerte
+  html += `
+    <div class="calc-step">
+      <div class="step-title">Schritt 1: Ihre Rohwerte (10 Skalen)</div>
+      <div class="step-content">
+        <p>Aus Ihren Antworten wurden für jede der 10 Skalen Werte zwischen 0% und 100% berechnet:</p>
+        <div class="value-list">
+          <div class="value-item"><span class="value-name">Aufmerksamkeit</span><span class="value-score">${scores.attention||0}%</span></div>
+          <div class="value-item"><span class="value-name">Sensorik</span><span class="value-score">${scores.sensory||0}%</span></div>
+          <div class="value-item"><span class="value-name">Soziales</span><span class="value-score">${scores.social||0}%</span></div>
+          <div class="value-item"><span class="value-name">Maskierung</span><span class="value-score">${scores.masking||0}%</span></div>
+          <div class="value-item"><span class="value-name">Struktur</span><span class="value-score">${scores.structure||0}%</span></div>
+          <div class="value-item"><span class="value-name">Überlastung</span><span class="value-score">${scores.overload||0}%</span></div>
+          <div class="value-item"><span class="value-name">Alexithymie</span><span class="value-score">${scores.alexithymia||0}%</span></div>
+          <div class="value-item"><span class="value-name">Executive</span><span class="value-score">${scores.executive||0}%</span></div>
+          <div class="value-item"><span class="value-name">Emotreg</span><span class="value-score">${scores.emotreg||0}%</span></div>
+          <div class="value-item"><span class="value-name">Hyperfokus</span><span class="value-score">${scores.hyperfocus||0}%</span></div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  // SCHRITT 2: Meta-Daten
+  html += `
+    <div class="calc-step">
+      <div class="step-title">Schritt 2: Ihre Angaben (Meta-Daten)</div>
+      <div class="step-content">
+        <p>Diese Informationen beeinflussen die Pattern-Erkennung und Konfidenz-Berechnung:</p>
+        <ul style="margin-left: 20px; margin-top: 10px;">
+          <li><strong>Geschlecht:</strong> ${genderMap[meta.gender] || meta.gender || "—"}</li>
+          <li><strong>Symptombeginn:</strong> ${onsetMap[meta.onset] || meta.onset || "—"}</li>
+          <li><strong>Aktueller Stress:</strong> ${stressMap[meta.stress] || meta.stress || "—"}</li>
+          ${meta.diagnoses && meta.diagnoses.length > 0 ? `<li><strong>Bestehende Diagnosen:</strong> ${meta.diagnoses.join(', ')}</li>` : ''}
+        </ul>
+      </div>
+    </div>
+  `;
+
+  // SCHRITT 3: Cluster-Berechnung
+  html += `
+    <div class="calc-step">
+      <div class="step-title">Schritt 3: Cluster-Berechnung (gewichtete Durchschnitte)</div>
+      <div class="step-content">
+        <div class="formula-box">
+          <strong>ADHS-Cluster:</strong><br>
+          = (${scores.attention||0} × 1.2 + ${scores.executive||0} × 1.4 + ${scores.hyperfocus||0} × 0.6) / Gewichtssumme<br>
+          = <strong>${adhdCalc}%</strong>
+        </div>
+        <div class="formula-box">
+          <strong>Autismus-Cluster:</strong><br>
+          = (${scores.sensory||0} × 1.4 + ${scores.social||0} × 1.2 + ${scores.structure||0} × 0.8) / Gewichtssumme<br>
+          = <strong>${autismCalc}%</strong>
+        </div>
+        <div class="formula-box">
+          <strong>Emotionale Verarbeitung:</strong><br>
+          = (${scores.alexithymia||0} × 1.1 + ${scores.emotreg||0} × 1.0) / 2.1<br>
+          = <strong>${emotionalCalc}%</strong>
+        </div>
+        <div class="formula-box">
+          <strong>Kompensation & Belastung:</strong><br>
+          = (${scores.masking||0} × 1.2 + ${scores.overload||0} × 1.0) / 2.2<br>
+          = <strong>${compensationCalc}%</strong>
+        </div>
+      </div>
+    </div>
+  `;
+
+  // SCHRITT 4: Pattern-Erkennung
+  html += `
+    <div class="calc-step">
+      <div class="step-title">Schritt 4: Muster-Erkennung (Patterns)</div>
+      <div class="step-content">
+        <p>Das System prüft spezifische Muster basierend auf Ihren Werten und Meta-Daten:</p>
+  `;
+
+  if (patterns && patterns.length > 0) {
+    patterns.forEach(p => {
+      html += `
+        <div class="pattern-box">
+          <div class="pattern-name">✓ ${p.label}</div>
+          <p style="margin-top:6px;font-size:0.9em;">Konfidenz: ${Math.round((p.confidence||0)*100)}%</p>
+        </div>
+      `;
+    });
+  } else {
+    html += `<p style="margin-left: 20px;">Keine spezifischen Muster erkannt.</p>`;
+  }
+
+  html += `
+      </div>
+    </div>
+  `;
+
+  // SCHRITT 5: Profil-Bestimmung
+  html += `
+    <div class="calc-step">
+      <div class="step-title">Schritt 5: Profil-Bestimmung & Konfidenz</div>
+      <div class="step-content">
+        <p>Basierend auf Cluster-Scores, erkannten Mustern und Meta-Daten wird das wahrscheinlichste Profil bestimmt:</p>
+        
+        <div style="margin-top: 20px;">
+          <strong>Prüfungs-Reihenfolge:</strong>
+          <ol style="margin-left: 20px; margin-top: 10px;">
+            <li>Einzelne dominante Skala? ${maxScore >= 85 || (maxScore >= 75 && (maxScore - (sortedVals[1]||0)) >= 15) ? 'Ja ✓' : 'Nein'}</li>
+            <li>Sehr niedrige Werte (< 35%)? ${maxScore < 35 ? 'Ja ✓' : 'Nein'}</li>
+            <li>Unauffällig (< 55% und avg < 52%)? ${maxScore < 55 && avgScore < 52 ? 'Ja ✓' : 'Nein'}</li>
+            <li>AuDHD (beide Cluster ≥ 65%)? ${adhdCalc >= 65 && autismCalc >= 65 ? 'Ja ✓' : 'Nein'}</li>
+            <li>ADHS-Profil (Cluster ≥ 65%)? ${adhdCalc >= 65 ? 'Ja' : 'Nein'}</li>
+            <li>Autismus-Profil (Cluster ≥ 65%)? ${autismCalc >= 65 ? 'Ja' : 'Nein'}</li>
+            <li>Hochmaskierung? ${(scores.masking||0) >= 65 && ((scores.social||0) >= 65 || (scores.sensory||0) >= 65) ? 'Ja' : 'Nein'}</li>
+            <li>Überlastung? ${(scores.overload||0) >= 80 ? 'Ja' : 'Nein'}</li>
+            <li>Traits (avg ≥ 55% und < 65%)? ${avgScore >= 55 && avgScore < 65 ? 'Ja' : 'Nein'}</li>
+            <li>Sonst: Gemischtes Profil</li>
+          </ol>
+        </div>
+        
+        <div class="info-box" style="margin-top: 20px;">
+          <strong>Ihr Ergebnis:</strong>
+          <p style="margin-top: 10px;">
+            ${profileResult?.mainProfile?.type || "—"}
+            (Konfidenz: ${Math.round((profileResult?.mainProfile?.confidence||0)*100)}%)
+          </p>
+        </div>
+      </div>
+    </div>
+  `;
+
+  container.innerHTML = html;
 }
 
 // =====================================================
 // PROFIL-ERKLÄRUNGEN MIT DYNAMISCHEN WERTEN
 // =====================================================
 
-function renderProfileExplanations(data) {
+function renderProfileExplanations(scales, clusters) {
   const container = document.getElementById('profile-explanations');
-  if (!container || !data.scores) return;
+  if (!container) return;
 
-  const scores = data.scores;
-  const profileResult = data.profileResult || {};
-  
-  // ADHS-Cluster berechnen
-  const adhdScore = Math.round(
-    (scores.attention * 1.2 + scores.executive * 1.2 + scores.hyperfocus * 0.6) / 3
-  );
-  
-  // Autismus-Cluster berechnen
-  const autismScore = Math.round(
-    (scores.sensory * 1.2 + scores.social * 1.2 + scores.structure * 0.8) / 3
-  );
-  
-  // Emotional Processing
-  const emotionalScore = Math.round(
-    (scores.alexithymia + scores.emotreg) / 2
-  );
-  
-  // Compensation
-  const compensationScore = Math.round(
-    (scores.masking + scores.overload) / 2
-  );
+  const scores = scales; // Alias
+  const adhdScore = Math.round(clusters.adhd || 0);
+  const autismScore = Math.round(clusters.autism || 0);
+  const emotionalScore = Math.round(clusters.emotional || 0);
+  const compensationScore = Math.round(clusters.compensation || 0);
 
   let html = '';
 
@@ -1169,7 +1324,6 @@ function renderProfileExplanations(data) {
           Energie gezielt auf interessante Projekte zu lenken, statt sich durch uninteressante zu quälen.
         </p>
       </div>
-
       <div class="profile-direction">
         <h5>Was bedeuten niedrigere Werte?</h5>
         <p>
@@ -1219,7 +1373,6 @@ function renderProfileExplanations(data) {
           die Welt wahrzunehmen, ist anders, nicht falsch.
         </p>
       </div>
-
       <div class="profile-direction">
         <h5>Was bedeuten niedrigere Werte?</h5>
         <p>
@@ -1274,7 +1427,6 @@ function renderProfileExplanations(data) {
           Stärken und Herausforderungen.
         </p>
       </div>
-
       <div class="profile-direction">
         <h5>Was bedeuten niedrigere Werte?</h5>
         <p>
@@ -1291,7 +1443,7 @@ function renderProfileExplanations(data) {
   html += `
     <div class="profile-explain-box">
       <h4>Hochmaskierungs-Profil (High Masking)</h4>
-      <div class="profile-result-display">Ihr Maskierungs-Wert: ${scores.masking}%</div>
+      <div class="profile-result-display">Ihr Maskierungs-Wert: ${scores.masking||0}%</div>
       
       <div class="profile-direction">
         <h5>Was bedeuten höhere Werte?</h5>
@@ -1319,7 +1471,6 @@ function renderProfileExplanations(data) {
           zwischen Erschöpfung und Erholung machen.
         </p>
       </div>
-
       <div class="profile-direction">
         <h5>Was bedeuten niedrigere Werte?</h5>
         <p>
@@ -1336,7 +1487,7 @@ function renderProfileExplanations(data) {
   html += `
     <div class="profile-explain-box">
       <h4>Überlastungs-/Burnout-Profil</h4>
-      <div class="profile-result-display">Ihr Überlastungs-Wert: ${scores.overload}%</div>
+      <div class="profile-result-display">Ihr Überlastungs-Wert: ${scores.overload||0}%</div>
       
       <div class="profile-direction">
         <h5>Was bedeuten höhere Werte?</h5>
@@ -1359,7 +1510,6 @@ function renderProfileExplanations(data) {
           kann sinnvoll sein.
         </p>
       </div>
-
       <div class="profile-direction">
         <h5>Was bedeuten niedrigere Werte?</h5>
         <p>
@@ -1374,213 +1524,7 @@ function renderProfileExplanations(data) {
   container.innerHTML = html;
 }
 
-// =====================================================
-// PERSÖNLICHE BERECHNUNG RENDERN
-// =====================================================
-
-function renderPersonalCalculation(data) {
-  const container = document.getElementById('personal-calculation');
-  
-  const scores = data.scores;
-  const meta = data.meta;
-  const profileResult = data.profileResult || {};
-  
-  let html = '';
-  
-  // SCHRITT 1: Rohwerte
-  html += `
-    <div class="calc-step">
-      <div class="step-title">Schritt 1: Ihre Rohwerte (10 Skalen)</div>
-      <div class="step-content">
-        <p>Aus Ihren Antworten wurden für jede der 10 Skalen Werte zwischen 0% und 100% berechnet:</p>
-        <div class="value-list">
-          <div class="value-item"><span class="value-name">Aufmerksamkeit</span><span class="value-score">${scores.attention}%</span></div>
-          <div class="value-item"><span class="value-name">Sensorik</span><span class="value-score">${scores.sensory}%</span></div>
-          <div class="value-item"><span class="value-name">Soziales</span><span class="value-score">${scores.social}%</span></div>
-          <div class="value-item"><span class="value-name">Maskierung</span><span class="value-score">${scores.masking}%</span></div>
-          <div class="value-item"><span class="value-name">Struktur</span><span class="value-score">${scores.structure}%</span></div>
-          <div class="value-item"><span class="value-name">Überlastung</span><span class="value-score">${scores.overload}%</span></div>
-          <div class="value-item"><span class="value-name">Alexithymie</span><span class="value-score">${scores.alexithymia}%</span></div>
-          <div class="value-item"><span class="value-name">Executive</span><span class="value-score">${scores.executive}%</span></div>
-          <div class="value-item"><span class="value-name">Emotreg</span><span class="value-score">${scores.emotreg}%</span></div>
-          <div class="value-item"><span class="value-name">Hyperfokus</span><span class="value-score">${scores.hyperfocus}%</span></div>
-        </div>
-      </div>
-    </div>
-  `;
-  
-  // SCHRITT 2: Meta-Daten
-  const genderMap = {male: 'Männlich', female: 'Weiblich', diverse: 'Divers', 'prefer-not': 'Keine Angabe'};
-  const onsetMap = {childhood: 'Kindheit', adolescence: 'Jugend', adult: 'Erwachsenenalter', recent: 'Kürzlich', unsure: 'Unsicher', unknown: 'Unbekannt'};
-  const stressMap = {low: 'Niedrig', moderate: 'Moderat', high: 'Hoch', 'very-high': 'Sehr hoch'};
-  
-  html += `
-    <div class="calc-step">
-      <div class="step-title">Schritt 2: Ihre Angaben (Meta-Daten)</div>
-      <div class="step-content">
-        <p>Diese Informationen beeinflussen die Pattern-Erkennung und Konfidenz-Berechnung:</p>
-        <ul style="margin-left: 20px; margin-top: 10px;">
-          <li><strong>Geschlecht:</strong> ${genderMap[meta.gender] || meta.gender}</li>
-          <li><strong>Symptombeginn:</strong> ${onsetMap[meta.onset] || meta.onset}</li>
-          <li><strong>Aktueller Stress:</strong> ${stressMap[meta.stress] || meta.stress}</li>
-          ${meta.diagnosis && meta.diagnosis.length > 0 ? `<li><strong>Bestehende Diagnosen:</strong> ${meta.diagnosis.join(', ')}</li>` : ''}
-        </ul>
-      </div>
-    </div>
-  `;
-  
-  // SCHRITT 3: Cluster-Berechnung
-  const adhdCalc = Math.round((scores.attention * 1.2 + scores.executive * 1.2 + scores.hyperfocus * 0.6) / 3);
-  const autismCalc = Math.round((scores.sensory * 1.2 + scores.social * 1.2 + scores.structure * 0.8) / 3);
-  const emotionalCalc = Math.round((scores.alexithymia + scores.emotreg) / 2);
-  const compensationCalc = Math.round((scores.masking + scores.overload) / 2);
-  
-  html += `
-    <div class="calc-step">
-      <div class="step-title">Schritt 3: Cluster-Berechnung (gewichtete Durchschnitte)</div>
-      <div class="step-content">
-        <div class="formula-box">
-          <strong>ADHS-Cluster:</strong><br>
-          = (${scores.attention} × 1.2 + ${scores.executive} × 1.2 + ${scores.hyperfocus} × 0.6) / 3<br>
-          = (${Math.round(scores.attention * 1.2)} + ${Math.round(scores.executive * 1.2)} + ${Math.round(scores.hyperfocus * 0.6)}) / 3<br>
-          = <strong>${adhdCalc}%</strong>
-        </div>
-        <div class="formula-box">
-          <strong>Autismus-Cluster:</strong><br>
-          = (${scores.sensory} × 1.2 + ${scores.social} × 1.2 + ${scores.structure} × 0.8) / 3<br>
-          = (${Math.round(scores.sensory * 1.2)} + ${Math.round(scores.social * 1.2)} + ${Math.round(scores.structure * 0.8)}) / 3<br>
-          = <strong>${autismCalc}%</strong>
-        </div>
-        <div class="formula-box">
-          <strong>Emotionale Verarbeitung:</strong><br>
-          = (${scores.alexithymia} + ${scores.emotreg}) / 2<br>
-          = <strong>${emotionalCalc}%</strong>
-        </div>
-        <div class="formula-box">
-          <strong>Kompensation & Belastung:</strong><br>
-          = (${scores.masking} + ${scores.overload}) / 2<br>
-          = <strong>${compensationCalc}%</strong>
-        </div>
-      </div>
-    </div>
-  `;
-  
-  // SCHRITT 4: Pattern-Erkennung
-  html += `
-    <div class="calc-step">
-      <div class="step-title">Schritt 4: Muster-Erkennung (Patterns)</div>
-      <div class="step-content">
-        <p>Das System prüft spezifische Muster basierend auf Ihren Werten und Meta-Daten:</p>
-  `;
-  
-  // High Masking Check
-  if (scores.masking >= 65 && (scores.social >= 65 || scores.sensory >= 65)) {
-    html += `
-      <div class="pattern-box">
-        <div class="pattern-name">✓ Hochmaskierungs-Muster erkannt</div>
-        <ul style="margin-left: 20px; margin-top: 8px;">
-          <li>Maskierung ${scores.masking}% ≥ 65% ✓</li>
-          <li>Sozial/Sensorisch erhöht ✓</li>
-          ${meta.gender === 'female' || meta.gender === 'diverse' ? '<li>Weiblich/Divers: Erhöht Konfidenz</li>' : ''}
-          ${meta.onset === 'childhood' ? '<li>Symptombeginn Kindheit: Erhöht Konfidenz</li>' : ''}
-        </ul>
-      </div>
-    `;
-  } else {
-    html += `<p style="margin-left: 20px;">• Hochmaskierung: Nicht erkannt (Maskierung ${scores.masking}% < 65% oder Sozial/Sensorisch nicht erhöht)</p>`;
-  }
-  
-  // Stress Overlay Check
-  if (scores.overload >= 80 && meta.stress !== 'low') {
-    html += `
-      <div class="pattern-box">
-        <div class="pattern-name">✓ Stress-Überlagerungs-Muster erkannt</div>
-        <ul style="margin-left: 20px; margin-top: 8px;">
-          <li>Überlastung ${scores.overload}% ≥ 80% ✓</li>
-          <li>Aktueller Stress: ${stressMap[meta.stress]}</li>
-          <li>Hinweis: Aktuelle Belastung kann Werte beeinflussen</li>
-        </ul>
-      </div>
-    `;
-  } else {
-    html += `<p style="margin-left: 20px;">• Stress-Überlagerung: Nicht erkannt (Überlastung ${scores.overload}% < 80%)</p>`;
-  }
-  
-  // AuDHD Check
-  if (adhdCalc >= 65 && autismCalc >= 65 && scores.hyperfocus >= 65 && scores.structure >= 65 && scores.overload >= 65) {
-    html += `
-      <div class="pattern-box">
-        <div class="pattern-name">✓ AuDHD-spezifisches Muster erkannt</div>
-        <ul style="margin-left: 20px; margin-top: 8px;">
-          <li>ADHS-Cluster ${adhdCalc}% ≥ 65% ✓</li>
-          <li>Autismus-Cluster ${autismCalc}% ≥ 65% ✓</li>
-          <li>Hyperfokus ${scores.hyperfocus}% ≥ 65% ✓</li>
-          <li>Struktur ${scores.structure}% ≥ 65% ✓</li>
-          <li>Überlastung ${scores.overload}% ≥ 65% ✓</li>
-        </ul>
-      </div>
-    `;
-  }
-  
-  // Traits Check
-  const allScores = Object.values(scores);
-  const avgScore = allScores.reduce((a, b) => a + b, 0) / allScores.length;
-  const maxScore = Math.max(...allScores);
-  
-  if (avgScore >= 55 && avgScore < 65 && maxScore < 78) {
-    html += `
-      <div class="pattern-box">
-        <div class="pattern-name">✓ Neurodivergente Züge (Traits) erkannt</div>
-        <ul style="margin-left: 20px; margin-top: 8px;">
-          <li>Durchschnitt ${Math.round(avgScore)}% ≥ 55% und < 65% ✓</li>
-          <li>Höchster Wert ${maxScore}% < 78% ✓</li>
-          <li>Merkmale erkennbar, aber moderat ausgeprägt</li>
-        </ul>
-      </div>
-    `;
-  }
-  
-  html += `
-      </div>
-    </div>
-  `;
-  
-  // SCHRITT 5: Profil-Bestimmung
-  html += `
-    <div class="calc-step">
-      <div class="step-title">Schritt 5: Profil-Bestimmung & Konfidenz</div>
-      <div class="step-content">
-        <p>Basierend auf Cluster-Scores, erkannten Mustern und Meta-Daten wird das wahrscheinlichste Profil bestimmt:</p>
-        
-        <div style="margin-top: 20px;">
-          <strong>Prüfungs-Reihenfolge:</strong>
-          <ol style="margin-left: 20px; margin-top: 10px;">
-            <li>Einzelne dominante Skala? ${maxScore >= 85 || (maxScore >= 75 && (maxScore - allScores.sort((a,b) => b-a)[1]) >= 15) ? 'Ja ✓' : 'Nein'}</li>
-            <li>Sehr niedrige Werte (< 35%)? ${maxScore < 35 ? 'Ja ✓' : 'Nein'}</li>
-            <li>Unauffällig (< 55% und avg < 52%)? ${maxScore < 55 && avgScore < 52 ? 'Ja ✓' : 'Nein'}</li>
-            <li>AuDHD (beide Cluster ≥ 65%)? ${adhdCalc >= 65 && autismCalc >= 65 ? 'Ja ✓' : 'Nein'}</li>
-            <li>ADHS-Profil (Cluster ≥ 65%)? ${adhdCalc >= 65 ? 'Ja' : 'Nein'}</li>
-            <li>Autismus-Profil (Cluster ≥ 65%)? ${autismCalc >= 65 ? 'Ja' : 'Nein'}</li>
-            <li>Hochmaskierung? ${scores.masking >= 65 && (scores.social >= 65 || scores.sensory >= 65) ? 'Ja' : 'Nein'}</li>
-            <li>Überlastung? ${scores.overload >= 80 ? 'Ja' : 'Nein'}</li>
-            <li>Traits (avg ≥ 55% und < 65%)? ${avgScore >= 55 && avgScore < 65 ? 'Ja' : 'Nein'}</li>
-            <li>Sonst: Gemischtes Profil</li>
-          </ol>
-        </div>
-        
-        <div class="info-box" style="margin-top: 20px;">
-          <strong>Ihr Ergebnis:</strong>
-          <p style="margin-top: 10px;">
-            Das System hat basierend auf allen Faktoren Ihr Profil bestimmt. 
-            Die genauen Werte und Interpretationen sehen Sie in Ihrer Profil-Übersicht.
-          </p>
-        </div>
-      </div>
-    </div>
-  `;
-  
-  container.innerHTML = html;
-}
+loadPersonalData();
 </script>
 
 </body>
