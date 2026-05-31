@@ -1546,6 +1546,8 @@ function profileConfidencePct(profileKey, scaleConf = {}) {
     return Math.round(Math.min(a, b));
   }
 
+  if (profileKey === "hyperfocus") return c("hyperfocus");
+
   // fallback: nichts anzeigen
   return null;
 }
