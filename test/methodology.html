@@ -1270,8 +1270,7 @@ function renderPersonalCalculation(container, scales, clusters, meta, patterns, 
           <strong>Ihr Ergebnis:</strong>
           <p style="margin-top: 10px;">
             ${profileResult?.mainProfile?.type || "—"}
-            (Konfidenz: ${Math.round((profileResult?.mainProfile?.confidence||0)*100)}%)
-          </p>
+                (Konfidenz: ${Math.round((report?.clusters?.confidence?.[profileResult?.mainProfile?.type] || 0) * 100)}%)          </p>
         </div>
       </div>
     </div>
