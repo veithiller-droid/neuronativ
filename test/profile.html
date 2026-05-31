@@ -1065,8 +1065,7 @@ body {
     <button class="btn btn-primary" onclick="window.print()">Als PDF speichern</button>
 <a id="bericht-link" href="druckbericht.html" class="btn btn-primary">Bericht</a>
     <a href="../test/index.html" class="btn btn-secondary">Zurück zum Test</a>
-    <a href="methodology.html" class="btn btn-secondary">Zur Methodik</a>
-  </div>
+<a id="methodik-link" href="methodology.html" class="btn btn-secondary">Zur Methodik</a>  </div>
 
 </div>
 
@@ -1077,6 +1076,14 @@ body {
   if (code) {
     const link = document.getElementById("bericht-link");
     if (link) link.href = `druckbericht.html?code=${code}`;
+  }
+</script>
+
+<script>
+  const _code = new URLSearchParams(location.search).get("code");
+  if (_code) {
+    const ml = document.getElementById("methodik-link");
+    if (ml) ml.href = `methodology.html?code=${_code}`;
   }
 </script>
 
